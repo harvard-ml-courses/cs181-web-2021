@@ -21,6 +21,7 @@ dates: ["",
   "Jan. 26 (T)", # Introduction, Release HW 1
   "Jan. 28 (Th)", # Linear Regression
   "", # section 1
+  "",
   "Feb. 2 (T)", # Probabilistic Linear Regression
   "Feb. 4 (Th)", # Linear Classification
   "", # T1 regression due
@@ -79,12 +80,12 @@ lectures:
     readings:
     hw:
     type: 'sec'
-  - topic: Overview #Jan 28
+  - topic:  #Jan 28
     subtopic: <a href="/cs181-web/recap1">Introduction</a>
     section:
     readings: 2.1, 2.2.1
     hw: <a href="/cs181-web/homework#hw1">HW1 (Regression)</a> released
-  - topic: Linear Regression #Jan 30
+  - topic: Regression #Jan 30
     subtopic: <a href="/cs181-web/recap2">Linear Regression</a>
     section:
     readings: 2.3-2.5, 2.6.1, 2.7.1
@@ -148,15 +149,16 @@ lectures:
     readings:
     hw:
     type: 'sec'
-  - topic: President's Day #Feb 18
-    subtopic: No class
-    readings:
-    hw:
   - topic:
     subtopic: <a href="/cs181-web/recap7">Model Selection - Bayesian</a>
     section:
     readings: 2.8, 2.9
     hw:
+  - topic:
+    subtopic: <a href="/cs181-web/recap8">Neural Networks 1</a>
+    section:
+    readings: 4.1-4.4, 4.6
+    hw: <a href="/cs181-web/homework#hw3">HW 3 (Bayesian Methods, NN, and Practical) </a> released
   - topic: #Feb 22
     subtopic:
     readings:
@@ -170,15 +172,15 @@ lectures:
     demos:
     hw:
     type: 'sec'
-  - topic:
-    subtopic: <a href="/cs181-web/recap8">Neural Networks 1</a>
-    section:
-    readings: 4.1-4.4, 4.6
-    hw: <a href="/cs181-web/homework#hw3">HW 3 (Bayesian Methods, NN, and Practical) </a> released
   - topic: #Feb 27
     subtopic: <a href="/cs181-web/recap9">Neural Networks 2</a>
     section:
     readings: 4.4
+    hw:
+  - topic: SVMs #Mar 4
+    subtopic: <a href="/cs181-web/recap10">Support Vector Machines 1</a>
+    section:
+    readings: 5.1-5.3
     hw:
   - topic: #Mar 1
     subtopic:
@@ -191,15 +193,15 @@ lectures:
     readings:
     hw:
     type: 'sec'
-  - topic: Objective #Mar 4
-    subtopic: <a href="/cs181-web/recap10">Support Vector Machine 1</a>
-    section:
-    readings: 5.1-5.3
-    hw:
   - topic: #Mar 6
-    subtopic: <a href="/cs181-web/recap11">Support Vector Machine 2</a>
+    subtopic: <a href="/cs181-web/recap11">Support Vector Machines 2</a>
     section:
     readings: 5.4
+    hw:
+  - topic:
+    subtopic: EthiCS Guest Lecture
+    section:
+    readings:
     hw:
   - topic: #Mar 8
     subtopic:
@@ -213,10 +215,10 @@ lectures:
     readings:
     hw:
     type: 'sec'
-  - topic: #Mar 11
-    subtopic: <a href="/cs181-web/recap12">Ethics in ML</a>
+  - topic: Unsupervised Learning
+    subtopic: Clustering
     section:
-    readings:
+    readings: 6
     hw:
   - topic: #Mar 13
     subtopic: <strike>Midterm 1</strike>
@@ -232,16 +234,16 @@ lectures:
     demos:
     hw:
     type:
-  - topic: Spring Break # Mar 18
-    subtopic: No class
+  - topic:
+    subtopic: Wellness day, no class
     section:
     readings:
     demos:
     hw: <a href="/cs181-web/homework#hw4">HW4 (SVM, Clustering, and Ethics)</a> released
-  - topic: #Mar 20
-    subtopic: No class
+  - topic: #Mar 27
+    subtopic: <a href="/cs181-web/recap14">Mixture Models</a>
     section:
-    readings:
+    readings: 9.1-9.5
     demos:
     hw:
   - topic: #Mar 22
@@ -274,12 +276,6 @@ lectures:
     demos:
     hw: <a href="/cs181-web/homework#hw4">HW4 (SVM, Clustering, and Ethics)</a> due
     type: 'hw'
-  - topic: # section 8
-    subtopic:
-    section: <a href="/cs181-web/sections#sec7">7. Mixture Models, EM, PCA</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic:  # Apr 1
     subtopic: <a href="/cs181-web/recap15">Principal Component Analysis</a>
     section:
