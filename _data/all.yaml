@@ -211,7 +211,7 @@ lectures:
     type: 'hw'
   - topic: # section 5
     subtopic:
-    section: <a href="/cs181-web/sections#sec5">5. Margin-Based Classification, SVMs</a>
+    section: <a href="/cs181-web/sections#sec5">5. TODO</a>
     readings:
     hw:
     type: 'sec'
@@ -221,7 +221,7 @@ lectures:
     readings: 6
     hw:
   - topic: #Mar 13
-    subtopic: <strike>Midterm 1</strike>
+    subtopic: Midterm 1
     section:
     readings:
     demos:
@@ -254,20 +254,19 @@ lectures:
     hw:
   - topic: # section 7
     subtopic:
-    section: <a href="/cs181-web/sections#sec6">6. Clustering</a>
+    section: <a href="/cs181-web/sections#sec6">6. TODO</a>
     readings:
     hw:
     type: 'sec'
   - topic: Unsupervised Learning # Mar 25
-    subtopic: <a href="/cs181-web/recap13">Clustering</a>
+    subtopic: <a href="/cs181-web/recap13">Principal Component Analysis</a>
     section:
-    readings: 6
+    readings: 7
     hw:
-  - topic: #Mar 27
-    subtopic: <a href="/cs181-web/recap14">Mixture Models</a>
+  - topic:
+    subtopic: <a href="/cs181-web/recap16">Topic Models</a>
     section:
-    readings: 9.1-9.5
-    demos:
+    readings: 9.6
     hw:
   - topic: #Mar 29
     subtopic:
@@ -277,16 +276,17 @@ lectures:
     hw: <a href="/cs181-web/homework#hw4">HW4 (SVM, Clustering, and Ethics)</a> due
     type: 'hw'
   - topic:  # Apr 1
-    subtopic: <a href="/cs181-web/recap15">Principal Component Analysis</a>
+    subtopic:
     section:
-    readings: 7
+    readings:
     demos:
     hw: <a href="/cs181-web/homework#hw5">HW5 (Mixtures, EM, and Graphical Models) </a> released
-  - topic: PGMs #Apr 3
-    subtopic: <a href="/cs181-web/recap16">Topic Models</a>
+  - topic:  #Apr 8
+    subtopic: <a href="/cs181-web/recap17">Graphical Models</a>
     section:
-    readings: 9.6
+    readings: 8
     hw:
+    type:
   - topic: # Apr 5
     subtopic:
     section:
