@@ -184,18 +184,6 @@ lectures:
     section:
     readings:
     hw:
-  - topic: # Apr 19
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw:
-  - topic: # section 11
-    subtopic:
-    section: <a href="/cs181-web/sections#sec10">10. TODO</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic:
     subtopic: <a href="/cs181-web/recap21">Reinforcement Learning 2</a>
     section:
@@ -208,19 +196,6 @@ lectures:
     demos:
     hw:
     type:
-  - topic: # Apr 26
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw: <a href="/cs181-web/homework#hw6">HW6 (Inference in Graphical Models, MDPs)</a> due
-    type: 'hw'
-  - topic: # section 12
-    subtopic:
-    section:
-    readings:
-    hw:
-    type: 'sec'
   - topic: # Apr 29
     subtopic: Midterm 2
     section:
