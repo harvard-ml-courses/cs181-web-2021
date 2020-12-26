@@ -20,58 +20,33 @@ dates: ["",
   "",
   "Jan. 26 (T)", # Introduction, Release HW 1
   "Jan. 28 (Th)", # Linear Regression
-  "", # section 1
-  "",
   "Feb. 2 (T)", # Probabilistic Linear Regression
   "Feb. 4 (Th)", # Linear Classification
-  "", # T1 regression due
-  "", # section 2
   "Feb. 9 (T)", # Probabilistic Linear Regression
   "Feb. 11 (Th)", # Model Selection: Frequentist
-  "", # P1 regression due
-        "", # section 3
   "Feb. 16 (T)", # Model Selection: Bayesian
   "Feb. 18 (Th)", # Neural Networks 1
-  "", # nothing due
-        "", # section 4
   "Feb. 23 (T)", # Neural Networks 2
   "Feb. 25 (Th)", # SVM 1
-  "", # T2 classification due
-        "", # section 5 (exam review)
   "Mar. 2 (T)", # SVM 2
   "Mar. 4 (Th)", # EthiCS
-  "",
-  "", # section 6
   "Mar. 9 (T)", # Clustering
   "Mar. 11 (Th)", # Midterm 1
-  "", # P2 classification due
   "Mar. 16 (T)", # No class, wellness day
   "Mar. 18 (Th)", # Mixture Models
-  "", # Spring Break
-  "", # section 7
   "Mar. 23 (T)", # PCA
   "Mar. 25 (Th)", # Topic Models
-  "", # T3 SVMs due
-  "", # section 8
   "Mar. 30 (T)", # Graphical Models
   "Apr. 1 (Th)", # Inference for Bayes Nets
-  "",
-  "", # section 9
   "Apr. 6 (T)", # HMMs
   "Apr. 8 (Th)", # MDPs
-  "", # P3 due
-  "", # section 10
   "Apr. 13 (T)", # RL 1
   "Apr. 15 (Th)", # No class, wellness day
-  "", # T5 prob modeling
-  "", # section 11
   "Apr. 20 (T)", # RL 2
   "Apr. 22 (Th)", # Interpretability
-  "",
-  "", # section 12 (exam review)
   "Apr. 27 (T)", # Midterm 2
   "Apr. 29 (Th)", # Free?
-  ""]
+]
 
 lectures:
   - topic:
@@ -90,19 +65,6 @@ lectures:
     section:
     readings: 2.3-2.5, 2.6.1, 2.7.1
     hw:
-  - topic:
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw:
-    type:
-  - topic: # section 1
-    subtopic:
-    section: <a href="/cs181-web/sections#sec1">1. Linear Regression</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic: #Feb 4
     subtopic: <a href="/cs181-web/recap3">Probabilistic Linear Regression</a>
     section:
@@ -113,18 +75,6 @@ lectures:
     section:
     readings: 3.1-3.5
     hw:
-  - topic: #Feb 8
-    subtopic:
-    section:
-    readings:
-    hw:
-    type: 'hw'
-  - topic: # section 2
-    subtopic:
-    section: <a href="/cs181-web/sections#sec2">2. TODO</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic: #Feb 11
     subtopic: <a href="/cs181-web/recap5">Probabilistic Linear Classification</a>
     section:
@@ -136,19 +86,6 @@ lectures:
     section:
     readings: 2.7, 2.8
     hw:
-  - topic: #Feb 15
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw:
-    type:
-  - topic: # section 3
-    subtopic:
-    section: <a href="/cs181-web/sections#sec3">3. TODO</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic:
     subtopic: <a href="/cs181-web/recap7">Model Selection - Bayesian</a>
     section:
@@ -159,19 +96,6 @@ lectures:
     section:
     readings: 4.1-4.4, 4.6
     hw: <a href="/cs181-web/homework#hw3">HW 3 (Bayesian Methods, NN, and Practical) </a> released
-  - topic: #Feb 22
-    subtopic:
-    readings:
-    demos:
-    hw:
-    type: 'hw'
-  - topic: # section 4
-    subtopic:
-    section: <a href="/cs181-web/sections#sec4">4. TODO </a>
-    readings:
-    demos:
-    hw:
-    type: 'sec'
   - topic: #Feb 27
     subtopic: <a href="/cs181-web/recap9">Neural Networks 2</a>
     section:
@@ -182,17 +106,6 @@ lectures:
     section:
     readings: 5.1-5.3
     hw:
-  - topic: #Mar 1
-    subtopic:
-    section:
-    readings:
-    hw:
-  - topic: # midterm 1 review
-    subtopic:
-    section: TODO
-    readings:
-    hw:
-    type: 'sec'
   - topic: #Mar 6
     subtopic: <a href="/cs181-web/recap11">Support Vector Machines 2</a>
     section:
@@ -203,18 +116,6 @@ lectures:
     section:
     readings:
     hw:
-  - topic: #Mar 8
-    subtopic:
-    section:
-    readings:
-    hw: <a href="/cs181-web/homework#hw3">HW3 (Bayesian Methods, NN, and Practical Supervised Learning) </a> due
-    type: 'hw'
-  - topic: # section 5
-    subtopic:
-    section: <a href="/cs181-web/sections#sec5">5. TODO</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic: Unsupervised Learning
     subtopic: Clustering
     section:
@@ -227,13 +128,6 @@ lectures:
     demos:
     hw:
     type: 'exam'
-  - topic: #Mar 15
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw:
-    type:
   - topic:
     subtopic: Wellness day, no class
     section:
@@ -246,18 +140,6 @@ lectures:
     readings: 9.1-9.5
     demos:
     hw:
-  - topic: #Mar 22
-    subtopic:
-    section:
-    reading:
-    demos:
-    hw:
-  - topic: # section 7
-    subtopic:
-    section: <a href="/cs181-web/sections#sec6">6. TODO</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic:
     subtopic: <a href="/cs181-web/recap13">Principal Component Analysis</a>
     section:
@@ -268,19 +150,6 @@ lectures:
     section:
     readings: 9.6
     hw:
-  - topic: #Mar 29
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw: <a href="/cs181-web/homework#hw4">HW4 (SVM, Clustering, and Ethics)</a> due
-    type: 'hw'
-  - topic:  # Apr 1
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw: <a href="/cs181-web/homework#hw5">HW5 (Mixtures, EM, and Graphical Models) </a> released
   - topic:  #Apr 8
     subtopic: <a href="/cs181-web/recap17">Graphical Models</a>
     section:
@@ -293,12 +162,6 @@ lectures:
     readings:
     demos:
     hw:
-  - topic: # section 9
-    subtopic:
-    section: <a href="/cs181-web/sections#sec8">8. TODO</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic:  #Apr 8
     subtopic: <a href="/cs181-web/recap17">Hidden Markov Models</a>
     section:
@@ -311,19 +174,6 @@ lectures:
     readings: SB 3.1-3.6, SB 4.1-4.4 *
     demos:
     hw:
-  - topic: #Apr 12
-    subtopic:
-    section:
-    readings:
-    demos:
-    hw: <a href="/cs181-web/homework#hw5">HW 5 (Mixtures, EM, and Graphical Models) </a> due
-    type: 'hw'
-  - topic: # section 10
-    subtopic:
-    section: <a href="/cs181-web/sections#sec9">9. TODO</a>
-    readings:
-    hw:
-    type: 'sec'
   - topic: RL
     subtopic: <a href="/cs181-web/recap19">Reinforcement Learning 1</a>
     section:
