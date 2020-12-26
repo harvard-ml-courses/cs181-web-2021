@@ -122,7 +122,7 @@ lectures:
     section:
     readings: 2.8, 2.9
     hw:
-  - topic:
+  - topic: Neural Networks
     subtopic: <a href="/cs181-web/recap8">Neural Networks 1</a>
     section:
     readings: 4.1-4.4, 4.6
@@ -226,7 +226,7 @@ lectures:
     hw:
     type: 'sec'
 
-  - topic:  #Apr 8
+  - topic:  GMs and BNs
     subtopic: <a href="/cs181-web/recap17">Graphical Models</a>
     section:
     readings: 8
