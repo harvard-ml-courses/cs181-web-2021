@@ -20,30 +20,43 @@ dates: ["",
   "",
   "Jan. 26 (T)", # Introduction, Release HW 1
   "Jan. 28 (Th)", # Linear Regression
+  "",
   "Feb. 2 (T)", # Probabilistic Linear Regression
   "Feb. 4 (Th)", # Linear Classification
+  "",
   "Feb. 9 (T)", # Probabilistic Linear Regression
   "Feb. 11 (Th)", # Model Selection: Frequentist
+  "",
   "Feb. 16 (T)", # Model Selection: Bayesian
   "Feb. 18 (Th)", # Neural Networks 1
+  "",
   "Feb. 23 (T)", # Neural Networks 2
   "Feb. 25 (Th)", # SVM 1
+  "",
   "Mar. 2 (T)", # SVM 2
   "Mar. 4 (Th)", # EthiCS
+  "",
   "Mar. 9 (T)", # Clustering
   "Mar. 11 (Th)", # Midterm 1
+  "",
   "Mar. 16 (T)", # No class, wellness day
   "Mar. 18 (Th)", # Mixture Models
+  "",
   "Mar. 23 (T)", # PCA
   "Mar. 25 (Th)", # Topic Models
+  "",
   "Mar. 30 (T)", # Graphical Models
   "Apr. 1 (Th)", # Inference for Bayes Nets
+  "",
   "Apr. 6 (T)", # HMMs
   "Apr. 8 (Th)", # MDPs
+  "",
   "Apr. 13 (T)", # RL 1
   "Apr. 15 (Th)", # No class, wellness day
+  "",
   "Apr. 20 (T)", # RL 2
   "Apr. 22 (Th)", # Interpretability
+  "",
   "Apr. 27 (T)", # Midterm 2
   "Apr. 29 (Th)", # Free?
 ]
@@ -65,6 +78,12 @@ lectures:
     section:
     readings: 2.3-2.5, 2.6.1, 2.7.1
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec1">1.</a>
+    readings:
+    hw:
+    type: 'sec'
   - topic: #Feb 4
     subtopic: <a href="/cs181-web/recap3">Probabilistic Linear Regression</a>
     section:
@@ -75,6 +94,12 @@ lectures:
     section:
     readings: 3.1-3.5
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec2">2.</a>
+    readings:
+    hw:
+    type: 'sec'
   - topic: #Feb 11
     subtopic: <a href="/cs181-web/recap5">Probabilistic Linear Classification</a>
     section:
@@ -87,6 +112,12 @@ lectures:
     readings: 2.7, 2.8
     hw:
   - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec3">3.</a>
+    readings:
+    hw:
+    type: 'sec'
+  - topic:
     subtopic: <a href="/cs181-web/recap7">Model Selection - Bayesian</a>
     section:
     readings: 2.8, 2.9
@@ -96,6 +127,12 @@ lectures:
     section:
     readings: 4.1-4.4, 4.6
     hw: <a href="/cs181-web/homework#hw3">HW 3 (Bayesian Methods, NN, and Practical) </a> released
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec4">4.</a>
+    readings:
+    hw:
+    type: 'sec'
   - topic: #Feb 27
     subtopic: <a href="/cs181-web/recap9">Neural Networks 2</a>
     section:
@@ -106,6 +143,14 @@ lectures:
     section:
     readings: 5.1-5.3
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec5">5.</a>
+    readings:
+    hw:
+    type: 'sec'
+
+
   - topic: #Mar 6
     subtopic: <a href="/cs181-web/recap11">Support Vector Machines 2</a>
     section:
@@ -116,6 +161,14 @@ lectures:
     section:
     readings:
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec6">6.</a>
+    readings:
+    hw:
+    type: 'sec'
+
+
   - topic: Unsupervised Learning
     subtopic: Clustering
     section:
@@ -129,6 +182,14 @@ lectures:
     hw:
     type: 'exam'
   - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec7">7.</a>
+    readings:
+    hw:
+    type: 'sec'
+
+
+  - topic:
     subtopic: Wellness day, no class
     section:
     readings:
@@ -141,6 +202,14 @@ lectures:
     demos:
     hw:
   - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec8">8.</a>
+    readings:
+    hw:
+    type: 'sec'
+
+
+  - topic:
     subtopic: <a href="/cs181-web/recap13">Principal Component Analysis</a>
     section:
     readings: 7
@@ -150,6 +219,13 @@ lectures:
     section:
     readings: 9.6
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec9">9.</a>
+    readings:
+    hw:
+    type: 'sec'
+
   - topic:  #Apr 8
     subtopic: <a href="/cs181-web/recap17">Graphical Models</a>
     section:
@@ -162,6 +238,13 @@ lectures:
     readings:
     demos:
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec10">10.</a>
+    readings:
+    hw:
+    type: 'sec'
+
   - topic:  #Apr 8
     subtopic: <a href="/cs181-web/recap17">Hidden Markov Models</a>
     section:
@@ -174,6 +257,13 @@ lectures:
     readings: SB 3.1-3.6, SB 4.1-4.4 *
     demos:
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec11">11.</a>
+    readings:
+    hw:
+    type: 'sec'
+
   - topic: RL
     subtopic: <a href="/cs181-web/recap19">Reinforcement Learning 1</a>
     section:
@@ -184,6 +274,13 @@ lectures:
     section:
     readings:
     hw:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec12">12.</a>
+    readings:
+    hw:
+    type: 'sec'
+
   - topic:
     subtopic: <a href="/cs181-web/recap21">Reinforcement Learning 2</a>
     section:
@@ -196,6 +293,13 @@ lectures:
     demos:
     hw:
     type:
+  - topic:
+    subtopic:
+    section: <a href="/cs181-web/sections#sec13">13.</a>
+    readings:
+    hw:
+    type: 'sec'
+
   - topic: # Apr 29
     subtopic: Midterm 2
     section:
