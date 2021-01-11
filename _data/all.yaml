@@ -80,6 +80,7 @@ lectures:
     section: <a href="/cs181-web/sections#sec0">0. Math and Code Review</a>
     readings:
     hw:
+    hw2: Does this work?
     type: 'sec'
   - topic:  #Jan 28
     subtopic: <a href="/cs181-web/recap1">Introduction</a>
