@@ -20,42 +20,55 @@ dates: ["",
   "",
   "Jan. 26 (T)", # Introduction, Release HW 1
   "Jan. 28 (Th)", # Linear Regression
+  "Jan. 29 (Fr)",
   "",
   "Feb. 2 (T)", # Probabilistic Linear Regression
   "Feb. 4 (Th)", # Linear Classification
+  "Feb. 5 (Fr)",
   "",
   "Feb. 9 (T)", # Probabilistic Linear Regression
   "Feb. 11 (Th)", # Model Selection: Frequentist
+  "Feb. 12 (Fr)",
   "",
   "Feb. 16 (T)", # Model Selection: Bayesian
   "Feb. 18 (Th)", # Neural Networks 1
+  "Feb. 19 (Fr)",
   "",
   "Feb. 23 (T)", # Neural Networks 2
   "Feb. 25 (Th)", # SVM 1
+  "Feb. 26 (Fr)",
   "",
   "Mar. 2 (T)", # SVM 2
   "Mar. 4 (Th)", # EthiCS
+  "Mar. 5 (Fr)",
   "",
   "Mar. 9 (T)", # Clustering
   "Mar. 11 (Th)", # Midterm 1
+  "Mar. 12 (Fr)",
   "",
   "Mar. 16 (T)", # No class, wellness day
   "Mar. 18 (Th)", # Mixture Models
+  "Mar. 19 (Fr)",
   "",
   "Mar. 23 (T)", # PCA
   "Mar. 25 (Th)", # Topic Models
+  "Mar. 26 (Fr)",
   "",
   "Mar. 30 (T)", # Graphical Models
   "Apr. 1 (Th)", # Inference for Bayes Nets
+  "Apr. 2 (Fr)",
   "",
   "Apr. 6 (T)", # HMMs
   "Apr. 8 (Th)", # MDPs
+  "Apr. 9 (Fr)",
   "",
   "Apr. 13 (T)", # RL 1
   "Apr. 15 (Th)", # No class, wellness day
+  "Apr. 16 (Fr)",
   "",
   "Apr. 20 (T)", # RL 2
   "Apr. 22 (Th)", # Interpretability
+  "Apr. 23 (Fr)",
   "",
   "Apr. 27 (T)", # Midterm 2
   "Apr. 29 (Th)", # Free?
@@ -72,11 +85,16 @@ lectures:
     subtopic: <a href="/cs181-web/recap1">Introduction</a>
     section:
     readings: 2.1, 2.2.1
-    hw: <a href="/cs181-web/homework#hw1">HW1 (Regression)</a> released
+    hw: <a href="/cs181-web/homework#hw1">HW 1 (Regression)</a> released
   - topic: Regression #Jan 30
     subtopic: <a href="/cs181-web/recap2">Linear Regression</a>
     section:
     readings: 2.3-2.5, 2.6.1, 2.7.1
+    hw:
+  - topic:
+    subtopic:
+    section:
+    readings:
     hw:
   - topic:
     subtopic:
@@ -93,7 +111,12 @@ lectures:
     subtopic: <a href="/cs181-web/recap4">Linear Classification</a>
     section:
     readings: 3.1-3.5
-    hw:
+    hw: HW 1 due
+  - topic:
+    subtopic:
+    section:
+    readings:
+    hw: HW 2 (Classification, Bayes) released
   - topic:
     subtopic:
     section: <a href="/cs181-web/sections#sec2">2.</a>
@@ -105,11 +128,16 @@ lectures:
     section:
     readings: 3.6
     demos:
-    hw: <a href="/cs181-web/homework#hw2">HW 2 (Classification)</a> released
+    hw:
   - topic: Model Selection
     subtopic: <a href="/cs181-web/recap6">Model Selection - Frequentist</a>
     section:
     readings: 2.7, 2.8
+    hw:
+  - topic:
+    subtopic:
+    section:
+    readings:
     hw:
   - topic:
     subtopic:
@@ -126,7 +154,12 @@ lectures:
     subtopic: <a href="/cs181-web/recap8">Neural Networks 1</a>
     section:
     readings: 4.1-4.4, 4.6
-    hw: <a href="/cs181-web/homework#hw3">HW 3 (Bayesian Methods, NN, and Practical) </a> released
+    hw:
+  - topic:
+    subtopic:
+    section:
+    readings:
+    hw: HW 2 due.  HW 3 (Neural Networks, SVMs) released
   - topic:
     subtopic:
     section: <a href="/cs181-web/sections#sec4">4.</a>
@@ -142,6 +175,11 @@ lectures:
     subtopic: <a href="/cs181-web/recap10">Support Vector Machines 1</a>
     section:
     readings: 5.1-5.3
+    hw:
+  - topic:
+    subtopic:
+    section:
+    readings:
     hw:
   - topic:
     subtopic:
@@ -161,6 +199,11 @@ lectures:
     section:
     readings:
     hw:
+  - topic:
+    subtopic:
+    section:
+    readings:
+    hw: HW 3 due.  HW 4 (Ethics, Clustering) released
   - topic:
     subtopic:
     section: <a href="/cs181-web/sections#sec6">6.</a>
@@ -183,6 +226,11 @@ lectures:
     type: 'exam'
   - topic:
     subtopic:
+    section:
+    readings:
+    hw:
+  - topic:
+    subtopic:
     section: <a href="/cs181-web/sections#sec7">7.</a>
     readings:
     hw:
@@ -203,6 +251,11 @@ lectures:
     hw:
   - topic:
     subtopic:
+    section:
+    readings:
+    hw: HW 4 due.  HW 5 (Mixtures, EM, Graphical) released
+  - topic:
+    subtopic:
     section: <a href="/cs181-web/sections#sec8">8.</a>
     readings:
     hw:
@@ -219,6 +272,13 @@ lectures:
     section:
     readings: 9.6
     hw:
+
+  - topic:
+    subtopic:
+    section:
+    readings:
+    hw: Practical released
+
   - topic:
     subtopic:
     section: <a href="/cs181-web/sections#sec9">9.</a>
@@ -240,6 +300,11 @@ lectures:
     hw:
   - topic:
     subtopic:
+    section:
+    readings:
+    hw: HW 5 due
+  - topic:
+    subtopic:
     section: <a href="/cs181-web/sections#sec10">10.</a>
     readings:
     hw:
@@ -259,6 +324,11 @@ lectures:
     hw:
   - topic:
     subtopic:
+    section:
+    readings:
+    hw: Practical due. HW 6 (Inference, MDPs) released
+  - topic:
+    subtopic:
     section: <a href="/cs181-web/sections#sec11">11.</a>
     readings:
     hw:
@@ -271,6 +341,11 @@ lectures:
     hw: <a href="/cs181-web/homework#hw6">HW6 (Inference in Graphical Models, MDPs)</a> released
   - topic: # Apr 17
     subtopic: Wellness day, no class
+    section:
+    readings:
+    hw:
+  - topic:
+    subtopic:
     section:
     readings:
     hw:
@@ -295,6 +370,11 @@ lectures:
     type:
   - topic:
     subtopic:
+    section:
+    readings:
+    hw: HW 6 due
+  - topic:
+    subtopic:
     section: <a href="/cs181-web/sections#sec13">13.</a>
     readings:
     hw:
@@ -307,10 +387,4 @@ lectures:
     demos:
     hw:
     type: 'exam'
-  - topic: # May 1
-    subtopic: Free?
-    section:
-    readings:
-    demos:
-    hw:
-    type: 'exam'
+
