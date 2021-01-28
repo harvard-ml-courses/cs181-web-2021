@@ -23,26 +23,26 @@ weight: 0
 
       <h2 id="recap2_1">Course Introduction</h2>
 
-    Machine learning is everywhere:  with machine learning, we can build some really important and exciting things.  In CS 181 we take a critical approach to machine learning: it's not just all about "move fast and break things".  There are many examples where algorithms have perpetuated societal biases against people with marginalized identities, including racial and gender minorities.  Rigor, professionalism, ethics, and inclusion are essential to our work.<br>
+    Machine learning is everywhere:  with machine learning, we can build some really important and exciting things.  In CS 181 we take a critical approach to machine learning: it's not just all about "move fast and break things".  There are many examples where algorithms have perpetuated societal biases against people with marginalized identities, including racial and gender minorities.  Rigor, professionalism, ethics, and inclusion are essential to our work.<br><br>
 
-    We're going to begin the course with a short discussion about Deepfake videos.  Before we get too technical, we're going to think through potential societal implications of the ML.  This is an example of a video that very convincingly looks like Obama, but was created using ML:<br>
+    We're going to begin the course with a short discussion about Deepfake videos.  Before we get too technical, we're going to think through potential societal implications of the ML.  This is an example of a video that very convincingly looks like Obama, but was created using ML:<br><br>
 
     <iframe width="420" height="315"
     src="https://www.youtube.com/watch?v=AmUC4m6w1wo">
     </iframe>
 
-    Some questions one might consider are:<br>
+    Some questions one might consider are:<br><br>
 
     <ul>
       <li>How might you detect a Deepfake video?  Were there characteristics of either video that were give-aways that it wasn't real?</li>
       <li>Under what conditions might you have issues with these Deepfake videos?  What are the ethical concerns?</li>
     </ul>
 
-    Generative adversarial networks are used to create Deepfakes.  It's somewhat of a "race" against folks detecting Deepfakes, who find ways to distinguish or identify them, and the Deepfake designers who specifically improve their algorithms to address these use cases.<br>
+    Generative adversarial networks are used to create Deepfakes.  It's somewhat of a "race" against folks detecting Deepfakes, who find ways to distinguish or identify them, and the Deepfake designers who specifically improve their algorithms to address these use cases.<br><br>
 
-    There's other forms of impersionation and manipulation too, that are enabled by technology.  But impersonation in itself is not a new phenomenon: photos and media have been faked for years.  What is it that makes Deepfakes so concerning?  There's been a large amount of media about Deepfakes as a political problem.  But one of the most pressing and popular uses of Deepfakes is in revenge porn.  A lot of the social consequences are not necessarily political, but deeply interpersonal, shaping the fabric of our relationships.<br>
+    There's other forms of impersionation and manipulation too, that are enabled by technology.  But impersonation in itself is not a new phenomenon: photos and media have been faked for years.  What is it that makes Deepfakes so concerning?  There's been a large amount of media about Deepfakes as a political problem.  But one of the most pressing and popular uses of Deepfakes is in revenge porn.  A lot of the social consequences are not necessarily political, but deeply interpersonal, shaping the fabric of our relationships.<br><br>
 
-    So how do we make machine learning models?  Much of machine learning is about perfecting the "zen", or gaining the wisdom through experience to:<br>
+    So how do we make machine learning models?  Much of machine learning is about perfecting the "zen", or gaining the wisdom through experience to:<br><br>
     <ul>
       <li>Make appropriate modeling choices</li>
       <li>Have sufficient understanding to be able to apply new techniques</li>
@@ -50,7 +50,7 @@ weight: 0
       <li>Evaluate carefully
     </ul>
 
-    Yet to get there, we also need to do a lot of "push-ups".  By doing math and deriving popular methods, we'll develop a better understanding of ML.<br>
+    Yet to get there, we also need to do a lot of "push-ups".  By doing math and deriving popular methods, we'll develop a better understanding of ML.<br><br>
 
     <h2 id="recap2_1">ML Taxonomy</h2>
 
@@ -75,60 +75,60 @@ weight: 0
     Robots dancing is not RL, they're currently using control theory.
 
     <h2 id="recap2_1">Non-Parametric Regression</h2>
-    In this course, we use "The Cube" as a framework to organize the different types of methods we learn.  Today, we'll be discussing <b>non-parametric regression</b>, which is a form of <b>supervised learning</b>.  Recall that in supervised learning, our objective is to predict labels $y$ from data $x$, where labels $y$ are available to us at training time.  We are interested in <b>regression</b>, where labels $y$ are continuous. Non-parametric regression is not probabilistic.<br>
+    In this course, we use "The Cube" as a framework to organize the different types of methods we learn.  Today, we'll be discussing <b>non-parametric regression</b>, which is a form of <b>supervised learning</b>.  Recall that in supervised learning, our objective is to predict labels $y$ from data $x$, where labels $y$ are available to us at training time.  We are interested in <b>regression</b>, where labels $y$ are continuous. Non-parametric regression is not probabilistic.<br><br>
 
-    So how do we solve a regression problem?  Let's draw a 1-dimensional example:<br>
+    So how do we solve a regression problem?  Let's draw a 1-dimensional example:<br><br>
 
     <div class="text-center">
-        <img src="{{ site.baseurl }}/images/recap1_1.png" style="width:50%"  alt="1D regression example"></img>
+        <img src="{{ site.baseurl }}/images/recap1_1.png" style="width:40%"  alt="1D regression example"></img>
     </div>
 
-    Given some value $x_{test}$, our goal is to predict its corresponding label $y_{test}$.<br>
+    Given some value $x_{test}$, our goal is to predict its corresponding label $y_{test}$.<br><br>
 
-    The first method we'll present, K-nearest-neighbors, is one of the simplest ways to imagine predicting the labels.  The intuition is: why don't we just look around the other available data points we have that have $x$-values near our $x_{test}$?  Their $y$-values are good $y$-values to propose.  To make a prediction for point $x_{test}$, look at the points near the current point, and make a prediction based on them.  This is a <b>non-parametric</b> method because its run-time scales with the size of the dataset.<br>
+    The first method we'll present, K-nearest-neighbors, is one of the simplest ways to imagine predicting the labels.  The intuition is: why don't we just look around the other available data points we have that have $x$-values near our $x_{test}$?  Their $y$-values are good $y$-values to propose.  To make a prediction for point $x_{test}$, look at the points near the current point, and make a prediction based on them.  This is a <b>non-parametric</b> method because its run-time scales with the size of the dataset.<br><br>
 
-    <b>K-nearest-neighbors (KNN):</b><br>
+    <b>K-nearest-neighbors (KNN):</b><br><br>
 
-    KNN is one algorithm used for non-parametric regression.  Our dataset $\mathcal{D}$ consists of $N$ pairs of inputs and outputs:<br>
+    KNN is one algorithm used for non-parametric regression.  Our dataset $\mathcal{D}$ consists of $N$ pairs of inputs and outputs:<br><br>
 
     $$\mathcal{D} =\{ (x_0, y_0), (x_1, y_1), ... (x_N, y_N)\}$$
 
-    Our regression algorithm makes predictions $\hat{y}(x)$ for some input $x$ as follows:
+    Our regression algorithm makes predictions $\hat{y}(x)$ for some input $x$ as follows:<br><br>
     <ol>
       <li> Find the $K$ data points $(x_i, y_i)$ that are closest to $x$.
       <li> Predict $\hat{y}(x) = \frac{1}{K} \sum_{k = 1}^{K} y_k$, where the $y_k$ are the corresponding labels for the the are the $K$ nearest $x_k$s to our $x$.
     </ol>
 
-    Pros of KNN:<br>
+    Pros of KNN:<br><br>
     <ul>
       <li> It's flexible!  We made no assumptions on the shape of our data, or the relationship between $x$ and $y$.
     </li>
 
-    Cons of KNN:<br>
+    Cons of KNN:<br><br>
     <ul>
       <li> We need to keep the training data around in order to make predictions.  If you have a really big training dataset that has thousands (or millions!) of points, then running KNN may be inefficient and expensive at test-time.  Every time you need to make a prediction for some new point $x$, you need to find $x$'s nearest neighbors.  (Sidenote: There have been some advances in algorithms and systems that can make these searches more efficient, but this is still a compelling consideration.)
       <li>  To use KNN we must define "what is near"?  For example, say that data $x$ is high-dimensional and complex, like a patient's entire medical record.  How can you tell when two patients are similar to each other, given their medical data?  The answer isn't obvious.
     </ul>
 
-    <b>Kernelized Regression</b>
+    <b>Kernelized Regression</b><br><br>
 
-    Kernelized regression is another form of non-parametric regression.  To predict label $\hat{y}(x)$ for a data point $x$ using dataset $\{(x_n, y_n)\}_{n = 1}^N$ of $N$ examples,<br>
+    Kernelized regression is another form of non-parametric regression.  To predict label $\hat{y}(x)$ for a data point $x$ using dataset $\{(x_n, y_n)\}_{n = 1}^N$ of $N$ examples,<br><br>
 
     $$ \hat{y}(x) = \frac{\sum_{n = 1}^{N} K(x, x_n) y_n}{\sum_n K(x, x_n)}$$
 
-    The "kernel" or "similarity" function $K(x, x_n)$ outputs a real number that is large when $x$ is "similar" to $x_n$, and small when $x$ is "far" from $x_n$.  Note that kernel regression sums over <i>all</i> of the points in the dataset; while KNN only sums over the $K$ nearest neighbors.<br>
+    The "kernel" or "similarity" function $K(x, x_n)$ outputs a real number that is large when $x$ is "similar" to $x_n$, and small when $x$ is "far" from $x_n$.  Note that kernel regression sums over <i>all</i> of the points in the dataset; while KNN only sums over the $K$ nearest neighbors.<br><br>
 
-    Later in the semester, we'll discuss other kernel functions, and properties that determine a valid kernel function.  One example kernel function is:<br>
+    Later in the semester, we'll discuss other kernel functions, and properties that determine a valid kernel function.  One example kernel function is:<br><br>
 
     $$ K(x, x') = \exp \left( - (x - x') W (x - x')^T\right)  $$
 
-    where $W$ is a matrix: one example choice of $W$ could be the identity matrix $I$.<br>
+    where $W$ is a matrix: one example choice of $W$ could be the identity matrix $I$.<br><br>
 
-    <b>Conceptual question 1:</b>  What is the role of the denominator in kernel regression?  Can we get values larger than the maximum $y$-value $y_{max}$ of the training data?  Can we get values smaller than the maximum $y$-value $y_{min}$ of the training data?<br>
+    <b>Conceptual question 1:</b>  What is the role of the denominator in kernel regression?  Can we get values larger than the maximum $y$-value $y_{max}$ of the training data?  Can we get values smaller than the maximum $y$-value $y_{min}$ of the training data?<br><br>
 
-    Answer:  The denominator acts as a "normalizing constant".  No, we can't get values outside the max-min range of the training data.<br>
+    Answer:  The denominator acts as a "normalizing constant".  No, we can't get values outside the max-min range of the training data.<br><br>
 
-    <b>Conceptual question 2:</b> Say that we wish to use a non-parametric regressor to make a prediction for an ``out-of-distribution'' data point, or a data point is far away from the available training data points.  What will our regressor do?<br>
+    <b>Conceptual question 2:</b> Say that we wish to use a non-parametric regressor to make a prediction for an ``out-of-distribution'' data point, or a data point is far away from the available training data points.  What will our regressor do?<br><br>
 
 
 
