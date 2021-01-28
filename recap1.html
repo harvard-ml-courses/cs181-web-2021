@@ -55,27 +55,27 @@ weight: 0
 
     Yet to get there, we also need to do a lot of "push-ups".  By doing math and deriving popular methods, we'll develop a better understanding of ML.<br><br>
 
-    <h2 id="recap2_1">ML Taxonomy</h2>
-    In CS 181, the methods we study can be split into 3 groups: supervised, unsupervised, and reinforcement learning.
+    <h2 id="recap2_1">ML Taxonomy</h2><br><br>
+    In CS 181, the methods we study can be split into 3 groups: supervised, unsupervised, and reinforcement learning.<br><br>
 
-    <h3>Supervised learning</h2>
-    Supervised learning is defined by using labels $y$ during training.  At run-time, an ML model is given a new input $x$, and predicts a label $y$.
+    <h3>Supervised learning</h3><br><br>
+    Supervised learning is defined by using labels $y$ during training.  At run-time, an ML model is given a new input $x$, and predicts a label $y$.<br><br>
 
-    There's two variations of supervised learning:
+    There's two variations of supervised learning:<br><br>
     <ul>
       <li>Regression, where labels $y$ are numeric, or real numbers.  Example: Virtu Financial uses regression to predict a stock's future price. </li>
       <li>Classification, where labels $y$ are categorical.  Example:  "Swipe typing" uses a language model to predict which word is intended from one's typing.</li>
     </ul>
 
-    <h3>Unsupervised learning</h3>
+    <h3>Unsupervised learning</h3><br><br>
     The crucial difference between unsupervised and supervised learning is that in unsupervised learning, there are no labels $y$ available when training.  All that is available is data $x$.<br><br>
 
-    Two types of unsupervised learning we'll discuss in-depth are clustering and embedding. Clustering is used to find natural groupings of examples in the data, one popular example is Google News, which delivers groupings of stories about the same topic.  Embedding techniques are used to embed a high-dimensional dataset in a low-dimensional space.  One example of an embedding technique is point-of-sales data from supermarkets.  If we look at time-series data of 1073 products in different locations, and embed the time-series into a lower-dimensional space using a technique called Principal Components Analysis, one of the components actually clearly illustrates the economic effect of the 2008 financial crisis.
+    Two types of unsupervised learning we'll discuss in-depth are clustering and embedding. Clustering is used to find natural groupings of examples in the data, one popular example is Google News, which delivers groupings of stories about the same topic.  Embedding techniques are used to embed a high-dimensional dataset in a low-dimensional space.  One example of an embedding technique is point-of-sales data from supermarkets.  If we look at time-series data of 1073 products in different locations, and embed the time-series into a lower-dimensional space using a technique called Principal Components Analysis, one of the components actually clearly illustrates the economic effect of the 2008 financial crisis.<br><br>
 
-    <h3>Reinforcement learning</h3>
-    In Reinforcement Learning, the data is a sequence of triples: states, actions, and rewards.  If a robot is rolling around Cambridge, its state is its current location, the action is which way it moves, and the reward it gets is based on what happens to it after it takes the action (for example, whether it falls into a grate or accomplishes its goal).
+    <h3>Reinforcement learning</h3><br><br>
+    In Reinforcement Learning, the data is a sequence of triples: states, actions, and rewards.  If a robot is rolling around Cambridge, its state is its current location, the action is which way it moves, and the reward it gets is based on what happens to it after it takes the action (for example, whether it falls into a grate or accomplishes its goal).<br><br>
 
-    <h2 id="recap2_1">Non-Parametric Regression</h2>
+    <h2 id="recap2_1">Non-Parametric Regression</h2><br><br>
     In this course, we use "The Cube" as a framework to organize the different types of methods we learn.  Today, we'll be discussing <i>non-parametric regression</i>, which is a form of <i>supervised learning</i>.  Recall that in supervised learning, our objective is to predict labels $y$ from data $x$, where labels $y$ are available to us at training time.  We are interested in <i>regression</i>, where labels $y$ are continuous. Non-parametric regression is not probabilistic.<br><br>
 
     So how do we solve a regression problem?  Let's draw a 1-dimensional example:<br><br>
