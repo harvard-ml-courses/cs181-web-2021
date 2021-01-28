@@ -52,9 +52,8 @@ weight: 0
 
     Yet to get there, we also need to do a lot of "push-ups".  By doing math and deriving popular methods, we'll develop a better understanding of ML.
 
-    <h2 id="recap2_1">Course Organization</h2>
+    <h2 id="recap2_1">ML Taxonomy</h2>
 
-    Course logistics:
 
     The ML taxonomy
 
@@ -76,36 +75,36 @@ weight: 0
     Robots dancing is not RL, they're currently using control theory.
 
     <h2 id="recap2_1">Non-Parametric Regression</h2>
-    In this course, we use "The Cube" as a framework to organize the different types of methods we learn.  Today, we'll be discussing <b>non-parametric regression</b>, which is a form of <b>supervised learning</b>.  Recall that in supervised learning, our objective is to predict labels $y$ from data $x$, where labels $y$ are available to us at training time.  We are interested in <b>regression</b>, where labels $y$ are continuous. Non-parametric regression is not probabilistic.
+    In this course, we use "The Cube" as a framework to organize the different types of methods we learn.  Today, we'll be discussing <b>non-parametric regression</b>, which is a form of <b>supervised learning</b>.  Recall that in supervised learning, our objective is to predict labels $y$ from data $x$, where labels $y$ are available to us at training time.  We are interested in <b>regression</b>, where labels $y$ are continuous. Non-parametric regression is not probabilistic.<br>
 
-    So how do we solve a regression problem?  Let's draw a 1-dimensional example:
+    So how do we solve a regression problem?  Let's draw a 1-dimensional example:<br>
 
     <div class="text-center">
         <img src="{{ site.baseurl }}/images/recap1_1.png" style="width:80%"  alt="1D regression example"></img>
     </div>
 
-    Given some value $x_{test}$, our goal is to predict its corresponding label $y_{test}$.
+    Given some value $x_{test}$, our goal is to predict its corresponding label $y_{test}$.<br>
 
-    The first method we'll present, K-nearest-neighbors, is one of the simplest ways to imagine predicting the labels.  The intuition is: why don't we just look around the other available data points we have that have $x$-values near our $x_{test}$?  Their $y$-values are good $y$-values to propose.  To make a prediction for point $x_{test}$, look at the points near the current point, and make a prediction based on them.  This is a <b>non-parametric</b> method because its run-time scales with the size of the dataset.
+    The first method we'll present, K-nearest-neighbors, is one of the simplest ways to imagine predicting the labels.  The intuition is: why don't we just look around the other available data points we have that have $x$-values near our $x_{test}$?  Their $y$-values are good $y$-values to propose.  To make a prediction for point $x_{test}$, look at the points near the current point, and make a prediction based on them.  This is a <b>non-parametric</b> method because its run-time scales with the size of the dataset.<br>
 
-    <b>K-nearest-neighbors (KNN):</b>
+    <b>K-nearest-neighbors (KNN):</b><br>
 
-    KNN is one algorithm used for non-parametric regression.  Our dataset $\mathcal{D}$ consists of $N$ pairs of inputs and outputs:
+    KNN is one algorithm used for non-parametric regression.  Our dataset $\mathcal{D}$ consists of $N$ pairs of inputs and outputs:<br>
 
     $$\mathcal{D} =\{ (x_0, y_0), (x_1, y_1), ... (x_N, y_N)\}$$
 
     Our regression algorithm makes predictions $\hat{y}(x)$ for some input $x$ as follows:
     <ol>
       <li> Find the $K$ data points $(x_i, y_i)$ that are closest to $x$.
-      <li> Predict $\math{y}(x) = \frac{1}{K} \sum_{k = 1}^{K} y_k$, where the $y_k$ are the corresponding labels for the the are the $K$ nearest $x_k$s to our $x$.
+      <li> Predict $\hat{y}(x) = \frac{1}{K} \sum_{k = 1}^{K} y_k$, where the $y_k$ are the corresponding labels for the the are the $K$ nearest $x_k$s to our $x$.
     </ol>
 
-    Pros of KNN:
+    Pros of KNN:<br>
     <ul>
       <li> It's flexible!  We made no assumptions on the shape of our data, or the relationship between $x$ and $y$.
     </li>
 
-    Cons of KNN:
+    Cons of KNN:<br>
     <ul>
       <li> We need to keep the training data around in order to make predictions.  If you have a really big training dataset that has thousands (or millions!) of points, then running KNN may be inefficient and expensive at test-time.  Every time you need to make a prediction for some new point $x$, you need to find $x$'s nearest neighbors.  (Sidenote: There have been some advances in algorithms and systems that can make these searches more efficient, but this is still a compelling consideration.)
       <li>  To use KNN we must define "what is near"?  For example, say that data $x$ is high-dimensional and complex, like a patient's entire medical record.  How can you tell when two patients are similar to each other, given their medical data?  The answer isn't obvious.
@@ -113,23 +112,23 @@ weight: 0
 
     <b>Kernelized Regression</b>
 
-    Kernelized regression is another form of non-parametric regression.  To predict label $\hat{y}(x)$ for a data point $x$ using dataset $\{(x_n, y_n)\}_{n = 1}^N$ of $N$ examples,
+    Kernelized regression is another form of non-parametric regression.  To predict label $\hat{y}(x)$ for a data point $x$ using dataset $\{(x_n, y_n)\}_{n = 1}^N$ of $N$ examples,<br>
 
     $$ \hat{y}(x) = \frac{\sum_{n = 1}^{N} K(x, x_n) y_n}{\sum_n K(x, x_n)}$$
 
-    The "kernel" or "similarity" function $K(x, x_n)$ outputs a real number that is large when $x$ is "similar" to $x_n$, and small when $x$ is "far" from $x_n$.  Note that kernel regression sums over <i>all</i> of the points in the dataset; while KNN only sums over the $K$ nearest neighbors.
+    The "kernel" or "similarity" function $K(x, x_n)$ outputs a real number that is large when $x$ is "similar" to $x_n$, and small when $x$ is "far" from $x_n$.  Note that kernel regression sums over <i>all</i> of the points in the dataset; while KNN only sums over the $K$ nearest neighbors.<br>
 
-    Later in the semester, we'll discuss other kernel functions, and properties that determine a valid kernel function.  One example kernel function is:
+    Later in the semester, we'll discuss other kernel functions, and properties that determine a valid kernel function.  One example kernel function is:<br>
 
     $$ K(x, x') = \exp \left( - (x - x') W (x - x')^T\right)  $$
 
-    where $W$ is a matrix: one example choice of $W$ could be the identity matrix $I$.
+    where $W$ is a matrix: one example choice of $W$ could be the identity matrix $I$.<br>
 
-    <b>Conceptual question 1:</b>  What is the role of the denominator in kernel regression?  Can we get values larger than the maximum $y$-value $y_{max}$ of the training data?  Can we get values smaller than the maximum $y$-value $y_{min}$ of the training data?
+    <b>Conceptual question 1:</b>  What is the role of the denominator in kernel regression?  Can we get values larger than the maximum $y$-value $y_{max}$ of the training data?  Can we get values smaller than the maximum $y$-value $y_{min}$ of the training data?<br>
 
-    Answer:  The denominator acts as a "normalizing constant".  No, we can't get values outside the max-min range of the training data.
+    Answer:  The denominator acts as a "normalizing constant".  No, we can't get values outside the max-min range of the training data.<br>
 
-    <b>Conceptual question 2:</b> Say that we wish to use a non-parametric regressor to make a prediction for an ``out-of-distribution'' data point, or a data point is far away from the available training data points.  What will our regressor do?
+    <b>Conceptual question 2:</b> Say that we wish to use a non-parametric regressor to make a prediction for an ``out-of-distribution'' data point, or a data point is far away from the available training data points.  What will our regressor do?<br>
 
 
 
