@@ -148,7 +148,9 @@ weight: 0
             \end{align*}
           $$
 
-      Note: to take the inverse, we need $\textbf{X}$ to have full column rank, which makes $\textbf{X}^T\textbf{X}$ positive definite, and guarantees an inverse. The interpretation is that the features will not be co-linear (the redundant encoding problem). We also find the second order condition (second derivative) $\frac{\partial^2}{\partial \textbf{w}^2} L(\textbf{w})$, and ensure that its positive definite. 
+      Note: to take the inverse, we need $\textbf{X}$ to have full column rank, which makes $\textbf{X}^T\textbf{X}$ positive definite, and guarantees an inverse. The interpretation is that the features will not be co-linear (the redundant encoding problem). We also find the second order condition (second derivative) $\frac{\partial^2}{\partial \textbf{w}^2} L(\textbf{w})$, and ensure that it is positive definite. 
+      
+      <br>
       <u id="recap2_5">Statistics View:</u>
 
       $(\textbf{X}^T\textbf{y})^T$ is the correlation between $\textbf{x}$ and $y$, so if the correlation is high, the weights should be higher since you should weigh $\textbf{x}$ by more in order to better predict $y$. $(\textbf{X}^T\textbf{X})$ is the variation in $\textbf{x}$.
@@ -176,7 +178,7 @@ weight: 0
       $$\textbf{w}^* = (\textbf{X}\textbf{X}^T)^{-1}\textbf{X}\textbf{y}^T$$
       $$\hat{\textbf{y}} = (\textbf{X}\textbf{y}^T)^T(\textbf{X}\textbf{X}^T)^{-1} \textbf{x}$$
 
-      Here, $\textbf{w}^*$ is called a best linear unbiased estimator (BLUE). Conventions for notations vary between different sources so it is a useful skill to be able to understand and derive expressions in different notational formats.
+      Here, $\textbf{w}^*$ is called a best linear unbiased estimator (otherwise called a BLUE, but this is out of scope for the class). Conventions for notations vary between different sources so it is a useful skill to be able to understand and derive expressions in different notational formats.
 
       <h2 id="recap2_6">Basis Regression</h2>
 
