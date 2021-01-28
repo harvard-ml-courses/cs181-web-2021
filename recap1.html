@@ -73,7 +73,7 @@ weight: 0
     <h3>Unsupervised learning</h3>
     The crucial difference between unsupervised and supervised learning is that in unsupervised learning, there are no labels $y$ available when training.  All that is available is data $x$.<br><br>
 
-    Two types of unsupervised learning we'll discuss in-depth are clustering and embedding. Clustering is used to find natural groupings of examples in the data, one popular example is Google News, which delivers groupings of stories about the same topic.  Embedding techniques are used to embed a high-dimensional dataset in a low-dimensional space.  One example of an embedding technique is point-of-sales data from supermarkets.  If we look at time-series data of 1073 products in different locations, and embed the time-series into a lower-dimensional space using a technique called Principal Components Analysis, one of the components actually clearly illustrates the economic effect of the 2008 financial crisis.<br><br>
+    Two types of unsupervised learning we'll discuss in-depth are clustering and embedding. Clustering is used to find natural groupings of examples in the data; one popular example is Google News, which delivers groupings of stories about the same topic.  Embedding techniques are used to embed a high-dimensional dataset in a low-dimensional space.  One example of an embedding technique is point-of-sales data from supermarkets.  If we look at time-series data of 1073 products in different locations, and embed the time-series into a lower-dimensional space using a technique called Principal Components Analysis, one of the components actually clearly illustrates the economic effect of the 2008 financial crisis.<br><br>
 
     <h3>Reinforcement learning</h3>
     In Reinforcement Learning, the data is a sequence of triples: states, actions, and rewards.  If a robot is rolling around Cambridge, its state is its current location, the action is which way it moves, and the reward it gets is based on what happens to it after it takes the action (for example, whether it falls into a grate or accomplishes its goal).<br><br>
@@ -89,7 +89,7 @@ weight: 0
 
     Given some value $x_{test}$, our goal is to predict its corresponding label $y_{test}$.<br><br>
 
-    The first method we'll present, K-nearest-neighbors, is one of the simplest ways to imagine predicting the labels.  The intuition is: why don't we just look around the other available data points we have that have $x$-values near our $x_{test}$?  Their $y$-values are good $y$-values to propose.  To make a prediction for point $x_{test}$, look at the points near the current point, and make a prediction based on them.  This is a <b>non-parametric</b> method because its run-time scales with the size of the dataset.<br><br>
+    The first method we'll present, K-nearest-neighbors, is one of the simplest ways to imagine predicting the labels.  The intuition is: why don't we just look around the other available data points we have that have $x$-values near our $x_{test}$?  Their $y$-values are good $y$-values to propose.  To make a prediction for point $x_{test}$, look at the points near the current point, and make a prediction based on them.  This is a <i>non-parametric</i> method because its run-time scales with the size of the dataset.<br><br>
 
     <b>K-nearest-neighbors (KNN):</b><br><br>
 
@@ -128,11 +128,11 @@ weight: 0
 
     where $W$ is a matrix: one example choice of $W$ could be the identity matrix $I$.<br><br>
 
-    <b>Conceptual question 1:</b>  What is the role of the denominator in kernel regression?  Can we get values larger than the maximum $y$-value $y_{max}$ of the training data?  Can we get values smaller than the maximum $y$-value $y_{min}$ of the training data?<br><br>
+    <b>Conceptual question 1:</b>  What is the role of the denominator in kernel regression?  Can the output of the kernel regressor be a value larger than the maximum $y$-value $y_{max}$ of the training data?  Can we get values smaller than the maximum $y$-value $y_{min}$ of the training data?<br><br>
 
     Answer:  The denominator acts as a "normalizing constant".  No, we can't get values outside the max-min range of the training data.<br><br>
 
-    <b>Conceptual question 2:</b> Say that we wish to use a non-parametric regressor to make a prediction for an ``out-of-distribution'' data point, or a data point is far away from the available training data points.  What will our regressor do?<br><br>
+    <b>Conceptual question 2:</b> Say that we wish to use a non-parametric regressor to make a prediction for an "out-of-distribution" data point, or a data point is far away from the available training data points.  What will our regressor do?<br><br>
 
 
 
