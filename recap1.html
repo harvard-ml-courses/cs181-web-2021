@@ -95,8 +95,8 @@ weight: 0
 
     Our regression algorithm makes predictions $\hat{y}(x)$ for some input $x$ as follows:<br><br>
     <ol>
-      <li> Find the $K$ data points $(x_i, y_i)$ that are closest to $x$.
-      <li> Predict $\hat{y}(x) = \frac{1}{K} \sum_{k = 1}^{K} y_k$, where the $y_k$ are the corresponding labels for the the are the $K$ nearest $x_k$s to our $x$.
+      <li> Find the $K$ data points $(x_i, y_i)$ that are closest to $x$.</li>
+      <li> Predict $\hat{y}(x) = \frac{1}{K} \sum_{k = 1}^{K} y_k$, where the $y_k$ are the corresponding labels for the the are the $K$ nearest $x_k$s to our $x$.</li>
     </ol>
 
     Pros of KNN:<br><br>
@@ -106,8 +106,8 @@ weight: 0
 
     Cons of KNN:<br><br>
     <ul>
-      <li> We need to keep the training data around in order to make predictions.  If you have a really big training dataset that has thousands (or millions!) of points, then running KNN may be inefficient and expensive at test-time.  Every time you need to make a prediction for some new point $x$, you need to find $x$'s nearest neighbors.  (Sidenote: There have been some advances in algorithms and systems that can make these searches more efficient, but this is still a compelling consideration.)
-      <li>  To use KNN we must define "what is near"?  For example, say that data $x$ is high-dimensional and complex, like a patient's entire medical record.  How can you tell when two patients are similar to each other, given their medical data?  The answer isn't obvious.
+      <li> We need to keep the training data around in order to make predictions.  If you have a really big training dataset that has thousands (or millions!) of points, then running KNN may be inefficient and expensive at test-time.  Every time you need to make a prediction for some new point $x$, you need to find $x$'s nearest neighbors.  (Sidenote: There have been some advances in algorithms and systems that can make these searches more efficient, but this is still a compelling consideration.)</li>
+      <li>  To use KNN we must define "what is near"?  For example, say that data $x$ is high-dimensional and complex, like a patient's entire medical record.  How can you tell when two patients are similar to each other, given their medical data?  The answer isn't obvious.</li>
     </ul>
 
     <b>Kernelized Regression</b><br><br>
