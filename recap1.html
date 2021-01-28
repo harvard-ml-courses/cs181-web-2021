@@ -56,29 +56,27 @@ weight: 0
     Yet to get there, we also need to do a lot of "push-ups".  By doing math and deriving popular methods, we'll develop a better understanding of ML.<br><br>
 
     <h2 id="recap2_1">ML Taxonomy</h2>
+    In CS 181, the methods we study can be split into 3 groups: supervised, unsupervised, and reinforcement learning.
 
+    <h3>Supervised learning</h2>
+    Supervised learning is defined by using labels $y$ during training.  At run-time, an ML model is given a new input $x$, and predicts a label $y$.
 
-    The ML taxonomy
+    There's two variations of supervised learning:
+    <ul>
+      <li>Regression, where labels $y$ are numeric, or real numbers.  Example: Virtu Financial uses regression to predict a stock's future price. </li>
+      <li>Classification, where labels $y$ are categorical.  Example:  "Swipe typing" uses a language model to predict which word is intended from one's typing.</li>
+    </ul>
 
-    Supervised learning:
+    <h3>Unsupervised learning</h3>
+    The crucial difference between unsupervised and supervised learning is that in unsupervised learning, there are no labels $y$ available when training.  All that is available is data $x$.<br><br>
 
-    The blue errors of the image denote training.  $x$ is used to describe inputs, $y$ is used to describe labels.
+    Two types of unsupervised learning we'll discuss in-depth are clustering and embedding. Clustering is used to find natural groupings of examples in the data, one popular example is Google News, which delivers groupings of stories about the same topic.  Embedding techniques are used to embed a high-dimensional dataset in a low-dimensional space.  One example of an embedding technique is point-of-sales data from supermarkets.  If we look at time-series data of 1073 products in different locations, and embed the time-series into a lower-dimensional space using a technique called Principal Components Analysis, one of the components actually clearly illustrates the economic effect of the 2008 financial crisis.
 
-    Supervised learning is defined by using labels $y$ during training.  At run-time, the model is given a new input $x$, and predicts a label $y$.
-
-    There's two variations of this:
-    Regression, predicting labels that are numeric (in the real numbers).  Example: Virtu Financial uses regression to predict a stock price.
-
-    Example of classification: Swipe tiping, a language model to predict which word is intended.
-
-    Unsupervised learning:  The crucial difference is that there are no labels $y$ available when training.  All we have is data $x$.  Two types of unsupervised learning we'll discuss in-depth are clustering and embedding. Clustering is used to find natural groupings of examples in the data, one popular example is Google News where you're delivered groupings of stories about the same topic.  Embedding techniques are used to embed a high-dimensional dataset in a low-dimensional space.  In this image, we wish to represent 2D data with its projection onto a line.  One example of an embedding technique is point-of-sales data from supermarkets.  If we look at time-series data of 1073 products in different locations, and embed the time-series into a lower-dimensional space using a technique called Principal Components Analysis, one of the components actually clearly illustrates the economic effect of the 2008 financial crisis.
-
-    In Reinforcement Learning, the data is a sequence of triples: states, actions, and rewards.  If a robot is rolling around Cambridge, its state is its current location, the action is which way it moves, and the reward it gets is based on what happens to it after it takes the action (i.e. it falls into a grate or accomplishes its goal).  example: Robot learns to flip pancakes.  In this example, the feedback is whether or not the robot was able to successfully catch the pancake.  It learns to take actions (mechanical flipping motions) that maximize the reward (catching the pancake)!
-
-    Robots dancing is not RL, they're currently using control theory.
+    <h3>Reinforcement learning</h3>
+    In Reinforcement Learning, the data is a sequence of triples: states, actions, and rewards.  If a robot is rolling around Cambridge, its state is its current location, the action is which way it moves, and the reward it gets is based on what happens to it after it takes the action (for example, whether it falls into a grate or accomplishes its goal).
 
     <h2 id="recap2_1">Non-Parametric Regression</h2>
-    In this course, we use "The Cube" as a framework to organize the different types of methods we learn.  Today, we'll be discussing <b>non-parametric regression</b>, which is a form of <b>supervised learning</b>.  Recall that in supervised learning, our objective is to predict labels $y$ from data $x$, where labels $y$ are available to us at training time.  We are interested in <b>regression</b>, where labels $y$ are continuous. Non-parametric regression is not probabilistic.<br><br>
+    In this course, we use "The Cube" as a framework to organize the different types of methods we learn.  Today, we'll be discussing <i>non-parametric regression</i>, which is a form of <i>supervised learning</i>.  Recall that in supervised learning, our objective is to predict labels $y$ from data $x$, where labels $y$ are available to us at training time.  We are interested in <i>regression</i>, where labels $y$ are continuous. Non-parametric regression is not probabilistic.<br><br>
 
     So how do we solve a regression problem?  Let's draw a 1-dimensional example:<br><br>
 
