@@ -60,15 +60,16 @@ weight: 0
 
       <ul>
           <li> we have some input $\mathbf{x}_n$  </li>
-          <li> someone multiplies it by $\mathbf{w}$ </li>
-          <li> Before we get to see the result, someone draws noise
-              $\epsilon$ ~ $N(0, \sigma^2)$ and adds it. Call the result y_n </li>
-        <li>$y  | \mathbf{x}, \epsilon = \mathbf{w}^T\mathbf{x} + \epsilon$</li>
+          <li> Nari multiplies it by $\mathbf{w}$ </li>
+          <li> Before we get to see the result, Finale draws noise
+              $\epsilon_n$ ~ $N(0, \sigma^2)$ and adds it. Call the result y_n </li>
+          <li> Nari and Finale repeat this $N$ times. Then they throw away $\mathbf{w}$ and $\{\epsilon_n\}_{n=1}^N$, so
+              we only observe $\{\mathbf{x}_n, y_n \}_{n=1}^N$
       </ul>
         
-      Formally, $\mathbf{x}_n$ is a random variable, but we are only modeling $y$ given an arbitrary $\mathbf{w]$,
-      so we don't need to consider $\mathbf{x}$'s distribution. $\epsilon$ is also a random variable.
-      $Y$ is a function of both so it too is a random variable. In particular, we know its distribution:
+      Formally, $\mathbf{x}_n$ is a random variable, but we are only modeling $y_n$ given an arbitrary $\mathbf{x}$,
+      so we don't need to consider $\mathbf{x}_n$'s distribution. $\epsilon_n$ is also a random variable.
+      $y_n$ is a function of both so it too is a random variable. In particular, we know its distribution:
     
         <ul>
             <li> $ y \sim \mathcal{N}(\mathbf{w}^\top \mathbf{x}, \sigma^2)$ </li>
@@ -77,11 +78,14 @@ weight: 0
 
       <h2 id="recap3_3">Maximizing Log Likelihood (with respect to $\mathbf{w}$)</h2>
 
-      Now that we've set up the model, we want to come up with a formula for the "likelihood of the model", also known as the likelihood.
-      This is defined as the probability of the data given the model, or in notation, $P(\textrm{data|model})$.
-      The purpose of setting this up is so that we can find the optimal $\mathbf{w}^*$ that maximizes this term, or put another way,
-      the  $\mathbf{w}^*$ that maximizes the chances that we are seeing the data we currently see (given the story we chose for the data).
-
+      Now that we've set up the model, we can think about how we would find $\mathbf{w}$.
+       We can start by asking, ``for a given particular value of $\mathbf{w}$,
+      how likely would it have been for us to observe our data? The conditional
+        distribution of the data given the model 
+      (a particular value of $\mathbf{w}$) is called the ``Likelihood", or in notation $P(\textrm{data|model})$.
+      Since we trust our data, we think a good $\mathbf{w}$ is one that maximizes the likelihood.
+      Remember, the generative story we assumed specifies the likelihood.
+     
       <br>
       <br>
 
