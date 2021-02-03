@@ -69,10 +69,16 @@ weight: 0
         
       Formally, $\mathbf{x}_n$ is a random variable, but we are only modeling $y_n$ given an arbitrary $\mathbf{x}$,
       so we don't need to consider $\mathbf{x}_n$'s distribution. $\epsilon_n$ is also a random variable.
-      $y_n$ is a function of both, so it too is a random variable. In particular, we know its distribution:
+      $y_n$ is a function of both, so it too is a random variable. In particular, we know its distribution!
+        
+      When we condition on $\mathbf{w},\mathbf{x}$ they are turned into constants. Next, for any constants $c_1,c_2$,
+       if $\epsilon \sim \mathcal{N}(c_2,\sigma^2)$ and $z = c_1 + \epsilon$, then 
+            $$z \mid c_1,c_2,\sigma \sim \mathcal{c_1+c_2,\sigma^2}$$
+        
+      This means
     
       $$  y \sim \mathcal{N}(\mathbf{w}^\top \mathbf{x}, \sigma^2)  $$
- 
+       
       <h2 id="recap3_3">Maximizing Log Likelihood (with respect to $\mathbf{w}$)</h2>
 
       Now that we've set up the model, we can think about how we would find $\mathbf{w}$.
@@ -93,7 +99,8 @@ weight: 0
 
       $$P(\textrm{data|model}) = \prod_n p(y_n | \mathbf{x}_n, \mathbf{w}, \sigma^2)$$
 
-      Since we are trying to find the w* that maximizes this function, we can apply a monotonic function to the entire expression and will still arrive at the same final w*.
+      Since we are trying to find the w* that maximizes this function, we can apply a monotonic function 
+      to the entire expression and will still arrive at the same final w*.
 
       <br>
 
@@ -118,7 +125,7 @@ weight: 0
       $$
         
       First term doesn't depend on $\mathbf{w}$. Second term looks familiar ! Just like our least-squares loss. So now,
-        if we maximize the probability of the data, we will get the same solution as least squares. 
+      if we maximize the probability of the data, we will get the same solution as least squares. 
         The solution is known as the ``maximum likleihood solution" or ``maximum likelihood estimator" (MLE) 
         for this generative model. 
         
@@ -186,6 +193,8 @@ weight: 0
         drawn from some particular $p(\mathbf{w})$? This leads us into the Bayesian view,
         which we will get to in a few weeks!
         
+        <br>
+               
         
     
 
