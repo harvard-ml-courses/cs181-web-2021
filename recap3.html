@@ -32,7 +32,7 @@ weight: 0
 
       <h2 id="recap2_1">Relevant Videos</h2>
       <ul>
-        <li><a href="https://www.youtube.com/watch?v=LfRaZu5_Q14&list=PLrH1CxyJ7Vqb-pHzfUClJNXBDAKajHE74&index=4&t=0s">Probabalistic Regression</a></li>
+        <li><a href="https://www.youtube.com/watch?v=LfRaZu5_Q14&list=PLrH1CxyJ7Vqb-pHzfUClJNXBDAKajHE74&index=4&t=0s">Probabilistic Regression</a></li>
       </ul>
 
       <br>
@@ -42,7 +42,7 @@ weight: 0
       In the previous lecture (2), we covered linear regression from a non-probabilistic point of view. 
       We specified our problem by assuming y is a function of x, assuming that the function is linear,
       and choosing squared loss. We saw that there was a closed-form solution for the parameters
-      of the linear function that minimize the squared loss (subject to an intervertibility condition).
+      of the linear function that minimize the squared loss (subject to an Invertibility condition).
       
 	  <br>
 
@@ -56,7 +56,7 @@ weight: 0
       In a probabilistic model, we start off with something fun and intuitive by specifying 
       what is called a Generative Model. We ask, "what's the story of how this data came to be?"
       This can involve assumptions and uncertainties.
-      We then try to mathematically encode certain and uncertain apects of this story.
+      We then try to mathematically encode certain and uncertain aspects of this story.
       Formally, this results in a probability distribution over our data. Finally,
       a mainstay approach in stats/ML is find a set of parameters that give 
       highest probability (or density) to our data.
@@ -94,8 +94,9 @@ weight: 0
       how likely would it have been for us to observe our data? 
 
 	  <br>
+	  <br>
 
-	  This is formalizd by the conditional
+	  This is formalized by the conditional
         distribution of the data given the model $P(\textrm{data|model})$.
         Here ``model" means a particular value of $\mathbf{w}$ and $\sigma$.
       We call this conditional distribution -as a function of the parameters- the ``Likelihood".
@@ -126,7 +127,7 @@ weight: 0
 
       <br>
         
-      Substiting $\log p$ with $\log \mathcal{N}$ we have
+      Substituting $\log p$ with $\log \mathcal{N}$ we have
    
       $$\begin{align*}
       \log P(\textrm{data|model}) &= \sum_n \log \mathcal{N}(y_n | \mathbf{w}^T\mathbf{x}_n, \sigma^2) \\
@@ -138,10 +139,11 @@ weight: 0
         
       First term doesn't depend on $\mathbf{w}$. Second term looks familiar ! Just like our least-squares loss. So now,
       if we maximize the probability of the data, we will get the same solution as least squares. 
-        The solution is known as the ``maximum likleihood solution" or ``maximum likelihood estimator" (MLE) 
+        The solution is known as the ``maximum likelihood solution" or ``maximum likelihood estimator" (MLE) 
         for this generative model. 
         
         <br>
+		<br>
         
         Note that we could have used other noise distributions (see Concept Check).
         
@@ -197,8 +199,8 @@ weight: 0
 
       <h2 id="recap3_7">Extending the Story: Making $\mathbf{w}$ Random Too</h2>
        
-      What we did: probabilstically approach to regression (1) the generaitive model (2) maxmimize the 
-        lieklihood w.r.t parameters
+      What we did: probabilistically approach to regression (1) the generative model (2) maximize the 
+        likelihood w.r.t parameters
         <br> 
         
       What if we were not totally clueless about $\mathbf{w}$? What if we knew it was 
