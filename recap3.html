@@ -71,13 +71,13 @@ weight: 0
       so we don't need to consider $\mathbf{x}_n$'s distribution. $\epsilon_n$ is also a random variable.
       $y_n$ is a function of both, so it too is a random variable. In particular, we know its distribution:
     
-      $$  y \sim \mathcal{N}(\mathbf{w}^\top \mathbf{x}, \sigma^2)$  $$
+      $$  y \sim \mathcal{N}(\mathbf{w}^\top \mathbf{x}, \sigma^2)  $$
  
       <h2 id="recap3_3">Maximizing Log Likelihood (with respect to $\mathbf{w}$)</h2>
 
       Now that we've set up the model, we can think about how we would find $\mathbf{w}$.
-       We can start by asking, ``for a given particular value of $\mathbf{w}$,
-      how likely would it have been for us to observe our data? The conditional
+       We can start by asking, ``for a given value of $\mathbf{w}$,
+      how likely would it have been for us to observe our data? This is the conditional
         distribution of the data given the model $P(\textrm{data|model})$.
         Here ``model" means a particular value of $\mathbf{w}$ and $\sigma$.
       We call this conditional distribution -as a function of the parameters- the ``Likelihood".
@@ -97,54 +97,32 @@ weight: 0
 
       <br>
 
-      $$\log(P(\textrm{data|model})) = \sum_n \log p(y_n | \mathbf{x}_n, \mathbf{w}, \sigma^2)$$
+      $$\log P(\textrm{data|model}) = \sum_n \log p(y_n | \mathbf{x}_n, \mathbf{w}, \sigma^2)$$
 
       <br>
         
-      Next, we substitute in the PDF of a Gaussian. Here, we assume $\sigma^2$ is known, and w is not. As a reminder, our general PDF is:
+      Next, we substitute in the PDF of a Gaussian. Here, we assume $\sigma^2$ is known, and $\mathbf{w}$ is not. As a reminder, our general PDF is:
 
       $$\mathcal{N}(z; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp^{-\frac{(z-\mu)^2}{2\sigma^2}}$$.
 
       <br>
-
-      $$\log(P(\textrm{data|model})) = \sum_n \log p(y_n | \mathbf{x}_n, \mathbf{w}, \sigma^2)$$
-
-      We can substitute in the following way. This is because we are looking at the probability of $y_n$ being the values
-      they are, given that we have a Gaussian with mean $\mathbf{w}^T\mathbf{x}$ and variance $\sigma^2$ (note: it is
-      important to remember here we are assuming we are given $\sigma^2$).
-
-      $$\log(P(\textrm{data|model})) = \sum_n \log \mathcal{N}(y_n | \mathbf{w}^T\mathbf{x}, \sigma^2)$$
-
-      <u>Student Question: How do we know how to do that substitution? As in, to go from the probability to this
-        particular PDF that was subbed in above?</u> The intuitive answer is that we know $\epsilon$ causes all the
-      variation in the final $y$, and $\epsilon$ is Gaussian, so the final term must be Gaussian with the same variance
-      of $\sigma^2$, and we also know that the mean of the final y is $\mathbf{w}^T\mathbf{x}$. However, we can also do
-      this formally. We can rewrite $p(y_n | \mathbf{x}_n, \mathbf{w}, \sigma^2)$ as an integral
-      $\int p(y_n | \mathbf{x}_n, \mathbf{w}, \epsilon)p(\epsilon | \sigma^2)  d\epsilon$. We know $p(\epsilon | \sigma^2)$
-      is a Gaussian centered around 0 with variance $\sigma^2$. And we know that $p(y|\mathbf{x}, \mathbf{w}, \epsilon)$
-      is really just a spike, because given $\mathbf{x}$, $\mathbf{w}$, and $\epsilon$, we know exactly what $y$ will be with
-      full certainty. When we multiply these two together, we get a Gaussian back again, specifically
-      $\mathcal{N}(y_n | \mathbf{w}^T\mathbf{x}_n, \sigma^2)$.
-
-      <br>
-      <br>
-
-      Let us continue the math:
-
+        
+      Substiting $\log p$ with $\log \mathcal{N}$ we have
+   
       $$\begin{align*}
       \log(P(\textrm{data|model})) &= \sum_n \log \mathcal{N}(y_n | \mathbf{w}^T\mathbf{x}_n, \sigma^2) \\
-      \log(P(\textrm{data|model})) &= \sum_n \log (\frac{1}{\sqrt{2\pi\sigma^2}}\exp^{-\frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}})\\
+      \log(P(\textrm{data|model})) &= \sum_n \log (\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}])\\
       \log(P(\textrm{data|model})) &= \sum_n (\log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2})\\
-      \log(P(\textrm{data|model})) &= N \log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \sum_n \frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}
+      \log(P(\textrm{data|model})) &= N \log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \sum_n \frac{1}{2\sigma^2}(y_n-\mathbf{w}^T\mathbf{x}_n)^2
       \end{align*}
       $$
-
-      When you take out the irrelevant constants that don't matter for the purposes of maximizing $\mathbf{w}^*$, you end up with the following, which looks just like least square loss:
-
-      $$\log(P(\textrm{data|model})) = - \sum_n (y_n-\mathbf{w}^T\mathbf{x}_n)^2$$
-
-      We omit taking the derivative here, see notes from previous lecture for how to get the derivative from here!
-
+        
+      First term doesn't depend on $\mathbf{w}$. Second term looks familiar ! Just like our least-squares loss. So now,
+        if we maximize the probability of the data, we will get the same solution as least squares. 
+        The solution is known as the ``maximum likleihood solution" or ``maximum likelihood estimator" (MLE) 
+        for this generative model. 
+        
+       
       <h2 id="recap3_5">Repeating Maximizing Likelihood (with respect to $\mathbf{w}$) with Matrices</h2>
 
       Both for practice, and as a check for our understanding, let us repeat the process with matrices, where we have
