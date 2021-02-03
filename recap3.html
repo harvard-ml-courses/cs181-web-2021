@@ -7,7 +7,7 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: February 3, 2020 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfDSe4vjhnU2Cz8QPzlNNZwCitE5ZN3POqYXlX7F9zfZ3gwhw/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDSe4vjhnU2Cz8QPzlNNZwCitE5ZN3POqYXlX7F9zfZ3gwhw/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: February 3, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfIT9Ox03AsH5ZQShRsrPagzj4Hovx-YhFN9WbQhoF2dPdQQA/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/1iLY3qZInTkMM2pd6ggrFlrvK6sNIryKyOpMRH4blyGs/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 2.6.2, 2.6.3</h4>
       <h4>Cube: Supervised, Continuous, Probabilistic</h4>
 
@@ -34,25 +34,46 @@ weight: 0
 
       <h2 id="recap3_1">Introduction</h2>
 
-      In the previous lecture, we covered linear regression from a nonprobabilistic point of view. Generally, nonprobabilistic methods use the data directly make predictions. When we see a new data point, we look at how it falls in relationship to our other data points in the data set to estimate what y value it should have. As a result, usually these models need to maintain all or some of the data in order to be effective, as the predictions come from the data.
-
+      In the previous lecture (2), we covered linear regression from a non-probabilistic point of view. 
+      We specified our problem by assuming y is a function of x, assuming that the function is linear,
+      and choosing squared loss. We saw that there was a closed-form solution for the parameters
+      of the linear function that minimize the squared loss (subject to an intervertibility condition).
+      One criticism of this approach is that the loss function was just handed to us, without us
+      making a clear set of assumptions about the data and possible noise in the data-generating process.
+     
       <br>
       <br>
 
-      This lecture, we covered linear regression from a probabilistic point of view. In a probabilistic model, we incorporate random variables into our model, and choose different distributions for the random variables that will affect out results. In real world situations, perhaps in given topic areas there are random variables that are known to follow certain distributions, so we can now include this in our model.
+      This lecture (3), we covered linear regression from a probabilistic point of view. 
+      In a probabilistic model, we start off with something fun and intuitive by specifying 
+      what is called a Generative Model. We ask, "what's the story of how this data came to be?"
+      This can involve assumptions and uncertainties.
+      We then try to mathematically encode certain and uncertain apects of this story.
+      Formally, this results in a probability distribution over our data. Finally,
+      a mainstay approach in stats/ML is find a set of parameters that give 
+      highest probability (or density) to our data.
+  
 
       <h2 id="recap3_2">Generative Model</h2>
+        
+      One example of a Story / Generative Model:
 
-      Specifically, we started our probabilistic view on linear regression by making a "story" for how the data were created (this is called a "generative" model). <br><br>
-
-      Given  $\mathbf{x}$'s, with $\mathbf{x} \sim P(\mathbf{x})$...
       <ul>
-        <li>$\epsilon$ ~ $N(0, \sigma^2)$</li>
+          <li> we have some input $\mathbf{x}_n$  </li>
+          <li> someone multiplies it by $\mathbf{w}$ </li>
+          <li> Before we get to see the result, someone draws noise
+              $\epsilon$ ~ $N(0, \sigma^2)$ and adds it. Call the result y_n </li>
         <li>$y  | \mathbf{x}, \epsilon = \mathbf{w}^T\mathbf{x} + \epsilon$</li>
       </ul>
-
-      To put this in words, we essentially assumed that given $\mathbf{x}$'s, our $y$ comes from multiplying the $\mathbf{x}$
-      with $\mathbf{w}$, but comes out a bit scattered due to some Gaussian noise term, $\epsilon$.
+        
+      Formally, $\mathbf{x}_n$ is a random variable, but we are only modeling $y$ given an arbitrary $$\mathbf{w]$$,
+      so we don't need to consider $\mathbf{x}$'s distribution. $\epsilon$ is also a random variable.
+      $Y$ is a function of both so it too is a random variable. In particular, we know its distribution:
+    
+        <ul>
+            <li> $ y \sim \mathcal{N}(\mathbf{w}^\top \mathbf{x}, \sigma^2) </li>
+         </ul>
+ 
 
       <h2 id="recap3_3">Maximizing Log Likelihood (with respect to $\mathbf{w}$)</h2>
 
