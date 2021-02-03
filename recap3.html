@@ -122,7 +122,7 @@ weight: 0
         
       Next, we substitute in the PDF of a Gaussian. Here, we assume $\sigma^2$ is known, and $\mathbf{w}$ is not. As a reminder, our general PDF is:
 
-      $$\mathcal{N}(z; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp^{-\frac{(z-\mu)^2}{2\sigma^2}}$$.
+      $$\mathcal{N}(z; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(z-\mu)^2}{2\sigma^2}]$$.
 
       <br>
         
@@ -154,11 +154,11 @@ weight: 0
       We also have $\mathbf{\mu} = \mathbf{X}\mathbf{w}$ and $\mathbf{\Sigma} = \mathbb{1}\sigma^2$. Below is the general formula for a multivariate Gaussian
       $\mathcal{N}(\mathbf{z}; \mathbf{\mu}, \mathbf{\Sigma})$:
 
-      $$\frac{1}{\sqrt{2\pi|\mathbf{\Sigma}|}}\exp^{-\frac{1}{2}(\mathbf{z}-\mathbf{\mu})^T\mathbf{\Sigma}^{-1}(\mathbf{z}-\mathbf{\mu})}$$
+      $$\frac{1}{\sqrt{2\pi|\mathbf{\Sigma}|}}\exp[-\frac{1}{2}(\mathbf{z}-\mathbf{\mu})^T\mathbf{\Sigma}^{-1}(\mathbf{z}-\mathbf{\mu})]$$
 
       After substituting in and taking the log, we have:
 
-      $$\log(\frac{1}{\sqrt{2\pi|\mathbf{\Sigma}|}}\exp^{-\frac{1}{2}(\mathbf{y}-\mathbf{X}\mathbf{w})^T\mathbf{\Sigma}^{-1}(\mathbf{y}-\mathbf{X}\mathbf{w})})$$
+      $$\log(\frac{1}{\sqrt{2\pi|\mathbf{\Sigma}|}}\exp[-\frac{1}{2}(\mathbf{y}-\mathbf{X}\mathbf{w})^T\mathbf{\Sigma}^{-1}(\mathbf{y}-\mathbf{X}\mathbf{w})}]$$
 
       $$\log(\frac{1}{\sqrt{2\pi|\mathbf{\Sigma}|}}) - \frac{1}{2} (\mathbf{y}-\mathbf{X}\mathbf{w})^T\mathbf{\Sigma}^{-1}(\mathbf{y}-\mathbf{X}\mathbf{w})$$
 
