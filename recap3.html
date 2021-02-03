@@ -156,11 +156,11 @@ weight: 0
 
       <h2 id="recap3_6">Estimating $\sigma^2$ instead of $\mathbf{w}$</h2>
 
-      Instead of taking the derivative with respect to $\mathbf{w}$, we can also take the derivative with respect to
-      $\sigma^2$ to find the $\sigma^2$ that maximizes the chances we the see that we currently see. Now, we assume
+      We can also take the derivative with respect to
+      $\sigma^2$ to find the $\sigma^2$. Now, we assume
       that $\mathbf{w}$ is given. Important note: we are looking at $\sigma^2$ specifically, the variance, not $\sigma$.
       First, we start with the equation we used from before.
-
+        
       $$-\frac{N}{2} \log 2\pi\sigma^2 - \frac{1}{2\sigma^2} (\mathbf{y}-\mathbf{X}\mathbf{w})^T(\mathbf{y}-\mathbf{X}\mathbf{w})$$
 
       $$-\frac{N}{2} \log 2\pi - \frac{N}{2}\log\sigma^2 -\frac{1}{2\sigma^2}(\mathbf{y}-\mathbf{X}\mathbf{w})^T(\mathbf{y}-\mathbf{X}\mathbf{w})$$
@@ -174,45 +174,20 @@ weight: 0
       \end{align*}
       $$
 
-      This is the empirical variance, which makes intuitive sense!
+      This is the empirical variance, which makes sense!
 
       <h2 id="recap3_7">Extending the Story: Making $\mathbf{w}$ Random Too</h2>
-
-      What if $\mathbf{w}$ was distributed $p(\mathbf{w})$? We have the same story, but $\mathbf{w}$ is also a random variable now. This leads us into the Bayesian view
-      (which will be covered much more in depth in future lectures).
-
-      Now we have $p(y, \mathbf{w} | \mathbf{x}, \sigma^2)$ which we can rewrite as $P(y | \mathbf{w}, \mathbf{x}, \sigma^2)p(\mathbf{w}|\mathbf{x}, \sigma^2)$.
-      Because $\mathbf{w}$ doesn't depend on $\mathbf{x}$ or $\sigma^2$, we can rewrite this as:
-
-      $$P(y | \mathbf{w}, \mathbf{x}, \sigma^2) p(\mathbf{w})$$
-
-      Now if we want to maximize this entire joint probability expression, we do:
-
-      $$\log(p(y, \mathbf{w}|\mathbf{x}, \sigma^2)) = \log(P(y | \mathbf{w}, \mathbf{x}, \sigma^2)) + \log(p(\mathbf{w}))$$
-
-      Which breaks down to a sum of our likelihood (same term from before) and this new term $\log(p(\mathbf{w}))$,
-      which we call the prior (think of it as our prior knowledge on what w should look like). Maximizing $\mathbf{w}^*$
-      over this collective term is called the MAP, the max a posterior. We are now not only maximizing the likelihood,
-      but also the incorporating our prior ideas of what $\mathbf{w}$ should look like. More to come in later lectures!
-
-
-      <br>
-      <br>
-
-      <u>Student Question: is this kind of like Ridge regression?</u> Yes, so it turns out when there we have $\mathbf{w}$
-      distributed as Gaussian, the $\log(p(\mathbf{w}))$ term turns into a $\mathbf{w}^2$ term which is exactly Ridge
-      regression. This will be covered in the future, so no worries if you don't understand!
-
-      <br>
-      <br>
-
-      <u>Student Question: what are the real world implications of probabilistic modeling?</u> Today, we saw how with
-      probabilistic models, we can incorporate random variables into our model, and choose different distributions for
-      the random variables that will affect out results (like how we could model $\epsilon$ as Gaussian). In particular
-      real world situations, there will sometimes be some random variables that are known to follow certain distributions.
-      For example, looking at $\mathbf{w}$ right here, if we know $\mathbf{w}$ is supposed sparse (because we know for a fact that only a few
-      variables actually matter), by modeling w as a random variable, we can incorporate our beliefs (of how w should be
-      sparse) into the model leading to a more useful solution for $\mathbf{w}$.
+       
+      What we did: probabilstically approach to regression (1) the generaitive model (2) maxmimize the 
+        lieklihood w.r.t parameters
+        <br> 
+        
+      What if we were not totally clueless about $\mathbf{w}$? What if we knew it was 
+        drawn from some particular $p(\mathbf{w})$? This leads us into the Bayesian view,
+        which we will get to in a few weeks!
+        
+        
+    
 
     </div>
 </section>
