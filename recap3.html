@@ -110,10 +110,10 @@ weight: 0
       Substiting $\log p$ with $\log \mathcal{N}$ we have
    
       $$\begin{align*}
-      \log(P(\textrm{data|model})) &= \sum_n \log \mathcal{N}(y_n | \mathbf{w}^T\mathbf{x}_n, \sigma^2) \\
-      \log(P(\textrm{data|model})) &= \sum_n \log (\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}])\\
-      \log(P(\textrm{data|model})) &= \sum_n (\log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2})\\
-      \log(P(\textrm{data|model})) &= N \log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \sum_n \frac{1}{2\sigma^2}(y_n-\mathbf{w}^T\mathbf{x}_n)^2
+      \log P(\textrm{data|model}) &= \sum_n \log \mathcal{N}(y_n | \mathbf{w}^T\mathbf{x}_n, \sigma^2) \\
+                 &= \sum_n \log (\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}])\\
+                 &= \sum_n (\log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2})\\
+                 &= N \log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \sum_n \frac{1}{2\sigma^2}(y_n-\mathbf{w}^T\mathbf{x}_n)^2
       \end{align*}
       $$
         
