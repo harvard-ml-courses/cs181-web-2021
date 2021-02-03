@@ -154,15 +154,6 @@ weight: 0
       <br>
       <br>
 
-      <u>Student Question: Why did we assume uniform variance sigma above?</u> Let's look at the story we set up.
-      For each $\mathbf{x}$ in 1 through N, we had $y | \mathbf{x}, \epsilon = \mathbf{w}^T\mathbf{x} + \epsilon$,
-      with $\epsilon$ distributed $\mathcal{N}(0, \sigma^2)$. If we think about it, we only designated one Gaussian
-      distribution for $\epsilon$, and it doesn't change across data points, so hence we have the same $\sigma^2$ across
-      the story as well, leading to the variance being uniform and leading to $\mathbf{\Sigma} = \mathbb{1} \sigma^2$.
-
-      <br>
-      <br>
-
       <h2 id="recap3_6">Estimating $\sigma^2$ instead of $\mathbf{w}$</h2>
 
       Instead of taking the derivative with respect to $\mathbf{w}$, we can also take the derivative with respect to
