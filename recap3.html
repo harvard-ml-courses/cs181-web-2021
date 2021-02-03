@@ -62,35 +62,34 @@ weight: 0
           <li> we have some input $\mathbf{x}_n$  </li>
           <li> Nari multiplies it by $\mathbf{w}$ </li>
           <li> Before we get to see the result, Finale draws noise
-              $\epsilon_n$ ~ $N(0, \sigma^2)$ and adds it. Call the result y_n </li>
+              $\epsilon_n$ ~ $N(0, \sigma^2)$ and adds it. Call the result $y_n$ </li>
           <li> Nari and Finale repeat this $N$ times. Then they throw away $\mathbf{w}$ and $\{\epsilon_n\}_{n=1}^N$, so
               we only observe $\{\mathbf{x}_n, y_n \}_{n=1}^N$
       </ul>
         
       Formally, $\mathbf{x}_n$ is a random variable, but we are only modeling $y_n$ given an arbitrary $\mathbf{x}$,
       so we don't need to consider $\mathbf{x}_n$'s distribution. $\epsilon_n$ is also a random variable.
-      $y_n$ is a function of both so it too is a random variable. In particular, we know its distribution:
+      $y_n$ is a function of both, so it too is a random variable. In particular, we know its distribution:
     
-        <ul>
-            <li> $ y \sim \mathcal{N}(\mathbf{w}^\top \mathbf{x}, \sigma^2)$ </li>
-         </ul>
+      $$  y \sim \mathcal{N}(\mathbf{w}^\top \mathbf{x}, \sigma^2)$  $$
  
-
       <h2 id="recap3_3">Maximizing Log Likelihood (with respect to $\mathbf{w}$)</h2>
 
       Now that we've set up the model, we can think about how we would find $\mathbf{w}$.
        We can start by asking, ``for a given particular value of $\mathbf{w}$,
       how likely would it have been for us to observe our data? The conditional
-        distribution of the data given the model 
-      (a particular value of $\mathbf{w}$) is called the ``Likelihood", or in notation $P(\textrm{data|model})$.
+        distribution of the data given the model $P(\textrm{data|model})$.
+        Here ``model" means a particular value of $\mathbf{w}$ and $\sigma$.
+      We call this conditional distribution -as a function of the parameters- the ``Likelihood".
       Since we trust our data, we think a good $\mathbf{w}$ is one that maximizes the likelihood.
       Remember, the generative story we assumed specifies the likelihood.
      
       <br>
       <br>
 
-      We can rewrite the the $P(\textrm{data|model})$ expression into the following, because all the $y_n$'s are
-      independent given $\mathbf{x}_n$'s and parameters (which we decided in our story):
+      Before trying to maximize, lets incrementally re-write the Likelihood.
+      Because we assumed conditionally i.i.d. $y_n$ given $x_n$ and parameters,
+      
 
       $$P(\textrm{data|model}) = \prod_n p(y_n | \mathbf{x}_n, \mathbf{w}, \sigma^2)$$
 
@@ -101,13 +100,7 @@ weight: 0
       $$\log(P(\textrm{data|model})) = \sum_n \log p(y_n | \mathbf{x}_n, \mathbf{w}, \sigma^2)$$
 
       <br>
-
-      <u id="recap3_4">Student Question: What exactly is the relationship between maximum likelihood and loss?</u> As mentioned above, we are trying to maximize the likelihood here. To make this maximization problem easier in the math, we took the log (standard practice), which is safe because it is monotonic. Finally, if we want to rewrite this maximium likelihood problem as a loss, we can add in a negative sign and now say we are minimizing $-\log(P(\textrm{data|model)})$ with respect to w. This is now the format of a loss function. So to convert a likelihood to a loss, take the negative log of the likelihood (what we did in the concept check).
-
-      <br>
-      <br>
-
-
+        
       Next, we substitute in the PDF of a Gaussian. Here, we assume $\sigma^2$ is known, and w is not. As a reminder, our general PDF is:
 
       $$\mathcal{N}(z; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp^{-\frac{(z-\mu)^2}{2\sigma^2}}$$.
