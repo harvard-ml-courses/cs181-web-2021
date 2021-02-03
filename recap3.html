@@ -7,16 +7,21 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: February 3, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfIT9Ox03AsH5ZQShRsrPagzj4Hovx-YhFN9WbQhoF2dPdQQA/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/1iLY3qZInTkMM2pd6ggrFlrvK6sNIryKyOpMRH4blyGs/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: February 2, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfIT9Ox03AsH5ZQShRsrPagzj4Hovx-YhFN9WbQhoF2dPdQQA/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/1iLY3qZInTkMM2pd6ggrFlrvK6sNIryKyOpMRH4blyGs/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 2.6.2, 2.6.3</h4>
       <h4>Cube: Supervised, Continuous, Probabilistic</h4>
 
       <br>
 
+      <h4><a href="https://harvard.zoom.us/rec/play/NyladU3p8999uTODvcEAnAd40xH-w41eSRMu8gDixcZXxmbR226hJ3WO0nrlGzZ4yGTueBVEIXUKgBto.iLSkG52m2eAtvQpD
+	  ">Lecture Video</a></h4>
+	  <h4><a href="files/lecture3_ipad.pdf" target="_blank">iPad Notes</a></h4>
+
+
       <h3>Lecture 3 Summary</h3>
 
       <ul>
-        <li><a href="#recap3_1">Introduction: Nonprobabilistic vs Probabilistic Models</a></li>
+        <li><a href="#recap3_1">Intro: Nonprobabilistic vs Probabilistic Models</a></li>
         <li><a href="#recap3_2">Setting Up the Generative Story</a></li>
         <li><a href="#recap3_3">Maximizing Likelihood of the Model (with respect to w)</a></li>
         <li><a href="#recap3_4">Relationship of Maximizing Likelihood to Loss</a></li>
@@ -38,7 +43,10 @@ weight: 0
       We specified our problem by assuming y is a function of x, assuming that the function is linear,
       and choosing squared loss. We saw that there was a closed-form solution for the parameters
       of the linear function that minimize the squared loss (subject to an intervertibility condition).
-      One criticism of this approach is that the loss function was just handed to us, without us
+      
+	  <br>
+
+	  One criticism of this approach is that the loss function was just handed to us, without us
       making a clear set of assumptions about the data and possible noise in the data-generating process.
      
       <br>
@@ -83,13 +91,17 @@ weight: 0
 
       Now that we've set up the model, we can think about how we would find $\mathbf{w}$.
        We can start by asking, ``for a given value of $\mathbf{w}$,
-      how likely would it have been for us to observe our data? This is the conditional
+      how likely would it have been for us to observe our data? 
+
+	  <br>
+
+	  This is formalizd by the conditional
         distribution of the data given the model $P(\textrm{data|model})$.
         Here ``model" means a particular value of $\mathbf{w}$ and $\sigma$.
       We call this conditional distribution -as a function of the parameters- the ``Likelihood".
       Since we trust our data, we think a good $\mathbf{w}$ is one that maximizes the likelihood.
       Remember, the generative story we assumed specifies the likelihood.
-     
+      In a few lectures, we will assume different models. Each one will have their own Likelihood.
       <br>
       <br>
 
@@ -118,9 +130,9 @@ weight: 0
    
       $$\begin{align*}
       \log P(\textrm{data|model}) &= \sum_n \log \mathcal{N}(y_n | \mathbf{w}^T\mathbf{x}_n, \sigma^2) \\
-                 &= \sum_n \log (\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}])\\
-                 &= \sum_n (\log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2})\\
-                 &= N \log (\frac{1}{\sqrt{2\pi\sigma^2}}) - \sum_n \frac{1}{2\sigma^2}(y_n-\mathbf{w}^T\mathbf{x}_n)^2
+                 &= \sum_n \log \Big(\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}] \Big)\\
+                 &= \sum_n \log \Big( \frac{1}{\sqrt{2\pi\sigma^2}}\Big) - \frac{(y_n-\mathbf{w}^T\mathbf{x}_n)^2}{2\sigma^2}\\
+                 &= N \log \Big(\frac{1}{\sqrt{2\pi\sigma^2}}\Big) - \sum_n \frac{1}{2\sigma^2}(y_n-\mathbf{w}^T\mathbf{x}_n)^2
       \end{align*}
       $$
         
@@ -194,9 +206,6 @@ weight: 0
         which we will get to in a few weeks!
         
         <br>
-               
-        
-    
 
     </div>
 </section>
