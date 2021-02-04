@@ -73,11 +73,11 @@ weight: 0
 
       Before deciding on a loss, let's just understand this model and what it does:
 
-      We introduce a discriminant function: $h(x,w) = \mathbf{w}^T x + w_0$. We predict: 
+      We introduce a discriminant function: $h(x,w) = \mathbf{w}^T \mathbf{x} + w_0$. We predict: 
       \begin{equation}
         \hat{y}=\left\{
         \begin{array}{@{}ll@{}}
-          +1, & \text{if}\ h(x, \mathbf{w}) > 0 \\
+          +1, & \text{if}\ h(\mathbf{x}, \mathbf{w}) > 0 \\
           1, & \text{otherwise}
         \end{array}\right.
       \end{equation} 
@@ -136,7 +136,7 @@ weight: 0
       Student question: How do you initialize the weight matrix, $\mathbf{w}$? Answer: you can choose any initial weight matrix. In the next section, we show how to reduce the loss by tuning the weight matrix. 
 
       <br><br>
-      Let us now consider hinge loss or linear rectifier function. Let us define $z = \mathbf{w}^T x + w_0$. 
+      Let us now consider hinge loss or linear rectifier function. Let us define $z = \mathbf{w}^T \mathbf{x} + w_0$. 
       $$
       \ell_{\text{hinge}}(z) =
       \left\{ \begin{array}{cc}
@@ -181,7 +181,7 @@ weight: 0
       <h4> Extensions: </h4>
 
       <ol>
-        <li>We can also think about multi-class classifications, where $y_k \in {C_1, \dots, C_k}$ (ie. the output variable can be classified into multiple different groups). You can perform "all vs one" training by training $k$ different binary classifiers, before taking $argmax_k h_(x, \textbf{w})$. </li>
+        <li>We can also think about multi-class classifications, where $y_k \in {C_1, \dots, C_k}$ (ie. the output variable can be classified into multiple different groups). You can perform "all vs one" training by training $k$ different binary classifiers, before taking $\textnorm{argmax}_k h_(x, \textbf{w})$. </li>
         <li>You can perform basis transforms to solve classification problems that don't have a linear decision boundary.</li>
       </ol>
 
