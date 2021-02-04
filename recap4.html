@@ -162,21 +162,27 @@ weight: 0
       <br><br>
 
       <h4> Comments: </h4>
-      \begin{itemize}
+      $\begin{itemize}
         \item Convex and differentiable function can be minimized via gradient descent 
         \item Convex optimization is polynomially solvable
-      \end{itemize}
+      \end{itemize}$
 
       <h4>How to solve for $\mathbf{w}^*$</h4>
       We can use <strong>stochastic</strong> gradient descent to optimize $\mathbf{w}$ : Use a <stong>mini-batch</stong> of
-      our data (good if datatset is larger; noisier gradient though!).
+      our data (good if datatset is larger; noisier gradient though!). Using SGD requires using a variable step size for gradient descent! 
 
       <br><br>
       What if we took just <strong>one</strong> (incorrectly classified) datum:
       $$\mathcal{L}^{(i)}(\mathbf{w}) = -y_i\mathbf{w}^T\mathbf{x}_i$$ and
       $$\mathbf{w} \leftarrow \mathbf{w} + \eta y_i \mathbf{x}_i$$
       This is the 1958 <strong>Perceptron</strong> algorithm : if $\hat{y} = y_n$, do nothing; else do above, until no error.
-      This converges if the data are linearly separable in the feature space.
+      This converges if and only if the data are linearly separable in the feature space.
+
+      <h4> Extensions: </h4>
+      $\begin{itemize}
+        \item We can also think about multi-class classifications, where $y_k \in {C_1, \dots, C_k}$ (ie. the output variable can be classified into multiple different groups). You can perform "all vs one" training by training $k$ different binary classifiers, before taking $argmax_k h_(x, \textbf{w})$. 
+        \item You can perform basis transforms to solve classification problems that don't have a linear decision boundary. 
+      \end{itemize}$
 
       <!-- <h3>A Different Loss : Fisher's Discriminant</h3>
       If $\mathbf{w}$ projects $\mathbf{x}$ into 1-D, why not explicitly seek clustering in that space?
@@ -226,7 +232,7 @@ weight: 0
       $$\mathbf{w} \propto \mathbf{S}_w^{-1}(\mathbf{m}_1 - \mathbf{m}_2)$$
       We start with the difference of means ($\mathbf{m}_1 - \mathbf{m}_2$) and rotate based on variance ($\mathbf{S}_w^{-1}$). -->
 
-      <h2 id="recap4_4">Metrics</h2>
+    <h2 id="recap4_4">Metrics</h2>
       There are four error metrics
       <table class="note-table">
         <tr><th>Metric</th><th>y</th><th>y-hat</th></tr>
