@@ -60,7 +60,7 @@ weight: 0
         </li>
       </ol>
 
-      Today's problem involves predicting $\hat{y}$ for a new example $x$. We are given the dataset $D = (x_1, y_1), (x_2, y_2), (x_3, y_3), \dots, (x_n, y_n)$, where $x_i \in \mathbb{R}$ and $y_i \in {-1, 1}$. 
+      Today's problem involves predicting $\hat{y}$ for a new example $x$. We are given the dataset $D = \{(x_1, y_1), (x_2, y_2), (x_3, y_3), \dots, (x_n, y_n) \}$, where $x_i \in \mathbb{R}$ and $y_i \in \{-1, 1\}$. 
 
       <h2>Method 1 (Review): Non-Parametric Models</h2>
       We can still use KNN for classification by returning the majority vote of the neighbors of $\mathbf{x}$. We can also use kernel methods. The advantage of using kernel methods is that it is super flexible. However, it can also be very slow on large datasets (which happens at prediction time) and it can be difficult to interpret. 
@@ -156,16 +156,16 @@ weight: 0
       $$\frac{\partial}{\partial \mathbf{w}}\mathcal{L}(\textbf{w}) = -\sum_{m \in S}y_m\mathbf{x}_m$$
       Note: We have absorbed the bias term into $\mathbf{w}$ here. Also, our loss function is convex. For each data point we try to optimize, we are trying to improve the loss. By improving the loss on individual data points (which can each be thought of as a separate optimization problem), we are improving the loss over the entire dataset. 
 
-      <br>
+      <br><br>
 
       Student Question: If the data is separable, does this algorithm choose the decision boundary that best separates the data? Because the gradient of the loss is only non-zero when the point is mis-classified, any decision boundary that separates the points will have zero loss. The algorithm here does not discern between the decision boundaries that all have zero loss (even if we can visually see that the decision boundary works but is not optimal). 
       <br><br>
 
       <h4> Comments: </h4>
-      $\begin{itemize}
-        \item Convex and differentiable function can be minimized via gradient descent 
-        \item Convex optimization is polynomially solvable
-      \end{itemize}$
+      <ol>
+        <li> Convex and differentiable function can be minimized via gradient descent </li>
+        <li>Convex optimization is polynomially solvable</li> 
+      </ol>
 
       <h4>How to solve for $\mathbf{w}^*$</h4>
       We can use <strong>stochastic</strong> gradient descent to optimize $\mathbf{w}$ : Use a <stong>mini-batch</stong> of
@@ -179,10 +179,11 @@ weight: 0
       This converges if and only if the data are linearly separable in the feature space.
 
       <h4> Extensions: </h4>
-      $\begin{itemize}
-        \item We can also think about multi-class classifications, where $y_k \in {C_1, \dots, C_k}$ (ie. the output variable can be classified into multiple different groups). You can perform "all vs one" training by training $k$ different binary classifiers, before taking $argmax_k h_(x, \textbf{w})$. 
-        \item You can perform basis transforms to solve classification problems that don't have a linear decision boundary. 
-      \end{itemize}$
+
+      <ol>
+        <li>We can also think about multi-class classifications, where $y_k \in {C_1, \dots, C_k}$ (ie. the output variable can be classified into multiple different groups). You can perform "all vs one" training by training $k$ different binary classifiers, before taking $argmax_k h_(x, \textbf{w})$. </li>
+        <li>You can perform basis transforms to solve classification problems that don't have a linear decision boundary.</li>
+      </ol>
 
       <!-- <h3>A Different Loss : Fisher's Discriminant</h3>
       If $\mathbf{w}$ projects $\mathbf{x}$ into 1-D, why not explicitly seek clustering in that space?
