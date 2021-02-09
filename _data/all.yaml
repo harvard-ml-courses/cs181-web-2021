@@ -104,7 +104,7 @@ lectures:
     type: 'hw'
   - topic:
     subtopic:
-    section: <a href="/cs181-web/sections#sec1">1.</a>
+    section: <a href="/cs181-web/sections#sec1">1. Linear Regression, MLE</a>
     readings:
     hw:
     type: 'sec'
@@ -127,7 +127,7 @@ lectures:
 
   - topic:
     subtopic:
-    section: <a href="/cs181-web/sections#sec2">2.</a>
+    section: <a href="/cs181-web/sections#sec2">2. Probabilistic Classification</a>
     readings:
     hw:
     type: 'sec'
