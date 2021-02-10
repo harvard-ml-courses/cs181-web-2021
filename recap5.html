@@ -64,7 +64,7 @@ weight: 0
 
       Our goal is to find parameters $\mathbf{w}$ that maximize the <i>conditional probability</i> of labels in the data: <br>
 
-      $$\argmax_{\mathbf{w}} \prod_n p(y_n | \mathbf{x}_n, \mathbf{w})$$
+      $$\operatorname*{argmax}_{\mathbf{w}} \prod_n p(y_n | \mathbf{x}_n, \mathbf{w})$$
 
       The term $p(y_n | \mathbf{x}_n, \mathbf{w})$ is called the conditional likelihood.<br><br>
 
@@ -76,7 +76,7 @@ weight: 0
 
       Our goal is to find parameters $\mathbf{w}$ that maximize the <i>joint distribution</i> of both the features $\mathbf{x}_n$ and labels $y_n$.
 
-      $$\argmax_{\mathbf{w}} \prod_n p(\mathbf{x}_n, y_n | \mathbf{w})$$
+      $$\operatorname*{argmax}_{\mathbf{w}} \prod_n p(\mathbf{x}_n, y_n | \mathbf{w})$$
 
       The term $p(\mathbf{x}_n, y_n | w)$ is called the joint likelihood.<br><br>
 
@@ -86,7 +86,7 @@ weight: 0
 
       A few notes:
       <ul>
-            <li>Today for convenience we will assume the two classes are $\{0, 1\}$, where $1$ is the "positive" and $0$ is the "negative" label.</li>
+            <li>Today we will assume the two classes are $\{0, 1\}$, where $1$ is the "positive" and $0$ is the "negative" label.</li>
             <li>A new example $y$ is 1 if the probability that it is 1 is greater than the probability that it is 0.
 
             \begin{equation}
@@ -100,8 +100,9 @@ weight: 0
             </li>
       </ul>
 
-
       <h2 id="recap5_3">Discriminative Approach</h2>
+
+
 
       <h2 id="recap5_4">Generative Approach</h2>
 
