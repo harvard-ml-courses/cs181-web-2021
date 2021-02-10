@@ -145,21 +145,21 @@ weight: 0
         <img src="{{ site.baseurl }}/images/recap5_2.png" style="width:40%"  alt="chart displaying 0-1, hinge, and logistic loss"></img>
       </div>
 
-      The logistic loss function is differentiable and convex.  This means we can use gradient descent methods to minimize this loss.  Unlike the hinge loss function, it still penalizes the classifier's predictions on data points where the classifier predicts the correct label.  In a sense, logistic loss prefers to make better decisions on correct predictions, "pushing away" from the decision boundary.
+      The logistic loss function is differentiable and convex.  This means we can use gradient descent methods to minimize this loss.  Unlike the hinge loss function, the logistic loss still penalizes the classifier's predictions on data points where the classifier predicts the correct label.  In a sense, logistic loss prefers to make better decisions on correct predictions, "pushing away" from the decision boundary.
 
       <h3>Stochastic gradient descent</h3>
 
       In order to use stochastic gradient descent to learn optimal parameters $\mathbf{w}$, we take the gradients of the negative log-likelihood with respect to $\mathbf{w}$.  Here are the gradients with respect to $\mathbf{w}$ on examples that are true positives and true negatives for the Hinge and the logistic loss functions:
 
       <div class="text-center">
-        <img src="{{ site.baseurl }}/images/recap5_3.png" style="width:40%"  alt="gradients of hinge and logistic loss from iPad notes"></img>
+        <img src="{{ site.baseurl }}/images/recap5_3.png" style="width:80%"  alt="gradients of hinge and logistic loss from iPad notes"></img>
       </div>
 
       When we use Hinge loss, only incorrectly classified data points contribute to the loss.  But for logistic regression, even if $\hat{y}_n = y_n$, we still update parameters $\mathbf{w}_{t + 1}$.<br><br>
 
       <b>Student question:</b>  Why use gradient descent?  If our loss function is differentiable and convex, can't we find an analytical solution?<br><br>
 
-      <br>Answer:</br>  In the case of logistic regression, it is hard to find an analytical solution.  Therefore in this course, we will use gradient descent to learn our logistic regression models.<br><br>
+      <b>Answer:</b>  In the case of logistic regression, it is hard to find an analytical solution.  Therefore in this course, we will use gradient descent to learn our logistic regression models.<br><br>
 
       <h2 id="recap5_4">Generative Approach</h2>
 
@@ -217,7 +217,7 @@ weight: 0
 
       For example, when you derive the maximum likelihood estimate for parameter $\mathbf{\mu}_0$, you find that
 
-      $$\hat{\mathbf{\mu}_0} =\frac{1}{N_0} \sum_n \mathbf{x}_n$$
+      $$\hat{\mathbf{\mu}_0} =\frac{1}{N_0} \sum_{n: y_n = 0} \mathbf{x}_n$$
 
       where $N_0$ is the total number of examples with label $0$.  Intuitively, the MLE of the mean $\mathbf{\mu}_0$ for class $0$ is the empirical average of the covariates for all of the training data points in class $0$.<br><br>
 
@@ -264,7 +264,7 @@ weight: 0
 
       In the generative setting, it's easy: just use a categorical class prior and estimate class conditions.  Classify as
 
-      $$ \argmax_k p(\mathbf{x} | y_k) p(y_k)$$
+      $$ \operatorname*{argmax}_{k}  p(\mathbf{x} | y_k) p(y_k)$$
 
       In a discriminative setting, we need to have separate parameters $\mathbf{w}_k$ for each class.  We classify using the "softmax" function:
 
