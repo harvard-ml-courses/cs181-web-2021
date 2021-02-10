@@ -7,7 +7,7 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: January 28, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSdt0FbHRGigfKONLpBcwdvv9W_ZM_EMThsccg043NMA-tCxdQ/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSdt0FbHRGigfKONLpBcwdvv9W_ZM_EMThsccg043NMA-tCxdQ/viewanalytics" target="_blank">Class Responses</a><a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: January 28, 2021 (<a href="https://forms.gle/AaQ8Q2ES9LPAkRq98" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLScAWDyRcNSHT7pX2gg_rSH7mDEVZJSDjfnMd5BQ8sFIa46BKQ/viewanalytics" target="_blank">Class Responses</a><a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 2.3-2.5, 2.6.1, 2.7.1</h4>
       <h4>Cube: Supervised, Continuous, Nonprobabilistic</h4>
 
@@ -57,7 +57,7 @@ weight: 0
       </ol>
 
       <h2> Definiing notation and Goals: </h2>
-      We have that given $x$, we wish to predict $\hat{y}$, generally, where $x$ is an input column vector. 
+      We have that given $x$, we wish to predict $\hat{y}$, generally, where $x$ is an input column vector.
 
       <h2 id="recap2_3">Linear Regression with L2 Loss</h2>
 
@@ -105,7 +105,7 @@ weight: 0
       Note: the following assumes the 1's to do the bias trick have already been added into the data.
 
       <h5> Recap of gradients </h5>
-      Definition: The gradient vector holds the partial derivatives with respect to the variables in the d-dimensional space. Gradient methods work best when the problem is convex, primarily because having a convex problem allows for a single optimal solution to be found (ie. the local maximum is also a global maximum). The gradient vector is represented by $\nabla g(x)$. The gradient vector points in the direction of steepest ascent. 
+      Definition: The gradient vector holds the partial derivatives with respect to the variables in the d-dimensional space. Gradient methods work best when the problem is convex, primarily because having a convex problem allows for a single optimal solution to be found (ie. the local maximum is also a global maximum). The gradient vector is represented by $\nabla g(x)$. The gradient vector points in the direction of steepest ascent.
 
 
       <h5 id="recap2_4">How to Solve for $\textbf{w}^*$: Method 1</h5>
@@ -126,7 +126,7 @@ weight: 0
 
       Another method is to directly solve for $\textbf{w}^*$. It turns out that in the case of a linear function with L2 loss, there is a clean solution for $\textbf{w}^*$. In order to solve for $\textbf{w}^*$, we take the gradient of the loss and set it to 0.
 
-      In this version of the derivation, there are D dimensions in the data and N data points. $\textbf{y}$ is an $N$-dimensional column vector, $\textbf{w}$ is a $(D+1)$-dimensional column vector of weights and $\textbf{X}$ is a $N \times (D+1)$ matrix of data such that the $n^{\text{th}}$ row is given by $\textbf{x}_n^T$. $\textbf{X}$ is called our design matrix. Note that in order to include our bias, we can set one entire feature (column of the design matrix) to 1, allowing us to derive the appropriate value in W for the bias. First we start with the residuals squared, but in matrix form. 
+      In this version of the derivation, there are D dimensions in the data and N data points. $\textbf{y}$ is an $N$-dimensional column vector, $\textbf{w}$ is a $(D+1)$-dimensional column vector of weights and $\textbf{X}$ is a $N \times (D+1)$ matrix of data such that the $n^{\text{th}}$ row is given by $\textbf{x}_n^T$. $\textbf{X}$ is called our design matrix. Note that in order to include our bias, we can set one entire feature (column of the design matrix) to 1, allowing us to derive the appropriate value in W for the bias. First we start with the residuals squared, but in matrix form.
       $$L(\textbf{w}) = \frac{1}{2}(\textbf{y} - \textbf{X}\textbf{w})^T(\textbf{y} - \textbf{X}\textbf{w})$$
 
       Let us take the gradient:
@@ -153,8 +153,8 @@ weight: 0
             \end{align*}
           $$
 
-      Note: to take the inverse, we need $\textbf{X}$ to have full column rank, which makes $\textbf{X}^T\textbf{X}$ positive definite, and guarantees an inverse. The interpretation is that the features will not be co-linear (the redundant encoding problem). We also find the second order condition (second derivative) $\frac{\partial^2}{\partial \textbf{w}^2} L(\textbf{w})$, and ensure that it is positive definite. 
-      
+      Note: to take the inverse, we need $\textbf{X}$ to have full column rank, which makes $\textbf{X}^T\textbf{X}$ positive definite, and guarantees an inverse. The interpretation is that the features will not be co-linear (the redundant encoding problem). We also find the second order condition (second derivative) $\frac{\partial^2}{\partial \textbf{w}^2} L(\textbf{w})$, and ensure that it is positive definite.
+
       <br>
       <u id="recap2_5">Statistics View:</u>
 

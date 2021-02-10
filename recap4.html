@@ -7,7 +7,7 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: February 4, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfFny0H7gR64WhBOGT-p-8cX0mnWybx36f_FdQzg-iEmDATRQ/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfFny0H7gR64WhBOGT-p-8cX0mnWybx36f_FdQzg-iEmDATRQ/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: February 4, 2021 (<a href="https://forms.gle/8TFKTaWwWHVcyzb59" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLScMkdwMaClV2MGjaTKzFSXa5djB-5IDU9ro1S-GwK9EOQKTXQ/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 3.1 - 3.5</h4>
       <h4>Cube: Supervised, Discrete, Nonprobabilistic</h4>
 
@@ -48,7 +48,7 @@ weight: 0
 
       <h2 id="recap4_2">Classification vs Regression</h2>
       Conceptually classification is not too different from regression. We follow the same general forms:
-      
+
       <ol>
         <li>Choose a model (linear vs non-linear boundary)</li>
         <li>Choose a loss function
@@ -60,10 +60,10 @@ weight: 0
         </li>
       </ol>
 
-      Today's problem involves predicting $\hat{y}$ for a new example $x$. We are given the dataset $D = \{(x_1, y_1), (x_2, y_2), (x_3, y_3), \dots, (x_n, y_n) \}$, where $x_i \in \mathbb{R}$ and $y_i \in \{-1, 1\}$. 
+      Today's problem involves predicting $\hat{y}$ for a new example $x$. We are given the dataset $D = \{(x_1, y_1), (x_2, y_2), (x_3, y_3), \dots, (x_n, y_n) \}$, where $x_i \in \mathbb{R}$ and $y_i \in \{-1, 1\}$.
 
       <h2>Method 1 (Review): Non-Parametric Models</h2>
-      We can still use KNN for classification by returning the majority vote of the neighbors of $\mathbf{x}$. We can also use kernel methods. The advantage of using kernel methods is that it is super flexible. However, it can also be very slow on large datasets (which happens at prediction time) and it can be difficult to interpret. 
+      We can still use KNN for classification by returning the majority vote of the neighbors of $\mathbf{x}$. We can also use kernel methods. The advantage of using kernel methods is that it is super flexible. However, it can also be very slow on large datasets (which happens at prediction time) and it can be difficult to interpret.
 
       <h2 id="recap4_3">Method 2: Linear Classification</h2>
 
@@ -73,16 +73,16 @@ weight: 0
 
       Before deciding on a loss, let's just understand this model and what it does:
 
-      We introduce a discriminant function: $h(x,w) = \mathbf{w}^T \mathbf{x} + w_0$. We predict: 
+      We introduce a discriminant function: $h(x,w) = \mathbf{w}^T \mathbf{x} + w_0$. We predict:
       \begin{equation}
         \hat{y}=\left\{
         \begin{array}{@{}ll@{}}
           +1, & \text{if}\ h(\mathbf{x}, \mathbf{w}) > 0 \\
           -1, & \text{otherwise}
         \end{array}\right.
-      \end{equation} 
+      \end{equation}
 
-      and we take the sign of the discriminant function for any particular point to predict the associated classification of $y$. 
+      and we take the sign of the discriminant function for any particular point to predict the associated classification of $y$.
 
       The decision boundary between the two sets of training data is where the discriminant is equal to 0, and our goal is to optimize the discriminant.
 
@@ -130,13 +130,13 @@ weight: 0
       that penalizes if the signs of $y_n$ and $\mathbf{w}^T\mathbf{x}_n + w_0$ do not match.
 
       <br>
-      At first blush, this loss function makes sense. It scales with the number of misclassified points, an intuitive metric for understanding the loss of a classifier. There is however an issue with this loss. It has uninformative gradient. We are either right or wrong. Taking the gradient will yield 0 at all points (except for the origin), regardless of whether a point was correctly classified. As such, we look for a new loss function that has a more informative gradient. 
-      
+      At first blush, this loss function makes sense. It scales with the number of misclassified points, an intuitive metric for understanding the loss of a classifier. There is however an issue with this loss. It has uninformative gradient. We are either right or wrong. Taking the gradient will yield 0 at all points (except for the origin), regardless of whether a point was correctly classified. As such, we look for a new loss function that has a more informative gradient.
+
       <br>
-      Student question: How do you initialize the weight matrix, $\mathbf{w}$? Answer: you can choose any initial weight matrix. In the next section, we show how to reduce the loss by tuning the weight matrix. 
+      Student question: How do you initialize the weight matrix, $\mathbf{w}$? Answer: you can choose any initial weight matrix. In the next section, we show how to reduce the loss by tuning the weight matrix.
 
       <br><br>
-      Let us now consider hinge loss or linear rectifier function. Let us define $z = \mathbf{w}^T \mathbf{x} + w_0$. 
+      Let us now consider hinge loss or linear rectifier function. Let us define $z = \mathbf{w}^T \mathbf{x} + w_0$.
       $$
       \ell_{\text{hinge}}(z) =
       \left\{ \begin{array}{cc}
@@ -154,22 +154,22 @@ weight: 0
       <br><br>
       Now, we can take gradients!
       $$\frac{\partial}{\partial \mathbf{w}}\mathcal{L}(\textbf{w}) = -\sum_{m \in S}y_m\mathbf{x}_m$$
-      Note: We have absorbed the bias term into $\mathbf{w}$ here. Also, our loss function is convex. For each data point we try to optimize, we are trying to improve the loss. By improving the loss on individual data points (which can each be thought of as a separate optimization problem), we are improving the loss over the entire dataset. 
+      Note: We have absorbed the bias term into $\mathbf{w}$ here. Also, our loss function is convex. For each data point we try to optimize, we are trying to improve the loss. By improving the loss on individual data points (which can each be thought of as a separate optimization problem), we are improving the loss over the entire dataset.
 
       <br><br>
 
-      Student Question: If the data is separable, does this algorithm choose the decision boundary that best separates the data? Because the gradient of the loss is only non-zero when the point is mis-classified, any decision boundary that separates the points will have zero loss. The algorithm here does not discern between the decision boundaries that all have zero loss (even if we can visually see that the decision boundary works but is not optimal). 
+      Student Question: If the data is separable, does this algorithm choose the decision boundary that best separates the data? Because the gradient of the loss is only non-zero when the point is mis-classified, any decision boundary that separates the points will have zero loss. The algorithm here does not discern between the decision boundaries that all have zero loss (even if we can visually see that the decision boundary works but is not optimal).
       <br><br>
 
       <h4> Comments: </h4>
       <ol>
         <li> Convex and differentiable function can be minimized via gradient descent </li>
-        <li>Convex optimization is polynomially solvable</li> 
+        <li>Convex optimization is polynomially solvable</li>
       </ol>
 
       <h4>How to solve for $\mathbf{w}^*$</h4>
       We can use <strong>stochastic</strong> gradient descent to optimize $\mathbf{w}$ : Use a <stong>mini-batch</stong> of
-      our data (good if datatset is larger; noisier gradient though!). Using SGD requires using a variable step size for gradient descent! 
+      our data (good if datatset is larger; noisier gradient though!). Using SGD requires using a variable step size for gradient descent!
 
       <br><br>
       What if we took just <strong>one</strong> (incorrectly classified) datum:
