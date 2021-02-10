@@ -87,7 +87,7 @@ weight: 0
       A few notes:
       <ul>
             <li>Today we will assume the two classes are $\{0, 1\}$, where $1$ is the "positive" and $0$ is the "negative" label.</li>
-            <li>A new example $y$ is 1 if the probability that it is 1 is greater than the probability that it is 0.
+            <li>A new example $y$ has predicted label 1 if the probability that it is 1 is greater than the probability that it is 0.
 
             \begin{equation}
               \hat{y} =\left\{
@@ -102,6 +102,64 @@ weight: 0
 
       <h2 id="recap5_3">Discriminative Approach</h2>
 
+      In logistic regression, we model $p(y | \mathbf{x})$ using the sigmoid (or "logistic") function:
+
+      $$p(y = 1 | \mathbf{x}) = \frac{1}{1 + \exp(- \mathbf{w}^T \mathbf{x})}$$
+
+      The sigmoid (or logistic) function is often denoted using a $\sigma$, and takes scalar values as input.  The sigmoid function intuitively "flattens" its input to output values between $0$ and $1$:<br><br>
+
+      <div class="text-center">
+        <img src="{{ site.baseurl }}/images/recap5_1.png" style="width:40%"  alt="chart of sigmoid(z)"></img>
+      </div>
+
+      In logistic regression, $p(y = 0 | \mathbf{x}) := 1 - p(y = 1 | \mathbf{x})$.<br><br>
+
+      If we write $h = \mathbf{w}^T \mathbf{x}$, then
+
+      $$ p(y = 1 | \mathbf{x}) = \frac{1}{1 + e^{-h}}, p(y = 0 | \mathbf{x}) = \frac{1}{1 + e^h}$$
+
+      Since $y \in \{0, 1\}$, we can rewrite $p(y | \mathbf{x})$ using the "power trick":
+
+      $$ p(y | \mathbf{x}) = p( y = 1 | \mathbf{x})^y \cdot p(y = 0 | \mathbf{x})^{1 - y}$$
+
+      The parameters <i>maximize</i> a likelihood function (the maximum likelihood estimate) also <i>minimize</i> the negative log-likelihood.  Thus, we can treat the negative log-likelihood - the expression we are minimizing - as a "loss function".
+
+      Therefore the negative log-likelihood, or "loss", over the dataset $D$ $L_D(\mathbf{w})$ can be written as:
+
+      $$ L_D(\mathbf{w}) = - \sum_n \ln [p(y_n | \mathbf{x}_n)]$$
+
+      Applying log rules and the power trick,
+
+      $$ = - \sum_n y_n \ln [\sigma(-h_n)] - \sum_n (1 - y_n) \ln [\sigma(h_n)]$$
+      $$ = \sum_n y_n \ln [1 + \exp(-h_n)] + \sum_n (1 - y_n) \ln [1 + \exp(h_n)]$$
+
+      The second term $(1 - y_n) \ln [1 + \exp(h_n)]$ can be understood as the loss of the classifier on a negative example $(\mathbf{x}_n, y_n = 0)$.  We can draw a picture of this logistic loss function $(1 + \exp(\mathbf{w}^T x))$.  It is helpful to compare this plot of logistic loss to that of 0/1 loss and hinge loss, which we discussed last week.<br><br>
+
+      <div class="text-center">
+        <img src="{{ site.baseurl }}/images/recap5_2.png" style="width:40%"  alt="chart displaying 0-1, hinge, and logistic loss"></img>
+      </div>
+
+      The logistic loss function is differentiable and convex.  This means we can use gradient descent methods to minimize this loss.  Unlike the hinge loss function, it still penalizes predictions even when .  In a sense, it prefers to make better decisions on correct predictions, pushing away from the decision boundary.
+
+      <h3>Stochastic gradient descent</h3>
+
+      For Hinge loss, positive example:
+
+      If $\hat{y_n} \neq y_n$, then $w_{y + 1} \leftarrow w_t + \eta x_n$.
+
+      Negative example:  If $\hat{y_n} \neq y_n$, $w_{t + 1} \leftarrow w_{t} - \eta x_n$.
+
+      Versus for logistic regression, even if $\hat{y}_n = y_n$, then
+
+      Positive example: $$ w_{t + 1} \leftarrow w_t + \eta x_n p(y_n = 0 | x_n)$$
+
+      Negative example: $$ w_{t + 1} \leftarrow w_t - \eta x_n p(y_n = 1 | x_n)$$
+
+      Algorithms come from loss functions.
+
+      Student question:  Why use gradient descent?  If it's differentiable and convex, can't we find an analtical solution?
+
+      Answer:  In the case of logistic regression, it is hard to find an analytical solution.  Therefore in this course, we will use gradient descent to learn our logistic regression models.
 
 
       <h2 id="recap5_4">Generative Approach</h2>
