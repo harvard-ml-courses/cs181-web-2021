@@ -45,18 +45,61 @@ weight: 0
       Recall that in <a href="{{ site.baseurl }}/recap4">last week's lecture</a>, we used the below parametric classification model to predict label $\hat{y}_n$ as <br>
 
       \begin{equation}
-        \hat{y}=\left\{
+        \hat{y}_n=\left\{
         \begin{array}{@{}ll@{}}
-          +1, & \text{if}\ h(\mathbf{x}, \mathbf{w}) > 0 \\
+          +1, & \text{if}\ \mathbf{w}^T \mathbf{x} + w_0 > 0 \\
           -1, & \text{otherwise}
         \end{array}\right.
       \end{equation}
 
+      We learn weights $\mathbf{w}$ by training using the hinge loss.<br>
 
-
-
+      But, what if we're interested in calculating a <i>probability</i> that an example is positive?  Today we'll discuss two approaches.  In both cases, we're going to use <i>maximum likelihood estimation</i> to learn model parameters.<br>
 
       <h2 id="recap5_2">Probabilistic Classification Overview</h2>
+
+      Today we'll discuss two different approaches to probabilistic classification: the discriminative and the generative approach.<br>
+
+      <h3>Approach 1:  Discriminative</h3>
+
+      Our goal is to find parameters $\mathbf{w}$ that maximize the <i>conditional probability</i> of labels in the data: <br>
+
+      $$\argmax_{\mathbf{w}} \prod_n p(y_n | \mathbf{x}_n, \mathbf{w})$$
+
+      The term $p(y_n | \mathbf{x}_n, \mathbf{w})$ is called the conditional likelihood.<br>
+
+      In this setting, the labels $y_n$ are generated based on covariates or features $\mathbf{x}_n$.  We take the product in this expression because we think of individual pairs $\{(\mathbf{x}_n, y_n)\}_{n = 1}^N$ as independently and identically distributed.<br>
+
+      We'll illustrate the discriminative approach using a method called <i>logistic regression</i>.
+
+      <h3>Approach 2:  Generative</h3>
+
+      Our goal is to find parameters $\mathbf{w}$ that maximize the <i>joint distribution</i> of both the features $\mathbf{x}_n$ and labels $y_n$.
+
+      $$\argmax_{\mathbf{w}} \prod_n p(\mathbf{x}_n, y_n | \mathbf{w})$$
+
+      The term $p(\mathbf{x}_n, y_n | w)$ is called the joint likelihood.<br>
+
+      In general, while the discriminative approach is simple, the generative approach is flexible.  The generative approach can add knowledge and handle missing labels quite elegantly.
+
+      We'll illustrate the generative approach using two methods: <i>multi-variate Gaussian</i> models and <i>Naive Bayes</i> models.
+
+      A few notes:
+      <ul>
+            <li>Today for convenience we will assume the two classes are $\{0, 1\}$, where $1$ is the "positive" and $0$ is the "negative" label.</li>
+            <li>A new example $y$ is 1 if the probability that it is 1 is greater than the probability that it is 0.
+
+            \begin{equation}
+              \hat{y} =\left\{
+              \begin{array}{@{}ll@{}}
+                1, & \text{if}\ p(y = 1 | \mathbf{x}) > p(y = 0 | \mathbf{x}) \\
+                0, & \text{otherwise}
+              \end{array}\right.
+            \end{equation}
+
+            </li>
+      </ul>
+
 
       <h2 id="recap5_3">Discriminative Approach</h2>
 
