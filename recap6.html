@@ -13,8 +13,7 @@ weight: 0
       <br>
 
       <h4><a href="https://harvard.zoom.us/rec/play/EvIaD2vZGmMt4lBi7baWqG5sWu0Vqln80gYa_ShMTC_ngm7qGEGkWW77FwnNPZ0EKGPWlrWj2kcP_8iM.wcNzC6U1X5vz_7fe">Lecture Video</a></h4>
-      <h4><a href="files/lecture5_slides.pdf" target="_blank">Slides</a></h4>
-      <h4><a href="files/lecture5_ipad.pdf" target="_blank">iPad Notes</a></h4>
+      <h4><a href="files/lecture6_ipad.pdf" target="_blank">iPad Notes</a></h4>
 
       <h3>Lecture 6 Summary</h3>
 
@@ -36,7 +35,14 @@ weight: 0
 
       Today is perhaps the most important lecture in terms of application of our knowledge into the real world. Specifically, today's topic is the frequentist view of model selection (the next lecture is the Bayesian view of model selection). While the Bayesian view is very elegant, the frequentist view is much more practical. <br><br>
 
-      THe goal of today is essentially to figure out a why to find models that perform well on new data. If we wanted to, we could always create models that fit to the training data perfectly, but for models to have real world meaning, we want to find models that will actually generalize to new data (as in to still perform well in the presence of new data). We don't want something incredibly complicated that overfits to the patterns of the training data.
+      The goal of today is essentially to figure out a why to find models that perform well on new data. If we wanted to, we could always create models that fit to the training data perfectly, but for models to have real world meaning, we want to find models that will actually generalize to new data (as in to still perform well in the presence of new data). We don't want something incredibly complicated that overfits to the patterns of the training data.
+
+      The question of how to generalize modles will be broken down into three components:
+      <ul>
+        <li><a href="#recap6_1">Basic techniques to select models that will generalize </a></li>
+        <li><a href="#recap6_2">Why models fail to generalize? </a></li>
+        <li><a href="#recap6_3">Ways to get around bias-variance tradeoffs</a></li>
+      </ul>
 
       <h2 id="recap6_2">Examples of Challenges in Model Selection</h2>
 
@@ -86,13 +92,13 @@ weight: 0
 
       <h2 id="recap6_4">Bias Variance Tradeoff</h2>
 
-      Now that we've discussed the process of how to test if models generalize to new data and how do do the same thing if we don't have enough data, we'll take a dive into the theory on how we should select a model class. Specifically, we will do this by looking at the bias variance tradeoff.<br><br>
+      Now that we've discussed the process of how to test if models generalize to new data and how to do the same thing if we don't have enough data, we'll take a dive into the theory on how we should select a model class. Specifically, we will do this by looking at the bias variance tradeoff.<br><br>
 
-      Generally, as a model size (complexity) gets bigger, say, as you go from linear regression to a qudaratic basis, to a cubic basis, the bias goes down, as we get a greater ability to fit our model onto the training data. On the other hand, the potential for a strangely specific curve to show up in a more complicated model increase. In other words, as the model size increase, the variance tends to go up.<br><br>
+      Generally, as a model size (complexity) gets bigger, say, as you go from linear regression to a quadratic basis, to a cubic basis, the bias goes down, as we get a greater ability to fit our model onto the training data. On the other hand, the potential for a strangely specific curve to show up in a more complicated model increase. In other words, as the model size increases, the variance tends to go up.<br><br>
 
       This results in a situation where bias goes down while model size increases, but variance goes up while model size increases, leading to a sweet spot where we will minimize the overall test error (which is made up of bias and variance). We will want a model that is there, with a minimal test error, and we'll discuss the theory a bit on why we can break the error down into bias and variance.<br><br>
 
-      <u>Student Question: Is model size the same as number of parameters?</u> Roughly speaking yes, but parameters might not be indpendent of each other, so it might not necssarily be the case. But this is a reasonable proxy to consider.<br><br>
+      <u>Student Question: Is model size the same as number of parameters?</u> Roughly speaking yes, but parameters might not be independent of each other, so it might not necessarily be the case. But this is a reasonable proxy to consider.<br><br>
 
       Note: a big asusmption we are making here is that optimiziation is not an issue (as in we're assuming we're doing the gradient descent well, or we have an analytic solution, etc. This doesn't mean we're assuming we have the best test accuracy, but we are indeed assming that we are optimizing models correctly).
 
@@ -104,7 +110,7 @@ weight: 0
 
       $$E_{y}[(y - \hat{y})^2] = E[(y - f_{D}(x))^2]$$
 
-      In real life, y has a mean $\bar{y}$ (this is how we define $\bar{y}$). Note that the model could be different as $\bar{y}$ (since the model might not properly capture the real life pattern of y). We now do the following modification to the equation, then expand:
+      In English, this basically means we are trying to minimize the expected square distance from any data point in our dataset to our model's prediction at a given $x$. In particular, note also that our term $f_{D}(x))^2$ is dependent on our dataset, $D$. In real life, y has a mean $\bar{y}$ (this is how we define $\bar{y}$). Note that the model could be different as $\bar{y}$ (since the model might not properly capture the real life pattern of y). We now do the following modification to the equation, then expand:
 
       $$E[(y - \bar{y} + \bar{y} - f_{D}(x))^2]$$
 
@@ -114,9 +120,9 @@ weight: 0
 
       In the above equation, the first term is variance of the true noise. Imagine a scenario whenever I use a sensor to capture the data, and it always has some error, there's nothing we can do about it in the modeling process to solve this.<br><br>
 
-      The second term is error due to a bad model.<br><br>
+      The second term is error due to a bad model. When it is large, our model prediction, $f_{D}(x)$, varies significantly from the "real life" dataset mean, $\bar{y}. <br><br>
 
-      The third term ends up being 0. This is because we assume noises (as in $y - \bar{y}$) are independently chosen, at run time, and so hence we can say the first term (of the third term) is independent of second term. Then, we can separate the expectations, and multiply the two to find that the whole thing goes to zero because the first term goes to zero.<br><br>
+      The third term ends up being 0. This is because we assume noises (as in $y - \bar{y}$) are independently chosen, at run time, and so hence we can say the first term (of the third term) is independent of second term. More importantly, the second term (of the third term) is a constant value: it is just our prediction value subtracting the true value at a given $x$. By expectation rules, we pull the second term out of the expectation. Then, multiply the two to find that the whole thing goes to zero because the remaining expected value of the first term goes to zero.<br><br>
 
       Next, we break up the second term above.<br><br>
 
@@ -128,7 +134,7 @@ weight: 0
 
       Now, we can break down the above expression.<br><br>
 
-      For the first term, we can rewrite this as: $(\bar{y}-\bar{f}(x))^2$, as these are constants that won't change after we take the expectation. The first term reprsents the bias squared. It shows that if you have the wrong model class, you you will suffer an error here no matter how good everything else is.<br><br>
+      For the first term, we can rewrite this as: $(\bar{y}-\bar{f}(x))^2$, as these are constants that won't change after we take the expectation. The first term represents the bias squared. It shows that if you have the wrong model class, you you will suffer an error here no matter how good everything else is.<br><br>
 
       The second term is the variance of model fit. If all the models are very far from the mean, that will contribute to the error term here.<br><br>
 
@@ -137,7 +143,9 @@ weight: 0
       $$2(\bar{y}-\bar{f}(x))E[\bar{f}(x)-\hat{y}(x)] = 2(\bar{y}-\bar{f}(x))(0) = 0$$
 
       So overall, we have:
-      $$E[(y-\hat{y})^2] = \textrm{noise} + \textrm{bias}^2 + \textrm{variance}$$
+      $$E[(\bar{y}-\hat{y})^2] = \textrm{noise} + \textrm{bias}^2 + \textrm{variance}$$
+
+      Only the bias and the variance are controllable through your model. Note that we went through two rounds of calculating the expectation: one expectation of $y|x$ and one term over the possible of choices of datasets. 
 
       <h2 id="recap6_5">Ways to Manage the Bias-Variance Tradeoff</h2>
 
