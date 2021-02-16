@@ -7,7 +7,7 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: February 18, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfOFrH5hFSp5mnV53qS4lTWFzm5pDAY_BLhMlIs-pl-GHAw-Q/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOFrH5hFSp5mnV53qS4lTWFzm5pDAY_BLhMlIs-pl-GHAw-Q/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: February 16, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfOFrH5hFSp5mnV53qS4lTWFzm5pDAY_BLhMlIs-pl-GHAw-Q/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOFrH5hFSp5mnV53qS4lTWFzm5pDAY_BLhMlIs-pl-GHAw-Q/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 2.8, 2.9</h4>
 
       <br>
@@ -26,11 +26,11 @@ weight: 0
 
       <h2 id="recap7_1">Diversion: More Real World Context on Model Selection</h2>
 
-      We start the lecture with a few more real world examples to discuss. 
+      We start the lecture with a few more real world examples to discuss. If inaccurate assumptions are made, models can be wrong even when all of the math is correct. For instance, we might assume that data features are independent of each other when the real-world features are actually correlated. 
+      
+      <br><br>
 
-      If inaccurate assumptions are made, models can be wrong even when all of the math is correct. For instance, we might assume that data features are independent of each other when the real-world features are actually correlated. 
-
-      Another example is a medical model assuming that antidepressants and patient features produce a recovery outcome, and that a correct drug could be selected for each patient to help them recover. Machine learning was used to predict antidepressant recommendations, but the model ended up overfitting. In the data, some patients’ illnesses were just less severe. These patients were more likely to get better no matter what medication they were prescribed. So this model would predict medications and these patients would probably get well, but not because it was the best drug — this was just an easy patient to treat.
+      Another example is a medical model assuming that antidepressants and patient features produce a recovery outcome, and that a correct drug could be selected for each patient to help them recover. Machine learning was used to predict antidepressant recommendations, but the model ended up overfitting. In the data, some patients’ illnesses were just less severe. These patients were more likely to get better no matter what medication they were prescribed. The model would predict medications and these patients would probably get well, but not because it was the best drug — this was just an easy patient to treat.
 
       <br><br>
 
@@ -38,27 +38,32 @@ weight: 0
 
       When we talked about classification, we had discriminative and generative models. Each one makes sense in different scenarios.
 
-      Discriminative: Use $x$ to predict $y$ by maximizing $p(y | x)$. As an example, we might use data about a customer’s features ($x$) to predict what they will buy ($y$).
+      <ul>
+      <li>Discriminative: Use $x$ to predict $y$ by maximizing $p(y | x)$. As an example, we might use data about a customer’s features ($x$) to predict what they will buy ($y$).</li>
       
-      Generative: Consider how the data is being produced by modeling $p(x,y)$. As an example, we might have data about patient symptoms ($y$) and want to know what disease produced them ($x$).
-      
+      <li>Generative: Consider how the data is being produced by modeling $p(x,y)$. As an example, we might have data about patient symptoms ($y$) and want to know what disease produced them ($x$).</li>
+      </ul>
       Earlier in Lecture 3, we discussed a generative setting where data was produced via the following story:
       <!-- TODO: ADD LECTURE 3 HREF -->
       
       <ol>
         <li>We have an input $x$</li>
-        <li>We have a noise sample $\epsilon$</li>
-        <li>The data $y$ is produced as $y = w^Tx + \epsilon \sim \mathcal{N}(0,\sigma^2)$</li>
+        <li>We have a noise sample $\epsilon \sim \mathcal{N}(0,\sigma^2)$</li>
+        <li>The data $y$ is produced as $y = w^Tx + \epsilon$</li>
       </ol>
       
-      In the Lecture 3 story, $w$ was fixed. Today, we will add a step 0 where we consider $w$ to be a random variable as well. (The $w$’s are the different models we are considering. For example, they might represent all possible decision boundary lines. (EDIT SO ITS NOT CONFUSING WHAT W IS???)) Through the Bayesian view, we can look at three useful concepts: the posterior distribution, the posterior predictive, and the marginal likelihood.
+      In the Lecture 3 story, $w$ was fixed. Today, we will add a step 0 where we consider $w$ to be a random variable as well. (The $w$’s are the different models we are considering. For example, they might represent all possible decision boundary lines. Through the Bayesian view, we can look at three useful concepts: the posterior distribution, the posterior predictive, and the marginal likelihood.
       
       <ul>
         <li>
-          After obtaining some data $X, y$, we can compute the <B>posterior distribution</B> $p(w | X,y)$. This tells us, “Given all the data you’ve seen in $X$ and $y$, these are the possibilities of what $w$ will look like.”
+          <B>Posterior distribution.</B> After obtaining some data $X, y$, we can compute the posterior distribution $p(w | X,y)$. This tells us, “Given all the data you’ve seen in $X$ and $y$, these are the possibilities (and probabilities) for what $w$ will look like.”
 
+          <br><br>
+          
           How can we find this distribution? First observe that in the data generation story we’re currently considering, we only need to know $w$, $x’$, and $\epsilon$ to get $y’$. So, we can make simplifications such as $p(y’ | w, x’, X, y) = p(y’ | w, x’)$, because the value of $y’$ does not depend on previously observed data. Also, seeing more $x$’s alone does not tell us more about what $w$ is, but seeing more labeled pairs of $x$’s and $y$’s together does tell us more about $w$’s distribution. Thus, $p(w|X) = p(w)$, but $p(w|X, y) \neq p(w)$.
 
+          <br><br>
+          
           Using this along with the fact that $p(y | X)$ does not depend on $w$, we can apply Bayes’ Theorem and then do some simplifying:
 
           \begin{align*}
@@ -69,12 +74,14 @@ weight: 0
 
           Depending on the setting and prior, this could be an easy calculation (if there's conjugacy) or a hard calculation (if there's not).
 
+          <br><br>
+
           <u>Note:</u> Conjugacy is when the prior and posterior are from the same family of distributions (e.g. both Gaussian, or both Beta). It can provide nice mathematical properties and cleaner forms that make optimization later on much easier. 
         </li>
 
         <li>
 
-          Improving our understanding of $w$’s distribution is nice, but to actually make predictions, we use the <B>posterior predictive</B> $p(y’ | x’, X, y)$. For a new piece of test data $x’$, the posterior predictive $p(y’ | x’, X, y)$ tells us how likely the label for $x’$ is to be $y’$ given the data $X, y$ that we have already observed. To find the posterior predictive, we would integrate over the possible $w$’s in our posterior distribution for $w$:
+          <B>Posterior predictive.</B> Improving our understanding of $w$’s distribution is nice, but to actually make predictions, we use the posterior predictive $p(y’ | x’, X, y)$. For a new piece of test data $x’$, the posterior predictive $p(y’ | x’, X, y)$ tells us how likely the label for $x’$ is to be $y’$ given the data $X, y$ that we have already observed. To find the posterior predictive, we would integrate over the possible $w$’s in our posterior distribution for $w$:
 
           $$p(y’ | x’, X, y) = \int_w p(y’ | w, x’)p(w | X, y)dw$$ 
 
@@ -83,7 +90,7 @@ weight: 0
         </li>
 
         <li>
-          Finally, we can compute the <B>marginal likelihood</B>, the probability of the training set
+          <B>Marginal likelihood.</B> Finally, we can compute the marginal likelihood, the probability of the training set
 
           $$p(x,y) = \int_w p(y | X,w)p(w)dw$$
 
@@ -137,7 +144,7 @@ weight: 0
 
       <h3>1. Defining the Bernoulli Part</h3>
 
-      Let's consider a coin that comes up "1" with probability $\theta$. This is the Bernoulli PMF:
+      Let's consider a coin that comes up "1" with probability $\theta$. Let $x$ be the result of the toss. This is the Bernoulli PMF:
 
       $$p(x | \theta) = \theta^x (1 - \theta)^{1 - x}$$
 
