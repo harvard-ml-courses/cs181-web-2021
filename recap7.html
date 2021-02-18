@@ -12,6 +12,9 @@ weight: 0
 
       <br>
 
+      <h4><a href="https://harvard.zoom.us/rec/play/3Rs5-CUfscUw4Spx0SouTEb2IVjbql0NdGyc_uelsI1ooPuGvtuPQEryOS0EdjGUvs5JzgJ6bRgbCwAB.0jRR41-cBQcNivT7">Lecture Video</a></h4>
+      <h4><a href="files/lecture7_ipad.pdf" target="_blank">iPad Notes</a></h4>
+
       <h3>Lecture 7 Summary</h3>
 
       <ul>
@@ -21,7 +24,7 @@ weight: 0
         <li><a href="#recap7_4">Concept 2 - What we want to find: The Posterior Predictive Distribution</a></li>
         <li><a href="#recap7_5">Concept 3 - How to choose the best model: The Marginal Likelihood</a></li> -->
         <li><a href="#recap7_6">Example using the Beta-Bernoulli Model</a></li>
-        <li><a href="#recap7_7">Bayesian Occam's Razor</a></li>
+        <!-- <li><a href="#recap7_7">Bayesian Occam's Razor</a></li> -->
       </ul>
 
       <h2 id="recap7_1">Diversion: More Real World Context on Model Selection</h2>
@@ -43,8 +46,7 @@ weight: 0
       
       <li>Generative: Consider how the data is being produced by modeling $p(x,y)$. As an example, we might have data about patient symptoms ($y$) and want to know what disease produced them ($x$).</li>
       </ul>
-      Earlier in Lecture 3, we discussed a generative setting where data was produced via the following story:
-      <!-- TODO: ADD LECTURE 3 HREF -->
+      Earlier in <a href="recap3.html">Lecture 3</a>, we discussed a generative setting where data was produced via the following story:
       
       <ol>
         <li>We have an input $x$</li>
@@ -52,9 +54,11 @@ weight: 0
         <li>The data $y$ is produced as $y = w^Tx + \epsilon$</li>
       </ol>
       
-      In the Lecture 3 story, $w$ was fixed. Today, we will add a step 0 where we consider $w$ to be a random variable as well. (The $w$’s are the different models we are considering. For example, they might represent all possible decision boundary lines. Through the Bayesian view, we can look at three useful concepts: the posterior distribution, the posterior predictive, and the marginal likelihood.
+      In the Lecture 3 story, $w$ was fixed. Today, we will add a step 0 where we consider $w$ to be a random variable as well. (The $w$’s are the different models we are considering. For example, they might represent all possible decision boundary lines.) Through the Bayesian view, we can look at three useful concepts: the posterior distribution, the posterior predictive, and the marginal likelihood.
       
-      <ul>
+      <br><br>
+
+      <ol>
         <li>
           <B>Posterior distribution.</B> After obtaining some data $X, y$, we can compute the posterior distribution $p(w | X,y)$. This tells us, “Given all the data you’ve seen in $X$ and $y$, these are the possibilities (and probabilities) for what $w$ will look like.”
 
@@ -76,12 +80,12 @@ weight: 0
 
           <br><br>
 
-          <u>Note:</u> Conjugacy is when the prior and posterior are from the same family of distributions (e.g. both Gaussian, or both Beta). It can provide nice mathematical properties and cleaner forms that make optimization later on much easier. 
+          <u>Note:</u> Conjugacy is when the prior and posterior are from the same family of distributions, like if they're both Gaussian or both Beta. It can provide nice mathematical properties and cleaner forms that make calculations much easier. 
         </li>
 
         <li>
 
-          <B>Posterior predictive.</B> Improving our understanding of $w$’s distribution is nice, but to actually make predictions, we use the posterior predictive $p(y’ | x’, X, y)$. For a new piece of test data $x’$, the posterior predictive $p(y’ | x’, X, y)$ tells us how likely the label for $x’$ is to be $y’$ given the data $X, y$ that we have already observed. To find the posterior predictive, we would integrate over the possible $w$’s in our posterior distribution for $w$:
+          <B>Posterior predictive.</B> To make predictions, we use the posterior predictive $p(y’ | x’, X, y)$. For a new piece of test data $x’$, the posterior predictive $p(y’ | x’, X, y)$ tells us how likely the label for $x’$ is to be $y’$ given the data $X, y$ that we have already observed. To find the posterior predictive, we would integrate over the possible $w$’s in our posterior distribution for $w$:
 
           $$p(y’ | x’, X, y) = \int_w p(y’ | w, x’)p(w | X, y)dw$$ 
 
@@ -95,9 +99,8 @@ weight: 0
           $$p(x,y) = \int_w p(y | X,w)p(w)dw$$
 
           The posterior predictive is what we use for inference (making predictions), but maximizing the marginal likelihood is what helps us select a model. 
-          <!-- get what a 'model' is clarified -->
         </li>
-      </ul>
+      </ol>
 
       
       <!-- <h2 id="recap7_3">Concept 1 - What we now have: The Posterior Distribution</h2>
@@ -148,7 +151,7 @@ weight: 0
 
       $$p(x | \theta) = \theta^x (1 - \theta)^{1 - x}$$
 
-      If we want to write out the probability of multiple coin flips, then we have:
+      If we want to write out the probability of a dataset of multiple coin flips, then we have:
 
       $$p(x_1 ... x_n | \theta) = \prod_n (\theta)^{x_n}(1-\theta)^{1 - x_n}$$
 
@@ -156,52 +159,108 @@ weight: 0
 
       Where in the above, $n_1$ is the number of heads, and $n_0$ is the number of tails.<br><br>
 
-      <u>Side Note:</u> at this point, we could've taken the maximum likelihood frequentist approach as follows $\theta_{MLE} = argmax_{\theta}$ $\theta^{n_1}(1-\theta)^{n_0}$, which leads us to an intuitive answer: $n_1/(n_1 + n_0)$<br><br>
+      If we take the maximum likelihood frequentist approach here, we would get $\theta_{MLE} = argmax_{\theta}$ $\theta^{n_1}(1-\theta)^{n_0}$, which leads us to an intuitive answer, the percentage of flips that came up heads: $n_1/(n_1 + n_0)$<br><br>
 
       <h3>2. Defining the Beta Part</h3>
 
-      In the Bayesian approach, we have $p(\theta)$ ~ $Beta(\alpha, \beta)$<br><br>
+      The MLE approach was one option for inferring $\theta$, but today we'll be considering the Bayesian approach instead. In the Bayesian approach, we have $p(\theta)$ ~ $Beta(\alpha, \beta)$. <br><br>
 
-      This is the PDF: $p(\theta) = \frac{1}{B(\alpha, \beta)} \theta^{\alpha-1}(1 - \theta)^{\beta - 1}$. Conveniently this is conjugate to our likelihood (you can tell by eyeballing it too that looks a lot like our likelihood), leading to an easy calculation in the next step (this is the same thing as mentioned above, where when there is conjugacy, then there is an easier calculation).
+      Now in our data generation story, Step 0 is drawing $\theta$ from a Beta distribution. Step 1 is drawing $N$ coin flips $x_i$ from $Bern(\theta)$ after $\theta$ is determined. <br><br>
+
+      The Beta distribution is parameterized by $\alpha$ and $\beta$, which describe our prior beliefs about what the probability distribution for $w$ should look like. We can think of $\alpha$ and $\beta$ as values for how many heads and tails we've seen so far - if we set $\alpha > \beta$, it would be like saying we had seen more heads than tails so far, and our prior distribution would be higher on the right. When $\alpha = \beta = 1$, the distribution is uniform, which best represents a case where we are clueless about what $\theta$ might be. If we set $\alpha = \beta > 1$, it reflects a belief that we've seen an equal number of heads and tails, and that $\theta$ is likely to be around $0.5$.     
+<!--       
+      <br><br>
+      
+      This is the beta PDF: $p(\theta) = \frac{1}{B(\alpha, \beta)} \theta^{\alpha-1}(1 - \theta)^{\beta - 1}$. Conveniently this is conjugate to our likelihood (you can tell by eyeballing it too that looks a lot like our likelihood), leading to an easy calculation in the next step. -->
 
       <h3>3. Calculating the Posterior</h3>
 
-      As from before, we have:
+      Starting from the proportionality we found earlier and plugging in the Beta PDF, we have:
 
-      $$p(\theta | X) \propto p(X|\theta)p(\theta)$$
+      \begin{align*}
+        p(\theta | X) &\propto p(X|\theta)p(\theta)
+        \\ &= \theta^{n_1}(1-\theta)^{n_0}z_{\alpha, beta}\theta^{\alpha - 1}(1-\theta)^{\beta - 1}
+        \\ &= z_{alpha,beta} \theta^{n_1 + \alpha - 1}(1 - \theta)^{n_0 + \beta - 1}
+      \end{align*}
+
+      The $z$ is just a normalizing constant that will integrate to 1. We don't need to worry about it right now. We just rewrote our posterior into the form of another Beta distribution, specifically $Beta(n_1 + \alpha, n_0  +\beta)$. Recall that our prior was $Beta(\alpha, \beta)$. Since they come from the same distribution family, we have conjugacy.
+
+
+      <!-- $$p(\theta | X) \propto p(X|\theta)p(\theta)$$
 
       $$\theta^{\alpha - 1 + n_1} (1 - \theta)^{\beta - 1 + n_0}$$
 
       We've multiplied the likelihood with the prior (here, the PDF of a Beta). Since we are looking at proportionality, we can drop the constants.<br><br>
 
-      We then add in a normalization factor of $\frac{1}{B(\alpha + n_1, \beta + n_0)}$, which we can do by matching on to the same pattern from before. We do this because this is a probability function, so we need to make sure the sum of the probabilities comes out to 1.<br><br>
+      We then add in a normalization factor of $\frac{1}{B(\alpha + n_1, \beta + n_0)}$, which we can do by matching on to the same pattern from before. We do this because this is a probability function, so we need to make sure the sum of the probabilities comes out to 1.<br><br> -->
 
-      <h3>4. A Pause for Intuition</h3>
+      <!-- <h3>4. A Pause for Intuition</h3>
 
-      Let's pause for our intuition on the prior of Beta. Let's say we had $\alpha = 1$ and $\beta = 1$. That would be equivalent to a prior of seeing 1 head and 1 tail, which (feel free to look up the Beta distribution on Google at this to help visualize the intuition), basically puts more weight on the $\theta$ being 0.5, which intuitively makes sense. If we had $\alpha = 3$ and $\beta = 3$, then it'd be an even more extreme version of the same thing, with even more weight on 0.5, because we're even more sure it's 0.5. But if it were like $\alpha = 3$ and $\beta = 1$, then the $\theta$ distribution would have most of it's weight towards the right, with a higher chance that $\theta = 1$, which again, makes intuitive sense as we've seen 3 heads and only one tail.<br><br>
+      Let's pause for our intuition on the prior of Beta. Let's say we had $\alpha = 1$ and $\beta = 1$. That would be equivalent to a prior of seeing 1 head and 1 tail, which (feel free to look up the Beta distribution on Google at this to help visualize the intuition), basically puts more weight on the $\theta$ being 0.5, which intuitively makes sense. If we had $\alpha = 3$ and $\beta = 3$, then it'd be an even more extreme version of the same thing, with even more weight on 0.5, because we're even more sure it's 0.5. But if it were like $\alpha = 3$ and $\beta = 1$, then the $\theta$ distribution would have most of it's weight towards the right, with a higher chance that $\theta = 1$, which again, makes intuitive sense as we've seen 3 heads and only one tail.<br><br> -->
 
-      <h3>5. Calculating the MAP</h3>
+      <h3>5. Finding the Maximum a Posteriori (MAP) </h3>
 
-      We can at this point, choose maximize the posterior, something we've talked over in the course previously.
+      Imagine that we used $\alpha = \beta = 2$ for our prior and that we've done two coin flips, both of which were heads. Then we'd have $n_1 = 2, n_2 = 0$. Using these values of $\alpha, \beta$ for our prior is like believing that we've already "seen" 2 heads and 2 tails that don't count as part of our data, so we are beginning with a belief that the coin is likely to be equal.<br><br>
+
+      After seeing two heads, our posterior distribution would be shifted to be higher on the right side, towards 1. The point at the peak of the posterior distribution is the Maximum a posteriori predictor (MAP). The MAP predictor can be solved for as 
+
+      $$\theta_{MAP} = \frac{n_1 + \alpha - 1}{\frac(n_0 + n_1 + \alpha + \beta - 2} = \frac34.$$
+
+      The form is the same as $\theta_{MLE}$'s form was, except the MAP includes the $\alpha$ and $\beta$ of the prior as well. <br><br>
+
+      Using a frequentist MLE approach where we only consider the data we've seen, we would have gotten $\theta_{MLE} = 1$ as our estimator because we have seen only heads. $\theta_MAP$ incorporates our prior beliefs about how $\theta$ is distributed in addition to the data we've observed. <br><br>
+
+      <!-- We can at this point, choose maximize the posterior, something we've talked over in the course previously.
 
       $$\theta_{MAP} = argmax_{\theta} p(\theta | x) = \alpha - 1 + n_1 / (\alpha + \beta + n_0 + n_1 - 2)$$
 
       For the math, we omit it because we can basically just pattern match to the max likelihood calculation before, it looks exactly the same in format. The intuition here is that as n gets large, the data will overwhelm whatever prior you have. This almost feels like regularization really, where we're trying to pull back and not look purely at the data, but give a gentle pull closer to 0.5 (if we set our $\alpha$ and $\beta$ that way), almost like a gentle tug. It's important to note that this isn't taking advantage of all the information in the posterior, but rather simply a maximum.<br><br>
 
-      <h3>6. Calculating the Posterior Predictive</h3>
+       -->
+      <h3>6. Using the Posterior Predictive</h3>
 
-      The most Bayesian person would actually go look for the posterior predictive distribution.
+      The most Bayesian person would actually integrate over the posterior distribution instead of choosing a value for $\theta$ -- after all, $\theta$ is supposed to be a random variable we don't know the value of. Let's consider the probability that our next coin flip will be heads. Conveniently, this is equal to the expected value of $\theta$. 
 
-      $$p(x = 1|X) = \int p(x=1|\theta) p(\theta | x_1 ... x_n )$$
+      \begin{align*} 
 
-      $$p(x = 1|X) = \int \theta \textrm{ } p(\theta | x_1 .. x_n)$$
+      p(x = 1|X) &= \int p(x=1|\theta) p(\theta | x_1 ... x_n )
+      \\ &= \mathbb{E}_{p(\theta | X)}
+      \\ &= \frac{\alpha + n_1}{\alpha + \beta + n_1 + n_0} = \frac46 = \frac23
+      
+      \end{align*}
 
-      Now it so happens to be that we're taking the expected value of theta because we used the trick to start the probabiliyt of heads with $\theta$, so we can use that information to calculate this term. It's very important to realize that we chose this purely out of covenience. In a real life situation, the probabilty of heads very likely won't be set perfectly in that way. Now we can calculate as follows:
+      <!-- $$p(x = 1|X) = \int p(x=1|\theta) p(\theta | x_1 ... x_n )$$
 
-      $$E[\theta] = (\alpha + n_1)/(\alpha + \beta + n_1 + n_0)$$
+      $$p(x = 1|X) = \int \theta \textrm{ } p(\theta | x_1 .. x_n)$$ -->
 
-      <h3>7. Summary and Final Example</h3>
+      <!-- Now it so happens to be that we're taking the expected value of theta because we used the trick to start the probability of heads with $\theta$, so we can use that information to calculate this term. It's very important to realize that we chose this purely out of covenience. In a real life situation, the probabilty of heads very likely won't be set perfectly in that way. Now we can calculate as follows:
 
+      $$E[\theta] = (\alpha + n_1)/(\alpha + \beta + n_1 + n_0)$$ -->
+
+      <h3>Quick Summary</h3>
+        We've now seen three ways to infer what $\theta$ is:
+        <ol>
+            <li>MLE: Let's predict using just the data we have seen.</li>
+            <li>MAP: Let's compute the posterior distribution and select the value for $\theta$ with highest probability.</li>
+            <li>Posterior Predictive: If we're feeling super Bayesian, we can avoid picking a single $\theta$ value. Instead, we'll integrate over the whole distribution to get an expected $\theta$. </li>
+        </ol>
+
+
+      <h3>Finally: How We Select Models</h3>
+      
+      What if we didn't know whether to use $\alpha_1, \beta_1$ or $\alpha_2, \beta_2$ as our prior? We can make the decision by comparing $p(X| alpha_1 beta_1)$ vs. $p(X| alpha_2, beta_2)$ to see which option makes the data we observed more likely.
+      
+      \begin{align*} 
+      p(X) &= \int_{\theta}p(X | \theta)p(\theta)d\theta
+      \\  &= \int_{\theta} \theta^{n_1}(1-\theta)^{n_0}z_{alpha, beta}\theta^{alpha - 1}(1-\theta)^{\beta - 1}d\theta
+      \\ &= z_{\alpha, \beta}\int_{\theta} \theta^{n_1 + \alpha - 1}(1 - \theta)^{n_0 + \beta - 1}\frac{z_{n_1 + \alpha, n_0 + \beta}}{z_{n_1 + \alpha, n_0 + \beta}d\theta
+      \\ &= \frac{z_{\alpha, \beta}}{z_{n_1 + \alpha, n_0 + \beta}} \int_{\theta} \theta^{n_1 + \alpha - 1}(1 - \theta)^{n_0 + \beta - 1}z_{n_1 + \alpha, n_0 + \beta}d\theta
+      \\ &= \frac{z_{\alpha, \beta}}{z_{n_1 + \alpha, n_0 + \beta}} \cdot 1
+      \\ &= \frac{z_{\alpha, \beta}}{z_{n_1 + \alpha, n_0 + \beta}}
+      \end{align*}
+
+      The integrand at the end is equal to $1$ because we manipulated it into the form of an integral over a $Beta(n_1 + \alpha, n_0 + \beta)$ distribution.
+<!-- 
       Example: Suppose $\alpha = \beta = 1$ as our prior. Then, we see 2 heads.
 
       $$p(x = 1 | \theta_{MLE}) = 1$$
@@ -212,14 +271,14 @@ weight: 0
 
       $$p(x = 1| \textrm{2 heads}, \alpha, \beta) = 3/4$$
 
-      <u>Student Question: Why is the MLE 1?</u> We had 2 head flips, we don't consider any prior, and so we divide 2 head flips over 2 total flips and get 1.
+      <u>Student Question: Why is the MLE 1?</u> We had 2 head flips, we don't consider any prior, and so we divide 2 head flips over 2 total flips and get 1. -->
 
-      <h2 id="recap7_7">Bayesian Occam's Razor</h2>
+      <!-- <h2 id="recap7_7">Bayesian Occam's Razor</h2>
 
       The idea of Occam's Razor is often times, the simpler model is better (amongst the feasible choices). The intuition behind this in the Bayesian sense is as follows. <br><br>
 
       First, we remember that in the Bayesian view, a common theme we've kept seeing is that we're essentially averaging over all possible models when we make our predictions. This is important because this influences how we select our model class. If we select a more complicated model class, say quadratic, because the size of the model class is big, the probability of any particular model being the right model is smaller, as the total sum of probabily is 1 no matter what, so each model is spread thin and has a small probabilty of actually being the best model. As we move from quadratric to linear, the probability of any given model of a linear class is naturally higher, since there are less possible models (model class is smaller) in the first place. Finally, if we go to a constant based model, the model class is even smaller, leading to an even higher probability per model.<br><br>
 
-      Essentially, we have the following idea. Obviously, if our data is in any way complicated, we can't pick the constant based model, because that is way too simple to model our data. However, amongst the feasible choices (say between linear and quadratic), we should always pick the simpler model class. In the simpler model class, there are less possibilities in an overall smaller model class size, so each individual model is more likely to occur.
+      Essentially, we have the following idea. Obviously, if our data is in any way complicated, we can't pick the constant based model, because that is way too simple to model our data. However, amongst the feasible choices (say between linear and quadratic), we should always pick the simpler model class. In the simpler model class, there are less possibilities in an overall smaller model class size, so each individual model is more likely to occur. -->
     </div>
 </section>
