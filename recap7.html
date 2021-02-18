@@ -136,7 +136,7 @@ weight: 0
 
       After seeing two heads, our posterior distribution would be shifted to be higher on the right side, towards 1. The point at the peak of the posterior distribution is the Maximum a posteriori predictor (MAP). The MAP predictor can be solved for as 
 
-      $$\theta_{MAP} = \frac{n_1 + \alpha - 1}{\frac(n_0 + n_1 + \alpha + \beta - 2} = \frac34.$$
+      $$\theta_{MAP} = \frac{n_1 + \alpha - 1}{n_0 + n_1 + \alpha + \beta - 2} = \frac34.$$
 
       The form is the same as $\theta_{MLE}$'s form was, except the MAP includes the $\alpha$ and $\beta$ of the prior as well. The intuition here is that as the number of trials gets large, the data will overwhelm whatever prior you have. <br><br>
 
@@ -148,7 +148,7 @@ weight: 0
 
       \begin{align*} 
 
-      p(x = 1|X) &= \int p(x=1|\theta) p(\theta | x_1 ... x_n )
+      p(x = 1|X) &= \int p(x=1|\theta) p(\theta | x_1 ... x_n )d\theta
       \\ &= \mathbb{E}_{p(\theta | X)}(\theta)
       \\ &= \frac{\alpha + n_1}{\alpha + \beta + n_1 + n_0} = \frac46 = \frac23
       
