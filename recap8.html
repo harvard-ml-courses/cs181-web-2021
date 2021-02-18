@@ -51,17 +51,6 @@ weight: 0
         <img src="{{ site.baseurl }}/images/recap8_1.png" style="width:60%"  alt="Neural Net Diagram 1"></img>
       </div>
 
-      Thought experiment: if we did not apply the $\sigma$ non-linearity, what would our Neural Network approximate? 
-
-      If we didn't apply the non-linearity, we would be applying a series of weights in sequence, amounting to a single linear transformation. This makes the Neural Network no different from traditional linear machine learning algorithms. Notice that: 
-      $$
-      
-      $$Phi &= W^1 x_n + w^1_0  $$
-      $$h &= w_f^T \Phi + w_0^f  $$
-      $$ &= w_f^T W^1 x_n + w_f^T w_0^1 _ w_0^f $$
-      
-      $$
-
       <br>
 
       The equations below correspond with the graph above, where x here represents a single datapoint with d dimensions.
@@ -101,6 +90,14 @@ weight: 0
       $$\phi_1 = \sigma(W^1_{11}x_1 + W^1_{12}x_2 + W^1_{13}x_3 + b^1_1)$$
 
       Note that we don't depict the bias in the diagram. There is basically also one bias term applied to each of the J $\phi$ terms.<br><br>
+
+      <u>Thought experiment: if we did not apply the $\sigma$ non-linearity, what would our Neural Network approximate? </u>
+
+      If we didn't apply the non-linearity, we would be applying a series of weights in sequence, amounting to a single linear transformation. This makes the Neural Network no different from traditional linear machine learning algorithms. Notice that: 
+            
+      $$Phi &= W^1 x_n + w^1_0  $$
+      $$h &= w_f^T \Phi + w_0^f  $$
+      $$ &= w_f^T W^1 x_n + w_f^T w_0^1 _ w_0^f $$
 
       <u>Student Question: Why do we name the output node f, and not $\hat{y}$?</u> We name this f and not $\hat{y}$ because we are keeping our expression general enough to be used for either of both classification and regression. This means, if we use it for classification, we could feed it into a sigmoid function (note: we are only working with a one node output layer, so we can only do binary classification which is achieved with sigmoid), and end up with $\hat{y} = \sigma(f) = \sigma(w^T\phi + w_0)$, and then we could use the result to convert the number into a class (if we were doing multiclass, we would need multiple output nodes in the output layer, and then apply softmax, for example). If used for regression (note: it has to be a one dimensional y here because again, we only have one output), then yes, f wouldn't need to be passed through $\sigma$, $\hat{y}$ would directly equal f.<br><br>
 
