@@ -20,7 +20,7 @@ weight: 0
       <ul>
         <li><a href="#recap7_1">Diversion: More Real World Context on Model Selection</a></li>
         <li><a href="#recap7_2">Intro to Bayesian Model Selection</a></li>
-        <li><a href="#recap7_3">Example using the Beta-Bernoulli Model</a></li>
+        <li><a href="#recap7_3">Setting Up a Beta-Bernoulli Model Example</a></li>
         <li><a href="#recap7_4">Different Choices for Predictors</a></li>
         <li><a href="#recap7_5">Model Selection With the Marginal Likelihood</a></li>
       </ul>
@@ -31,7 +31,7 @@ weight: 0
       
       <br><br>
 
-      Another example is a medical model assuming that antidepressants and patient features produce a recovery outcome, and that a correct drug could be selected for each patient to help them recover. Machine learning was used to predict antidepressant recommendations, but the model ended up overfitting. In the data, some patients’ illnesses were just less severe. These patients were more likely to get better no matter what medication they were prescribed. The model would predict medications and these patients would probably get well, but not because it was the best drug — this was just an easy patient to treat.
+      Another example is a medical model assuming that antidepressants and patient features produce a recovery outcome, and that a correct drug could be selected for each patient to help them recover. Machine learning was used to predict antidepressant recommendations, but the model ended up overfitting. In the data, some patients’ illnesses were just less severe. These patients were more likely to get better no matter what medication they were prescribed. The model would predict medications and these patients would probably get well, but not because it was the best drug &mdash this was just an easy patient to treat.
 
       <br><br>
 
@@ -94,7 +94,7 @@ weight: 0
 
       <h3>Defining the Bernoulli Part</h3>
 
-      Let's consider a coin that comes up "1" with probability $\theta$. Let $x$ be the result of the toss. The probability of a flip coming up a certain way comes from the Bernoulli PMF:
+      Let's consider a coin that comes up "1" with probability $\theta$. Let $x$ be the result of the toss. The probability of a flip landing a certain way comes from the Bernoulli PMF:
 
       $$p(x | \theta) = \theta^x (1 - \theta)^{1 - x}$$
 
@@ -112,7 +112,7 @@ weight: 0
 
       Now in our data generation story, Step 0 is drawing $\theta$ from a Beta distribution. Step 1 is drawing $N$ coin flips $x_i$ from $Bern(\theta)$ after $\theta$ is determined. <br><br>
 
-      The Beta distribution is parameterized by $\alpha$ and $\beta$, which describe our prior beliefs about what the probability distribution for $w$ should look like. We can think of $\alpha$ and $\beta$ as values for how many heads and tails we've seen so far - if we set $\alpha > \beta$, it would be like saying we had seen more heads than tails so far, and our prior distribution would be higher on the right. When $\alpha = \beta = 1$, the distribution is uniform, which best represents a case where we are clueless about what $\theta$ might be. If we set $\alpha = \beta > 1$, it reflects a belief that we've seen an equal number of heads and tails, and that $\theta$ is likely to be around $0.5$.     
+      The Beta distribution is parameterized by $\alpha$ and $\beta$, which describe our prior beliefs about what the probability distribution for $w$ should look like. We can think of $\alpha$ and $\beta$ as values for how many heads and tails we've seen so far &mdash if we set $\alpha > \beta$, it would be like saying we had seen more heads than tails so far, and our prior distribution would be higher on the right. When $\alpha = \beta = 1$, the distribution is uniform, which best represents a case where we are clueless about what $\theta$ might be. If we set $\alpha = \beta > 1$, it reflects a belief that we've seen an equal number of heads and tails, and that $\theta$ is likely to be around $0.5$.     
 
       <h3>Calculating the Posterior</h3>
 
@@ -146,7 +146,7 @@ weight: 0
 
       The form is the same as $\theta_{MLE}$'s form was, except the MAP includes the $\alpha$ and $\beta$ of the prior as well. The intuition here is that as the number of trials gets large, the data will overwhelm whatever prior you have. <br><br>
 
-      Using a frequentist MLE approach where we only consider the data we've seen, we would have gotten $\theta_{MLE} = 1$ as our estimator because we have seen only heads. $\theta_MAP$ incorporates our prior beliefs about how $\theta$ is distributed in addition to the data we've observed. <br><br>
+      Using a frequentist MLE approach where we only consider the data we've seen, we would have gotten $\theta_{MLE} = 1$ as our estimator because we have seen only heads. $\theta_{MAP}$ incorporates our prior beliefs about how $\theta$ is distributed in addition to the data we've observed. <br><br>
 
       <h3>Using the Posterior Predictive</h3>
 
@@ -181,7 +181,7 @@ weight: 0
       \\ &= \frac{z_{\alpha, \beta}}{z_{n_1 + \alpha, n_0 + \beta}}
       \end{align*}
 
-      The integrand at the end is equal to $1$ because we manipulated it into the form of a a $Beta(n_1 + \alpha, n_0 + \beta)$ distribution, which will integrate to $1$.
+      The integrand at the end is equal to $1$ because we manipulated it into the form of a $Beta(n_1 + \alpha, n_0 + \beta)$ distribution, which will integrate to $1$.
 
     </div>
 </section>
