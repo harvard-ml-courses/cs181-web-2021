@@ -45,11 +45,20 @@ weight: 0
 
       Let us all breakdown what's in the diagram below. First, in the leftmost layer of nodes, we have a bunch of D input dimensions. Next, between the input layer and the first hidden layer (the layer of $\phi$'s), we write out two parameters: $W^1$ and $b^1$. These parameters are drawn between the two layers because they serve exactly that purpose: to get us from our x input to the the hidden layer. How do we determine the dimensions of $W^1$? By convention, they will be J by D because the convention is to have the row as the dimension of the resulting layer and the column as the dimension of the starting layer (as you can see in the diagram, the dimensions work out in the math this way). In addition, we also have a J by 1 bias term $b^1$, where a given term represent a bias used for the creation of single one of the J nodes in the resulting hidden layer (see the equations in the diagram for the math). Next, let's look between the hidden layer and the output layer. Here, again, since we are between layers, we have parameters $W^2$ and $b^2$ here. The dimesions are 1 by J for $W^2$ since we are going from J dimensions to 1 dimension, and the $b^2$ has dimensions 1 by 1 since the resulting layer dimension is 1 (bias is always the dimesion of the resulting layer, by 1, since you only need one number for each of the nodes of the resulting next layer, and here, since our resulting layer is f that only has one dimension, $b^2$ is literally just a number).<br><br>
 
-      Note: this architecture is called a feed foward neural network because there are no cycles formed betwen the nodes.
+      Note: this architecture is called a feed foward neural network because there are no cycles formed between the nodes.
 
       <div class="text-center">
         <img src="{{ site.baseurl }}/images/recap8_1.png" style="width:60%"  alt="Neural Net Diagram 1"></img>
       </div>
+
+      Thought experiment: if we did not apply the $\sigma$ non-linearity, what would our Neural Network approximate? 
+
+      <br> 
+
+      If we didn't apply the non-linearity, we would be applying a series of weights in sequence, amounting to a single linear transformation. This makes the Neural Network no different from traditional linear machine learning algorithms. Notice that: 
+      $\begin{align} \Phi &= W^1 x_n + w^1_0 \\ h&= w_f^T \Phi + w_0^f  \\ h &= w_f^T W^1 x_n + w_f^T w_0^1 _ w_0^f \end{align}$
+
+      <br>
 
       The equations below correspond with the graph above, where x here represents a single datapoint with d dimensions.
 
