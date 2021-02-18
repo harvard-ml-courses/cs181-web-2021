@@ -31,7 +31,7 @@ weight: 0
       
       <br><br>
 
-      Another example is a medical model assuming that antidepressants and patient features produce a recovery outcome, and that a correct drug could be selected for each patient to help them recover. Machine learning was used to predict antidepressant recommendations, but the model ended up overfitting. In the data, some patients’ illnesses were just less severe. These patients were more likely to get better no matter what medication they were prescribed. The model would predict medications and these patients would probably get well, but not because it was the best drug &mdash this was just an easy patient to treat.
+      Another example is a medical model assuming that antidepressants and patient features produce a recovery outcome, and that a correct drug could be selected for each patient to help them recover. Machine learning was used to predict antidepressant recommendations, but the model ended up overfitting. In the data, some patients’ illnesses were just less severe. These patients were more likely to get better no matter what medication they were prescribed. The model would predict medications and these patients would probably get well, but not because it was the best drug &mdash; this was just an easy patient to treat.
 
       <br><br>
 
@@ -112,7 +112,7 @@ weight: 0
 
       Now in our data generation story, Step 0 is drawing $\theta$ from a Beta distribution. Step 1 is drawing $N$ coin flips $x_i$ from $Bern(\theta)$ after $\theta$ is determined. <br><br>
 
-      The Beta distribution is parameterized by $\alpha$ and $\beta$, which describe our prior beliefs about what the probability distribution for $w$ should look like. We can think of $\alpha$ and $\beta$ as values for how many heads and tails we've seen so far &mdash if we set $\alpha > \beta$, it would be like saying we had seen more heads than tails so far, and our prior distribution would be higher on the right. When $\alpha = \beta = 1$, the distribution is uniform, which best represents a case where we are clueless about what $\theta$ might be. If we set $\alpha = \beta > 1$, it reflects a belief that we've seen an equal number of heads and tails, and that $\theta$ is likely to be around $0.5$.     
+      The Beta distribution is parameterized by $\alpha$ and $\beta$, which describe our prior beliefs about what the probability distribution for $w$ should look like. We can think of $\alpha$ and $\beta$ as values for how many heads and tails we've seen so far &mdash; if we set $\alpha > \beta$, it would be like saying we had seen more heads than tails so far, and our prior distribution would be higher on the right. When $\alpha = \beta = 1$, the distribution is uniform, which best represents a case where we are clueless about what $\theta$ might be. If we set $\alpha = \beta > 1$, it reflects a belief that we've seen an equal number of heads and tails, and that $\theta$ is likely to be around $0.5$.     
 
       <h3>Calculating the Posterior</h3>
 
