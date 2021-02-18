@@ -27,22 +27,17 @@ weight: 0
 
       <h2 id="recap7_1">Diversion: More Real World Context on Model Selection</h2>
 
-      We start the lecture with a few more real world examples to discuss. If inaccurate assumptions are made, models can be wrong even when all of the math is correct. For instance, we might assume that data features are independent of each other when the real-world features are actually correlated. 
-      
-      <br><br>
+      We start the lecture with a few more real world examples to discuss. If inaccurate assumptions are made, models can be wrong even when all of the math is correct. For instance, we might assume that data features are independent of each other when the real-world features are actually correlated. <br><br>
 
       Another example is a medical model assuming that antidepressants and patient features produce a recovery outcome, and that a correct drug could be selected for each patient to help them recover. Machine learning was used to predict antidepressant recommendations, but the model ended up overfitting. In the data, some patients’ illnesses were just less severe. These patients were more likely to get better no matter what medication they were prescribed. The model would predict medications and these patients would probably get well, but not because it was the best drug &mdash; this was just an easy patient to treat.
-
-      <br><br>
 
       <h2 id="recap7_2">Intro to Bayesian Model Selection</h2>
 
       When we talked about classification, we had discriminative and generative models. Each one makes sense in different scenarios.
 
       <ul>
-      <li>Discriminative: Use $x$ to predict $y$ by maximizing $p(y | x)$. As an example, we might use data about a customer’s features ($x$) to predict what they will buy ($y$).</li>
-      
-      <li>Generative: Consider how the data is being produced by modeling $p(x,y)$. As an example, we might have data about patient symptoms ($y$) and want to know what disease produced them ($x$).</li>
+        <li>Discriminative: Use $x$ to predict $y$ by maximizing $p(y | x)$. As an example, we might use data about a customer’s features ($x$) to predict what they will buy ($y$).</li>
+        <li>Generative: Consider how the data is being produced by modeling $p(x,y)$. As an example, we might have data about patient symptoms ($y$) and want to know what disease produced them ($x$).</li>
       </ul>
       Earlier in <a href="recap3.html">Lecture 3</a>, we discussed a generative setting where data was produced via the following story:
       
@@ -54,41 +49,40 @@ weight: 0
       
       In the Lecture 3 story, $w$ was fixed. Today, we will add a step 0 where we consider $w$ to be a random variable as well. (The $w$’s are the different models we are considering. For example, they might represent all possible decision boundary lines.) Through the Bayesian view, we can look at three useful concepts: the posterior distribution, the posterior predictive, and the marginal likelihood.<br><br>
 
-      <ol>
-        <li>
-          <B>Posterior distribution.</B> After obtaining some data $X, y$, we can compute the posterior distribution $p(w | X,y)$. This tells us, “Given all the data you’ve seen in $X$ and $y$, these are the possibilities (and probabilities) for what $w$ will look like.” <br><br>
-          
-          How can we find this distribution? First observe that in the data generation story we’re currently considering, we only need to know $w$, $x’$, and $\epsilon$ to get $y’$. So, we can make simplifications such as $p(y’ | w, x’, X, y) = p(y’ | w, x’)$, because the value of $y’$ does not depend on previously observed data. Also, seeing more $x$’s alone does not tell us more about what $w$ is, but seeing more labeled pairs of $x$’s and $y$’s together does tell us more about $w$’s distribution. Thus, $p(w|X) = p(w)$, but $p(w|X, y) \neq p(w)$. <br><br>
-          
-          Using this along with the fact that $p(y | X)$ does not depend on $w$, we can apply Bayes’ Theorem and then do some simplifying:
+      <h3>Posterior Distribution</h3>
 
-          \begin{align*}
-            p(w | X,y) &= \frac{p(y | X, w)p(w | X)}{p(y | X)}
-            \\ &= \frac{p(y | X, w)p(w)}{p(y | X)}
-            \\ &\propto p(y | X,w)p(w)
-          \end{align*}
+      After obtaining some data $X, y$, we can compute the posterior distribution $p(w | X,y)$. This tells us, “Given all the data you’ve seen in $X$ and $y$, these are the possibilities (and probabilities) for what $w$ will look like.” <br><br>
+      
+      How can we find this distribution? First observe that in the data generation story we’re currently considering, we only need to know $w$, $x’$, and $\epsilon$ to get $y’$. So, we can make simplifications such as $p(y’ | w, x’, X, y) = p(y’ | w, x’)$, because the value of $y’$ does not depend on previously observed data. Also, seeing more $x$’s alone does not tell us more about what $w$ is, but seeing more labeled pairs of $x$’s and $y$’s together does tell us more about $w$’s distribution. Thus, $p(w|X) = p(w)$, but $p(w|X, y) \neq p(w)$. <br><br>
+      
+      Using this along with the fact that $p(y | X)$ does not depend on $w$, we can apply Bayes’ Theorem and then do some simplifying:
 
-          Depending on the setting and prior, this could be an easy calculation (if there's conjugacy) or a hard calculation (if there's not).<br><br>
+      \begin{align*}
+        p(w | X,y) &= \frac{p(y | X, w)p(w | X)}{p(y | X)}
+        \\ &= \frac{p(y | X, w)p(w)}{p(y | X)}
+        \\ &\propto p(y | X,w)p(w)
+      \end{align*}
 
-          <u>Note:</u> Conjugacy is when the prior and posterior are from the same family of distributions, like if they're both Gaussian or both Beta. It can provide nice mathematical properties and cleaner forms that make calculations much easier. 
-        </li>
-        <li>
+      Depending on the setting and prior, this could be an easy calculation (if there's conjugacy) or a hard calculation (if there's not).<br><br>
 
-          <B>Posterior predictive.</B> To make predictions, we use the posterior predictive $p(y’ | x’, X, y)$. For a new piece of test data $x’$, the posterior predictive $p(y’ | x’, X, y)$ tells us how likely the label for $x’$ is to be $y’$ given the data $X, y$ that we have already observed. To find the posterior predictive, we would integrate over the possible $w$’s in our posterior distribution for $w$:
+      <u>Note:</u> Conjugacy is when the prior and posterior are from the same family of distributions, like if they're both Gaussian or both Beta. It can provide nice mathematical properties and cleaner forms that make calculations much easier. 
+      
+      <h3>Posterior Predictive</h3>
 
-          $$p(y’ | x’, X, y) = \int_w p(y’ | w, x’)p(w | X, y)dw$$ 
+      To make predictions, we use the posterior predictive $p(y’ | x’, X, y)$. For a new piece of test data $x’$, the posterior predictive $p(y’ | x’, X, y)$ tells us how likely the label for $x’$ is to be $y’$ given the data $X, y$ that we have already observed. To find the posterior predictive, we would integrate over the possible $w$’s in our posterior distribution for $w$:
 
-          <u>Note:</u> In the Bayesian framework, we avoid working directly with $w$. It’s a random variable we don’t know the value of, so instead of working with $w$, we integrate over the whole distribution for $w$ to consider the likelihoods of all the different possible values.
+      $$p(y’ | x’, X, y) = \int_w p(y’ | w, x’)p(w | X, y)dw$$ 
 
-        </li>
-        <li>
-          <B>Marginal likelihood.</B> Finally, we can compute the marginal likelihood, the probability of the training set
+      <u>Note:</u> In the Bayesian framework, we avoid working directly with $w$. It’s a random variable we don’t know the value of, so instead of working with $w$, we integrate over the whole distribution for $w$ to consider the likelihoods of all the different possible values.
 
-          $$p(x,y) = \int_w p(y | X,w)p(w)dw$$
+      <h3>Marginal Likelihood</h3>
+      
+      Finally, we can compute the marginal likelihood, the probability of the training set
 
-          The posterior predictive is what we use for inference (making predictions), but maximizing the marginal likelihood is what helps us select a model. 
-        </li>
-      </ol>
+      $$p(x,y) = \int_w p(y | X,w)p(w)dw$$
+
+      The posterior predictive is what we use for inference (making predictions), but maximizing the marginal likelihood is what helps us select a model. 
+
 
       <h2 id="recap7_3">Setting Up a Beta-Bernoulli Model Example</h2>
 
@@ -132,7 +126,7 @@ weight: 0
 
       Let's say we're interested in inferring what $\theta$ is. <br><br>
 
-      If we take the maximum likelihood frequentist approach, we would ignore the prior and get $\theta_{MLE} = argmax_{\theta}$ $\theta^{n_1}(1-\theta)^{n_0}$, which leads us to an intuitive answer, the fraction of flips that came up heads: $$\theta_{MLE} = n_1/(n_1 + n_0)$$
+      If we take the maximum likelihood frequentist approach, we would ignore the prior and get $\theta_{MLE} = argmax_{\theta}$ $\theta^{n_1}(1-\theta)^{n_0}$, which leads us to an intuitive answer, the fraction of flips that came up heads: $$\theta_{MLE} = \frac{n_1}{n_1 + n_0}$$
 
       The Bayesian approach gives us additional methods for inferring $\theta$. 
       
@@ -174,7 +168,7 @@ weight: 0
       
       \begin{align*} 
       p(X) &= \int_{\theta}p(X | \theta)p(\theta)d\theta
-      \\  &= \int_{\theta} \theta^{n_1}(1-\theta)^{n_0}z_{\alpha, \beta}\theta^{alpha - 1}(1-\theta)^{\beta - 1}d\theta
+      \\  &= \int_{\theta} \theta^{n_1}(1-\theta)^{n_0}z_{\alpha, \beta}\theta^{\alpha - 1}(1-\theta)^{\beta - 1}d\theta
       \\ &= z_{\alpha, \beta}\int_{\theta} \theta^{n_1 + \alpha - 1}(1 - \theta)^{n_0 + \beta - 1}\frac{z_{n_1 + \alpha, n_0 + \beta}}{z_{n_1 + \alpha, n_0 + \beta}}d\theta
       \\ &= \frac{z_{\alpha, \beta}}{z_{n_1 + \alpha, n_0 + \beta}} \int_{\theta} \theta^{n_1 + \alpha - 1}(1 - \theta)^{n_0 + \beta - 1}z_{n_1 + \alpha, n_0 + \beta}d\theta
       \\ &= \frac{z_{\alpha, \beta}}{z_{n_1 + \alpha, n_0 + \beta}} \cdot 1
