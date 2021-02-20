@@ -101,7 +101,7 @@ weight: 0
             
       $$Phi = W^1 x_n + w^1_0  $$
       $$h = w_f^T \Phi + w_0^f  $$
-      $$ = w_f^T W^1 x_n + w_f^T w_0^1 _ w_0^f $$
+      $$h = w_f^T W^1 x_n + w_f^T w_0^1 w_0^f $$
 
       <u>Student Question: Why do we name the output node f, and not $\hat{y}$?</u> We name this f and not $\hat{y}$ because we are keeping our expression general enough to be used for either of both classification and regression. This means, if we use it for classification, we could feed it into a sigmoid function (note: we are only working with a one node output layer, so we can only do binary classification which is achieved with sigmoid), and end up with $\hat{y} = \sigma(f) = \sigma(w^T\phi + w_0)$, and then we could use the result to convert the number into a class (if we were doing multiclass, we would need multiple output nodes in the output layer, and then apply softmax, for example). If used for regression (note: it has to be a one dimensional y here because again, we only have one output), then yes, f wouldn't need to be passed through $\sigma$, $\hat{y}$ would directly equal f.<br><br>
 
@@ -215,7 +215,7 @@ weight: 0
       There are a lot of other architectures of neural networks. Finale covered the basic intuition in class for each of these, but we encourage you to do your own research (explore websites, videos) to find out more, rather than just write a simple sentence for each. If you have any questions, of course feel free to reach out to us on Piazza or email <a href="mailto: li_dylan@college.harvard.edu">li_dylan@college.harvard.edu</a>, and if there's enough demand, we can add in more notes here.<br>
       <ul>
         <li>Residual Network (Variant of a Feed Forward Network)</li>
-        <li>Convolutional Network</li>: https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53
+        <li>Convolutional Network: https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53</li>
         <li>Auto-encoder</li>
         <li>Recurrent</li>
       </ul>
