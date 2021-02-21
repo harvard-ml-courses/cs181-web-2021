@@ -136,7 +136,7 @@ weight: 0
 
       Applying log rules and the power trick,
 
-      $$ = - \sum_n y_n \ln [\sigma(-h_n)] - \sum_n (1 - y_n) \ln [\sigma(h_n)]$$
+      $$ = - \sum_n y_n \ln [\sigma(h_n)] - \sum_n (1 - y_n) \ln [\sigma(-h_n)]$$
       $$ = \sum_n y_n \ln [1 + \exp(-h_n)] + \sum_n (1 - y_n) \ln [1 + \exp(h_n)]$$
 
       The second term $(1 - y_n) \ln [1 + \exp(h_n)]$ can be understood as the loss of the classifier on a negative example $(\mathbf{x}_n, y_n = 0)$.  We can draw a picture of this logistic loss function $(1 + \exp(\mathbf{w}^T x))$.  It is helpful to compare this plot of logistic loss to that of 0/1 loss and hinge loss, which we discussed last week.<br><br>
