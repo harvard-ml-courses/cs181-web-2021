@@ -7,8 +7,8 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: February 26, 2020 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSf9Li4FodxBVj19HfAdd31ibKYrFtqCm9sEEEakWgURwZs97A/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9Li4FodxBVj19HfAdd31ibKYrFtqCm9sEEEakWgURwZs97A/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
-      <h4>Relevant Textbook Sections: 4.4</h4>
+      <h4>Date: February 22, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSf9Li4FodxBVj19HfAdd31ibKYrFtqCm9sEEEakWgURwZs97A/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9Li4FodxBVj19HfAdd31ibKYrFtqCm9sEEEakWgURwZs97A/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Relevant Textbook Sections: 4.4 (This section got updated, so please pull the textbook again to get the correct version!)</h4>
       <h4>Cube: Supervised, Discrete or Continuous, Nonprobabilistic</h4>
 
       <br>
@@ -16,7 +16,7 @@ weight: 0
       <h3>Lecture 9 Summary</h3>
 
       <ul>
-        <li><a href="#recap9_1">Intro: More Context and Examples of Neural Networks</a></li>
+        <li><a href="#recap9_1">Intro: More Neural Network Examples</a></li>
         <li><a href="#recap9_2">Optimizing the Neural Network</a></li>
         <li><a href="#recap9_3">Detour: Vector Chain Rule</a></li>
         <li><a href="#recap9_4">Let's Now Finish The Optimization</a></li>
@@ -24,50 +24,65 @@ weight: 0
         <li><a href="#recap9_6">Why does this all work?</a></li>
       </ul>
 
-      <h2 id="recap9_1">Intro: More Context and Examples of Neural Networks</h2>
+      <h2 id="recap9_1">More Neural Network Examples</h2>
 
-      Last lecture, we described different neural network models and architectures. Today, we will be focusing on the optimization of neural networks. These are going to be difficult, but will be important to understand.<br><br>
+      Neural networks are useful for research in so many fields.
+      <ul>
+        <li> 
+        Convolutional neural nets were applied to images representing the distribution of galaxies' velocities. This helped scientists understand the mass and clustering patterns of galaxies.
+        </li>
+        <li>
+        Neural networks can be used to predict which molecules will be most effective for creating blue LED lights, which makes the process finding a suitable molecule much more efficient.
+        </li>
+        <li>
+        We can train neural networks on physics simulations to try and predict what simulations would output without actually having to run them. Also, we can study what these physics-trained neural networks are learning. Are they actually somehow learning laws of physics? Could we study what they've learned to uncover new laws of physics?
+        </li>
+      </ul>
 
-      Also, before we move on, let's cover a few more examples of the use of neural networks. One thing we can do now is predict the aftershocks of earthquakes extremely efficiently using neural networks. Before, we had to use physics data to run the simluation to understand what is going to be expected, but now we can instead use a neural network on the data, and it's about as accurate. Another example is the creation of blue LED's. It's incredibly expensive to make these lights, as you have to make them, test them, and this can cost thousands of dollars. Now, we can predict which molecules are the most likely to be effective at creating the blue LED lights. Basically, at a cheaper cost, and in a shorter time, we'll be able to find a good molecule for this purpose, and create blue LED lights much more effective. This is a great example of an intersection of engineering and machine learning.<br><br>
+      <!-- Last lecture, we described different neural network models and architectures. Today, we will be focusing on the optimization of neural networks. These are going to be difficult, but will be important to understand.<br><br>
 
+      Also, before we move on, let's cover a few more examples of the use of neural networks. One thing we can do now is predict the aftershocks of earthquakes extremely efficiently using neural networks. Before, we had to use physics data to run the simluation to understand what is going to be expected, but now we can instead use a neural network on the data, and it's about as accurate. Another example is the creation of blue LED's. It's incredibly expensive to make these lights, as you have to make them, test them, and this can cost thousands of dollars. Now, we can predict which molecules are the most likely to be effective at creating the blue LED lights. Basically, at a cheaper cost, and in a shorter time, we'll be able to find a good molecule for this purpose, and create blue LED lights much more effective. This is a great example of an intersection of engineering and machine learning.<br><br> -->
+      <!-- <br><br> -->
       <h2 id="recap9_2">Optimizing the Neural Network</h2>
+      Last time, we talked about neural network architectures. Today, we'll discuss how neural networks can be optimized. (Spoiler: it's a lot of chain rule.) We'll use $\sigma$ as our activation function today, but you can replace it with other activation functions like $\tanh$ or ReLU as well.<br><br>
 
-      As usual, just as what we've done a long time ago, after we've picked our model class, and after we've picked our loss function (which we will do down below), we will need to optimize our loss function with respect to our parameters to solve for our final model.<br><br>
+      To optimize a neural network, we'd like to choose parameters that minimize the network's loss. We can find these parameters via gradient descent, but first we'll have to calculate the gradients of the network's loss with respect to the parameters. <br><br>
+      
+      
+      <!-- As usual, just as what we've done a long time ago, after we've picked our model class, and after we've picked our loss function (which we will do down below), we will need to optimize our loss function with respect to our parameters to solve for our final model.<br><br> -->
 
-      Ultimately, we want this specifically:<br><br>
+      So, we are trying to find:
 
-      $$\frac{\partial L_n}{\partial W}$$
+      $$\frac{\partial L}{\partial W}$$
 
-      To think through this, we know that we can do this because within the loss function, we'll be including the $f_n$ (see diagram from last lecture for context if you don't remeber what this is) term, and within the $f_n$ term, we can ultimately take the gradient with respect to W. We can use the chain rule to depict this:<br><br>
+      For some input $x_n$, the loss function $L$ is some way to measure the difference between the true value $y_n$ and the value $f_n$ our model predicts for $x_n$. Previously when discussing regression, we used $\hat{y}_n$ to represent the model prediction instead of $f_n$. Since the loss function must depend on $f_n$ (which in turn depends on the model parameters we're trying to optimize), we'll need to use chain rule:
 
-      $$\frac{\partial L_n}{\partial W} = \frac{\partial L_n}{\partial f_n} \frac{\partial f_n}{\partial W}$$
+      $$\frac{\partial L}{\partial W} = \frac{\partial L}{\partial f_n} \frac{\partial f_n}{\partial W}$$
 
-      The reason discuss this intuition first is to give context for what we're about to do below. As you can see, essentially to calculate $\frac{\partial L_n}{\partial W}$, we are going to take many steps, and one of the steps we can take first is to find the $\frac{\partial L_n}{\partial f_n}$, which we will do below for two different example loss functions. It is also important to note that this part of the equation is independent of the other derivatives, so it is totally fair game to calculate this first.<br><br>
+      <!-- The reason discuss this intuition first is to give context for what we're about to do below. As you can see, essentially to calculate $\frac{\partial L_n}{\partial W}$, we are going to take many steps, and one of the steps we can take first is to find the $\frac{\partial L_n}{\partial f_n}$, which we will do below for two different example loss functions. It is also important to note that this part of the equation is independent of the other derivatives, so it is totally fair game to calculate this first.<br><br> -->
+<!-- 
+      (Put this part back in eventually somewhere) Also in lecture today, we will cover back propagation, which relates very much to the above equation. To paraphrase Wikipedia (which I think has a great explanation): The concept of backpropagation is that we will compute the gradient of the loss (with respect to the weights) in an efficient way, which makes training networks with multiply layers actually possible. Specifically, back propagation is computing the gradient of the loss function a layer at a time, starting from the final layer (and going backwards), and then resuing terms so that we don't have to repeat any calculations (for intermediate terms in the chain rule). If you've taken CS124, this is an example of dynamic programming!<br><br>
 
-      Also in lecture today, we will cover back propagation, which relates very much to the above equation. To paraphrase Wikipedia (which I think has a great explanation): The concept of backpropagation is that we will compute the gradient of the loss (with respect to the weights) in an efficient way, which makes training networks with multiply layers actually possible. Specifically, back propagation is computing the gradient of the loss function a layer at a time, starting from the final layer (and going backwards), and then resuing terms so that we don't have to repeat any calculations (for intermediate terms in the chain rule). If you've taken CS124, this is an example of dynamic programming!<br><br>
-
-      Even though in real life, we probably will use packages to implement this and not implement backpropagation ourselves, it's good to understand the intuition behind this so we can better use the tools availble to us. By underestanding the details, we will know why are certain things slower, and why are certain things faster, etc.<br><br>
+      (Put this part back in too) Even though in real life, we probably will use packages to implement this and not implement backpropagation ourselves, it's good to understand the intuition behind this so we can better use the tools availble to us. By underestanding the details, we will know why are certain things slower, and why are certain things faster, etc.<br><br> -->
 
       <h4>Loss Function (if regression)</h4>
 
-      First, let's define an example loss function that we might use for regression (note: we can always choose other loss functions for regression as well, it doesn't have to be least squares). Below, we have the least squares loss. Just a note, we will be as general as possible, and hence are splitting up the notes into this format of regression and classification. Also note, where we used to put in $\hat{y}$ in linear regression in the past, now we're putting in $f_n$.
+      We've been using the least squares loss for regression.  
 
-      $$L(w) = 1/2 * \sum(y_n - f_n)^2$$
+      $$L(w) = \frac12 \cdot \sum_n(y_n - f_n)^2$$
 
-      Let us take the derivative:<br><br>
+      The derivative with respect to $f_n$ will be:
 
       $$dL/df_n = \sum_n (y_n - f_n)(-1)$$
 
-      Note: If we swapped it to another loss function, we also note that the only effect on the whole original expression $\frac{\partial L_n}{\partial W}$ is only in this specific part, $\frac{\partial L_n}{\partial f_n}$.
+      Note: If we swapped $L$ to be another loss function, the only effect on the whole original expression $\frac{\partial L}{\partial W}$ is a change in $\frac{\partial L}{\partial f_n}$. The rest of the gradient, $\frac{\partial f_n}{\partial W}$ remains the same.
 
       <h4>Loss Function (if classification)</h4>
 
-      As mentioned before, we are being as general as possible, so we also write here a loss function for classification, as another example. Let's pick the logistic loss here as our example.<br><br>
+      For classification, a good loss function choice might be logistic loss. For a binary classification case, we define the following:<br><br>
 
-      Remember first that for our binary classification, we define the following:<br><br>
-
-      $$p(y=1|x) = \sigma(f_n)$$
-      $$p(y=0|x) = 1 - \sigma(f_n)$$
+      $$p(y=1|x) = \sigma(f_n) = \frac{1}{1 + \exp(-f_n)}$$
+      $$p(y=0|x) = 1 - \sigma(f_n) = \frac{1}{1 + \exp(f_n)}$$
 
       Now, we can define the logistic loss function using the terms above:<br><br>
 
@@ -77,7 +92,7 @@ weight: 0
       Also remember the following helpful tip for the derivative:<br><br>
       $$\frac{\partial\sigma(z)}{z} = \sigma(z)(1 - \sigma(z))$$
 
-      Let us take the derivative:<br><br>
+      So then the derivative is:<br><br>
 
       $$\frac{\partial L_n}{\partial f_n} = y_n \frac{1}{\sigma(f_n)} \sigma(f_n) (1 - \sigma(f_n)) + (1 - y_n) \frac{1}{1 - \sigma(f_n)} \sigma(f_n)(1 - \sigma(f_n))(-1)$$
 
@@ -85,9 +100,11 @@ weight: 0
 
       $$\frac{\partial L_n}{\partial f_n} = y_n (1 - \sigma(f_n)) - (1 - y_n) \sigma(f_n)$$
 
+      This would be something we can calculate if we knew what $f_n$ was. So to get the gradient, we'll first have to use the current $W$ to calculate $f_n$ (a "forward pass"), then use $f_n$ to find the gradient (a "backward pass") and make our update step. In the forward pass, we start with an input $x_n$ and move forward through the layers of the model to figure out what the output $f_n$ would be (along with what other activation value in the network are). In the backward pass, the values we've calculated flow backwards to be used in chain rule products. These chain rule products become the gradients we are looking for.  
+      
       <h2 id="recap9_3">Detour: Vector Chain Rule</h2>
 
-      We will take a slight detour now in order to gain the tools we need to do the back propagation.
+      We will take a slight detour now in order to gain the tools we need to do the back propagation. Say we had nested functions as follows:
 
       $$y = f(u) = f(g(h(x)))$$
       $$u = g(v) = g(h(x))$$
@@ -95,20 +112,20 @@ weight: 0
 
       <h4>All Scalars</h4>
 
-      If we had all scalars, and we wanted to look for: $\frac{\partial f}{\partial x}$<br><br>
+      If we had all scalars, and we wanted to look for $\frac{\partial y}{\partial x}$, then we can simply apply chain rule:<br><br>
 
-      $$\frac{\partial f}{\partial x} = \frac{\partial f}{\partial u}\frac{\partial u}{\partial v} \frac{\partial v}{\partial x} = \frac{\partial f}{\partial u}\frac{\partial g}{\partial v}\frac{\partial h}{\partial x}$$<br><br>
+      $$\frac{\partial y}{\partial x} = \frac{\partial y}{\partial u}\frac{\partial u}{\partial v} \frac{\partial v}{\partial x}$$<br><br>
 
       <h4>If x (size $D$) was a  vector </h4>
 
-      $$\nabla_\mathbf{x}f = \frac{\partial f}{\partial u} \frac{\partial u}{\partial v} \nabla_\mathbf{x}v$$
+      $$\nabla_\mathbf{x}y = \frac{\partial y}{\partial u} \frac{\partial u}{\partial v} \nabla_\mathbf{x}v$$
 
-      Where $\frac{\partial f}{\partial u} and \frac{\partial u}{\partial v}$ parts scalar, and
-      $\nabla_\mathbf{x} v$ is $1 \times D$ a vector: as in how does each dimension of $\mathbf{x}$ affect scalar $v$.
+      Where $\frac{\partial y}{\partial u}$ and $\frac{\partial u}{\partial v}$ are scalars, and
+      $\nabla_\mathbf{x} v$ is a $1 \times D$ vector describing how each dimension of $\mathbf{x}$ affects scalar $v$.
       <br><br>
 
-      <strong>Note:</strong> We are using the <em>numerator layout notation</em> (sometimes known as the <em>Jacobian formulation</em>),
-      where $\mathbf{y}$ and $\mathbf{x}$ are size $M$ and $N$ vectors respectively and
+      Note: We are using the <em>numerator layout notation</em> (sometimes known as the <em>Jacobian formulation</em>),
+      where if $\mathbf{y}$ and $\mathbf{x}$ are size $M$ and $N$ vectors respectively, then
       $\frac{\partial \mathbf{y}}{\partial \mathbf{x}}$ is an $M\times N$ matrix such that
       $$\frac{\partial \mathbf{y}}{\partial \mathbf{x}} =
       \begin{pmatrix}
@@ -118,14 +135,14 @@ weight: 0
       \frac{\partial y_M}{\partial x_1} & \frac{\partial y_M}{\partial x_2} & \cdots & \frac{\partial y_M}{\partial x_N}
       \end{pmatrix}$$
 
-      $\frac{\partial \mathbf{y}}{\partial \mathbf{x}}$ is known as the Jacobian matrix and represented as $\mathbb{J}_\mathbf{x}[\mathbf{y}]$.
+      $\frac{\partial \mathbf{y}}{\partial \mathbf{x}}$ is known as the Jacobian matrix and represented as $\mathbb{J}_\mathbf{x}[\mathbf{y}]$. Its elements tell us how each element of $\mathbf{y}$ depend on each element of $\mathbf{x}$.  
       <br><br>
 
       <h4>If x (size $D$) and v (size $J$) were both vectors</h4>
 
-      $$\nabla_\mathbf{x} f = \frac{\partial f}{\partial u} \nabla_\mathbf{v}u \mathbb{J}_\mathbf{x}[\mathbf{v}]$$
+      $$\nabla_\mathbf{x} y = \frac{\partial f}{\partial u} \nabla_\mathbf{v}u \mathbb{J}_\mathbf{x}[\mathbf{v}]$$
 
-      $\frac{\partial f}{\partial u}$ is a scalar, $\nabla_\mathbf{v}u$ is a $1 \times J$ vector, and
+      $\frac{\partial y}{\partial u}$ is a scalar, $\nabla_\mathbf{v}u$ is a $1 \times J$ vector, and
       $\mathbb{J}_\mathbf{x}[\mathbf{v}]$ is a $J \times D$ matrix.
       <br>
       $\mathbb{J}_\mathbf{x}[\mathbf{v}]$ measures how each
@@ -137,16 +154,16 @@ weight: 0
       dimension of $\mathbf{x}$ affects each dimension of $u$.
       <br>
       Consequentially, $\frac{\partial f}{\partial u} \nabla_\mathbf{v}u \mathbb{J}_\mathbf{x}[\mathbf{v}]$ is a vector of
-      how each $\mathbf{x}$ dimension changes scalar $f$, through all dimensions of $\mathbf{v}$ and $u$.
+      how each $\mathbf{x}$ dimension changes scalar $y$, through all dimensions of $\mathbf{v}$ and $u$.
       <br><br>
 
       <h4>If x (size $D$) and v (size $J$) and u (size $J^\prime$) were all vectors</h4>
 
-      $$\nabla_\mathbf{x} f = \nabla_\mathbf{u} f \mathbb{J}_\mathbf{v}[\mathbf{u}] \mathbb{J}_\mathbf{x}[\mathbf{v}]$$
+      $$\nabla_\mathbf{x} y = \nabla_\mathbf{u} y \mathbb{J}_\mathbf{v}[\mathbf{u}] \mathbb{J}_\mathbf{x}[\mathbf{v}]$$
 
-      $\nabla_\mathbf{u} f$ is a $1 \times J^\prime$ vector, $\mathbb{J}_\mathbf{v}[\mathbf{u}]$ is a $J^\prime \times J$ matrix,
+      $\nabla_\mathbf{u} y$ is a $1 \times J^\prime$ vector, $\mathbb{J}_\mathbf{v}[\mathbf{u}]$ is a $J^\prime \times J$ matrix,
       $\mathbb{J}_\mathbf{x}[\mathbf{v}]$ is a $J\times D$ matrix.
-      We still get a vector of how each $\mathbf{x}$ dimension changes scalar $f$, through all dimensions of $\mathbf{v}$
+      We still get a vector of how each $\mathbf{x}$ dimension changes scalar $y$, through all dimensions of $\mathbf{v}$
       and $\mathbf{u}$.
       <br><br>
 
