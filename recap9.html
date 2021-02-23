@@ -9,12 +9,12 @@ weight: 0
     <div class="main">
       <h4>Date: February 22, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSf9Li4FodxBVj19HfAdd31ibKYrFtqCm9sEEEakWgURwZs97A/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9Li4FodxBVj19HfAdd31ibKYrFtqCm9sEEEakWgURwZs97A/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 4.4 </h4>
-      ((This section got updated, so please pull the textbook again to get the correct version!))
+      (This section got updated, so please pull the textbook again to get the correct version!)
       <h4>Cube: Supervised, Discrete or Continuous, Nonprobabilistic</h4>
 
       <br>
 
-      <!-- <h4><a href="https://harvard.zoom.us/rec/play/3Rs5-CUfscUw4Spx0SouTEb2IVjbql0NdGyc_uelsI1ooPuGvtuPQEryOS0EdjGUvs5JzgJ6bRgbCwAB.0jRR41-cBQcNivT7">Lecture Video</a></h4> -->
+      <h4><a href="https://harvard.zoom.us/rec/play/PpdQARHt5M0gZPcHsMWbYdXKCLPrEgLIQJHB9MjzW3gH4Hc2tqkCR2nGnYRRd82gVstb-4EqvI8-5CMw.tnYg14sP9tjabNSH">Lecture Video</a></h4>
       <h4><a href="files/lecture9_ipad.pdf" target="_blank">iPad Notes</a></h4>
 
       <h3>Lecture 9 Summary</h3>
@@ -46,7 +46,7 @@ weight: 0
       <h2 id="recap9_2">Optimizing the Neural Network</h2>
       Last time, we talked about neural network architectures. Today, we'll discuss how neural networks can be optimized. (Spoiler: it's a lot of chain rule.) We'll use $\sigma$ as our activation function in lecture, but you can replace it with other activation functions like tanh or ReLU as well.<br><br>
 
-      To optimize a neural network, we'd like to choose parameters that minimize the network's loss. We can find these parameters via gradient descent, but first we'll have to calculate the gradients of the network's loss with respect to the parameters. <br><br>
+      To optimize a neural network, we'd like to choose parameters $W$ that minimize the network's loss. We can find these parameters via gradient descent, but first we'll have to calculate the gradients of the network's loss with respect to the parameters. <br><br>
 
       So, we are trying to find:
 
@@ -56,9 +56,9 @@ weight: 0
 
       $$\frac{\partial L}{\partial W} = \frac{\partial L}{\partial f_n} \frac{\partial f_n}{\partial W}$$
 
-      <!-- Even though in real life, we probably will use packages to implement this and not implement backpropagation ourselves, it's good to understand the intuition behind this so we can better use the tools availble to us. By underestanding the details, we will know why are certain things slower, and why are certain things faster, etc.<br><br> --> -->
+      <!-- Even though in real life, we probably will use packages to implement this and not implement backpropagation ourselves, it's good to understand the intuition behind this so we can better use the tools availble to us. By underestanding the details, we will know why are certain things slower, and why are certain things faster, etc.<br><br> -->
 
-      <h4>Loss Function (if regression)</h4>
+      <h4>Loss Function For Regression</h4>
 
       We've been using the least squares loss for regression.  
 
@@ -68,9 +68,9 @@ weight: 0
 
       $$\frac{\partial L}{\partial f_n} = \sum_n (y_n - f_n)(-1)$$
 
-      Note: If we swapped $L$ to be another loss function, the only effect on the whole original expression $\frac{\partial L}{\partial W}$ is a change in $\frac{\partial L}{\partial f_n}$. The rest of the gradient, $\frac{\partial f_n}{\partial W}$ remains the same.
+      Note: If we swapped $L$ to be another loss function, the only effect on the whole original expression $\frac{\partial L}{\partial W}$ is a change in $\frac{\partial L}{\partial f_n}$. The rest of the gradient, $\frac{\partial f_n}{\partial W}$, remains the same.
 
-      <h4>Loss Function (if classification)</h4>
+      <h4>Loss Function For Classification</h4>
 
       For classification, a good loss function choice might be logistic loss. For a binary classification case, we define the following:<br><br>
 
@@ -79,8 +79,10 @@ weight: 0
 
       Now, we can define the logistic loss function using the terms above:<br><br>
 
-      $$L(w) = \sum_n y_n \log p(y=1|x) + (1 - y_n) \log p(y=0|x)$$
-      $$L(w) = \sum_n y_n \log \sigma(f_n) + (1 - y_n) \log (1 - \sigma(f_n))$$
+      \begin{align*} 
+      L(w) &= \sum_n y_n \log p(y=1|x) + (1 - y_n) \log p(y=0|x)
+      \\ &= \sum_n y_n \log \sigma(f_n) + (1 - y_n) \log (1 - \sigma(f_n))
+      \end{align*}
 
       Also remember the following helpful tip for the derivative:<br><br>
       $$\frac{\partial\sigma(z)}{z} = \sigma(z)(1 - \sigma(z))$$
@@ -93,7 +95,7 @@ weight: 0
 
       $$\frac{\partial L_n}{\partial f_n} = y_n (1 - \sigma(f_n)) - (1 - y_n) \sigma(f_n)$$
 
-      This would be something we can calculate if we knew what $f_n$ was. So to get the gradient, we'll first have to use the current $W$ to calculate $f_n$ (a "forward pass"), then use $f_n$ to find the gradient (a "backward pass") and make our update step along the gradient.<br><br>
+      This would be something we can calculate if we knew what $f_n$ was. So to get the gradient, we'll first have to use the current weights $W$ to calculate $f_n$ (a "forward pass"), then use $f_n$ to find the gradient (a "backward pass") and make our update step along the gradient.<br><br>
       
       Preview for intuition: in the forward pass, we start with an input $x_n$ and move forward through the layers of the model to figure out what the output $f_n$ would be (along with what other activation values in the network are). In the backward pass, the values we've calculated flow backwards to be used in chain rule products. (When we're working with many layers, $f_n$ will rely on $w_0$ a parameter in the first layer with $w_0$ nested inside many other products and activation functions. So then $\frac{\partial f_n}{\partial w_0}$ will involve a lot of chain rules.) These chain rule products become the gradients we are looking for.  
       
