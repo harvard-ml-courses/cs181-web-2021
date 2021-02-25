@@ -169,7 +169,7 @@ lectures:
     section:
     readings:
     dl: HW 2 due
-    release: HW 3 (Neural Networks, SVMs) released
+    release: HW 3 (Bayes, Neural Networks) released
     type: 'hw'
   - topic:
     subtopic:
@@ -216,7 +216,7 @@ lectures:
     section:
     readings:
     dl: HW 3 due
-    release: HW 4 (Ethics, Clustering) released
+    release: HW 4 (SVMs, Ethics, Clustering) released
     type: 'hw'
   - topic:
     subtopic:
