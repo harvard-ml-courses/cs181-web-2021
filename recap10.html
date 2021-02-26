@@ -15,6 +15,10 @@ weight: 0
 
       <h3>Lecture 10 Summary</h3>
 
+      <h4><a href="https://harvard.zoom.us/rec/play/PpdQARHt5M0gZPcHsMWbYdXKCLPrEgLIQJHB9MjzW3gH4Hc2tqkCR2nGnYRRd82gVstb-4EqvI8-5CMw.tnYg14sP9tjabNSH">Lecture Video</a></h4>
+      <h4><a href="files/lecture10_ipad.pdf" target="_blank">iPad Notes</a></h4>
+      <h4><a href="files/lecture10_slides.pdf" target="_blank">Slides</a></h4>
+
       <ul>
         <li><a href="#recap10_1">Intro: Real World Example of SVMs</a></li>
         <li><a href="#recap10_2">Intro to Max Margin (a new objective function)</a></li>
@@ -173,9 +177,14 @@ weight: 0
       $$y_n(w^Tx_n + w_0) >= 1 - \xi_n$$
       $$\xi_n \geq 0$$
 
-      To give some intuition on this, essentially we are "pretending" that the margin is 1 and writing our constraint in that same way, but allowing for some slack, for some miscliasfied points.<br><br>
+      To give some intuition on this, essentially we are "pretending" that the margin is 1 and writing our constraint in that same way, but allowing for some slack, for some misclassified points.<br><br>
 
       If we make C really big, we will be enforcing the constraints more. How do we set the C though? We would want to find this using cross validation (although sklearn finds it for you automatically). Also, it turns out also that this is still convex, so we can still use solvers! We have converge guarantees!
+
+      We can also write the following equivalent formulation: 
+      $$ min_{w, w_0} \frac{1}{2} \textbf{w}^T\textbf{w} + C \sum_{n} max(0, 1-y_n(\textbf{w}^T x_n + w_0 ))$$
+
+      This is a convex function and differentiable (almost everywhere), which we can optimize using SGD! 
 
       <h2 id="recap10_5">Review of All Loss Functions</h2>
 
