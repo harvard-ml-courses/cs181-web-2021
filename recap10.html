@@ -98,13 +98,13 @@ weight: 0
 
       $$r = \frac{w^Tx_n + w_0}{||w||_2}$$
 
-      This above is the signed distance. We can multiply by $y_n$ to get the unsigned distance, which is exactly the margin (this works if everything is correct, as the effect of multiplying by $y_n$ always makes the result positive). This is good, because we now have the margin, so we can actually maximize the min margin.<br><br>
+      This above is the signed distance. We can multiply by $y_n$ to get the unsigned distance, which is exactly the margin (this works if everything is correct, as the effect of multiplying by $y_n$ always makes the result positive). This is good, because we now have the margin, so we can actually maximize the min margin. Note that we are assuming correctly classified examples here, so the margin is always positive. <br><br>
 
       The equation below is saying given one data point, what is the margin.
 
       $$\textrm{margin}(x_n | w, w_o) = y_n(\frac{w^Tx_n + w_0}{||w||_2})$$
 
-      Note on terminology in the equation above. If we remove the normalization factor $||w||_2$, and we look at just the $y_n(w^Tx_n + w_0)$ term, this is known as the functional margin.<br><br>
+      Note on terminology in the equation above. If we remove the normalization factor $||w||_2$, and we look at just the $y_n(w^Tx_n + w_0)$ term, this is known as the functional margin. Note here that the margin is invariant to multiplying $(\textbf{w}, w_0)$ by a scaling factor $\beta > 0$. Recall that this invariance also holds for the decision boundary. Also note that the margin is negative if used on a misclassified example. <br><br>
 
       We want the minimium margin across all the data though, and then we want to maximize that whole term. Let's first write out the minimum margin across the data.
 
@@ -114,7 +114,7 @@ weight: 0
 
       $$max_{w, w_0} min_{x_n} \frac{1}{||w||_2} y_n (w^Tx_n + w_0)$$
 
-      This computation will turn out to be nice.
+      This computation will find a separator if our data is separable. On the other hand, this expression also looks ugly because we have a weight norm in the denominator. When we try to optimize by performing SGD, this may pose an issue. We are looking for a way to solve the hard max0margin formulation. 
 
       <h4>Deal with Overparamaterization and Simplify Objective</h4>
 
@@ -134,13 +134,21 @@ weight: 0
 
       $$max_{w, w_0} \frac{1}{||w||_2} min_n y_n (w^Tx_n + w_0) \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$$
 
-      Here, we pause for intuition. We know from before that we can scale the w's, and the results are really the same. In our problem we want w to be small because we are trying to maximize 1/w, and also minimize $w^Tx + w_0$. This mean's we would really just keep trying to make w smaller, that is, until we hit the new constraint we just set (and this is why we set it). Because of our set up, we also know that this whole term, $min_n y_n (w^Tx_n + w_0) \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$, is going to go to 1, as w keeps getting scaled smaller until we hit the constraint. We can prove this quickly in our heads because if it's not yet at the cosntriant, we aan always continue to scale w to be smaller until we hit the constraint. So now we have:
+      Here, we pause for intuition. We know from before that we can scale the w's, and the results are really the same. In our problem we want w to be small because we are trying to maximize 1/w, and also minimize $w^Tx + w_0$. This mean's we would really just keep trying to make w smaller, that is, until we hit the new constraint we just set (and this is why we set it). Because of our set up, we also know that this whole term, $min_n y_n (w^Tx_n + w_0) \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$, is going to go to 1, as w keeps getting scaled smaller until we hit the constraint. Because we can choose our $\beta$ without changing our optimal solution, one or more of these constraints will be binding. We can prove this quickly in our heads because if it's not yet at the constraint, we can always continue to scale w to be smaller until we hit the constraint. The second part of the term (involving minimizing the functional margin) now drops out, because the minimum margin is now 1. So now we have:
 
       $$max_{w, w_0} \frac{1}{||w||_2} \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$$
 
-      Let's change this now to:
+      Let's change this now to the equivalent formulation:
 
       $$min_{w, w_0} ||w||_2 \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$$
+
+      This is nice because it is convex with a quadratic objective and linear constraint. Because one of these constrains is binding, the margin will be equal to $\frac{1}{||w||_2}$. <br><br>
+
+      <div class="text-center">
+        <img src="{{ site.baseurl }}/images/recap10_6.png" style="width:40%"  alt="Soft Margin SVM"></img>
+      </div><br>
+
+      Using this formula for finding the margin, we can scale appropriately to get the above margin boundaries. 
 
       <h4>Optimization Trick</h4>
 
@@ -148,7 +156,7 @@ weight: 0
 
       <h2 id="recap10_4">Soft Margin SVM</h2>
 
-      What if the data is not separable and we still want a solution? We can have a relaxed soft margin formulation. For any particular point, we can define how badly it is from the margin using slack variables.<br><br>
+      What if the data is not separable and we still want a solution? We can have a relaxed soft margin formulation. For each data point, we can define how far the point on the wrong side of the margin boundary using slack variables.<br><br>
 
       We define the slack variable to be $\xi_n$ for the n'th data point. $\xi_n$ will be 0 if a point is correct and also out of the margin violation. Otherwise, $\xi_n$ will be the distance from the margin. The idea behind this is kind of like hinge loss, where we linearly increase as a point is more and more wrong.<br><br>
 
