@@ -7,7 +7,7 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: February 25, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSf8n7fFQrtByZz8UQsYGT8n14t7n5D_dC1ocqh7n1Hxj_yAOA/viewform" target="_blank">Concept Discussion and Possible Answers)</a></h4>
+      <h4>Date: February 25, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSf8n7fFQrtByZz8UQsYGT8n14t7n5D_dC1ocqh7n1Hxj_yAOA/viewform" target="_blank">Concept Discussion and Possible Answers, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 5.1-5.3</h4>
       <h4>Cube: Supervised, Discrete, Nonprobabilistic</h4>
 
@@ -182,7 +182,7 @@ weight: 0
       If we make C really big, we will be enforcing the constraints more. How do we set the C though? We would want to find this using cross validation (although sklearn finds it for you automatically). Also, it turns out also that this is still convex, so we can still use solvers! We have converge guarantees!
 
       We can also write the following equivalent formulation: 
-      $$ \textnorm{min}_{w, w_0} \frac{1}{2} \textbf{w}^T\textbf{w} + C \sum_{n} \textnorm{max}(0, 1-y_n(\textbf{w}^T x_n + w_0))$$
+      $$ \text{min}_{w, w_0} \frac{1}{2} \textbf{w}^T\textbf{w} + C \sum_{n} \text{max}(0, 1-y_n(\textbf{w}^T x_n + w_0))$$
 
       This is a convex function and differentiable (almost everywhere), which we can optimize using SGD! 
 
