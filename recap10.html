@@ -7,13 +7,17 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: March 2, 2020 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSf8n7fFQrtByZz8UQsYGT8n14t7n5D_dC1ocqh7n1Hxj_yAOA/viewform" target="_blank">Concept Discussion and Possible Answers)</a></h4>
+      <h4>Date: February 25, 2021 (<a href="https://docs.google.com/forms/d/1E9YYqTAd9Y3U92O-HaU5Z0rQhWhPp-bsva8TEn6OIC0/viewform?edit_requested=true" target="_blank">Concept Discussion and Possible Answers, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 5.1-5.3</h4>
       <h4>Cube: Supervised, Discrete, Nonprobabilistic</h4>
 
       <br>
 
       <h3>Lecture 10 Summary</h3>
+
+      <h4><a href="https://harvard.zoom.us/rec/play/fbgr20soY9NCKv8-YxB9GLrr_AeBFuu0VZgBA-R0JKH6zMu_UuSkfbVP76eQaZvqucc2e57ASmT0VlCg.oGLSn6zWculL_Sn1">Lecture Video</a></h4>
+      <h4><a href="files/lecture10_ipad.pdf" target="_blank">iPad Notes</a></h4>
+      <h4><a href="files/lecture10_slides.pdf" target="_blank">Slides</a></h4>
 
       <ul>
         <li><a href="#recap10_1">Intro: Real World Example of SVMs</a></li>
@@ -32,11 +36,15 @@ weight: 0
 
       <h2 id="recap10_1">Intro: Real World Example of SVMs</h2>
 
-      Until recently, Support Vector Machines were the workhorse of machine learning. They were used in all kinds of contexts. One quick example is if you wanted to classify different types of cells, you could use an SVM to sort cells into different types. This worked really well. Another example in Boston is the Casella plant which sorts trash and recycling. Cambridge and our surrounding areas have single stream recycling, and we just dump all recyclable things into a bin. How do they separate it back out? Some of it is manual, as you have to take big things out with your hands (for example, some people put bikes in the recycling for some reason). Magnets are used to get certains metals, but for plastics, there's no easy mechanical way of separating different types of plastics. Because of this, a long time ago when we recycled plastic, we had to use the numbers on the plastic to figure out which bin to throw our recycling into. Now, you don't have to do this, as SVMs come into play! There is a conveyer belt takes a picture of the plastics that move through and using SVMs, we can tell what type of plastic a given item is and automatically send it down the right path. Note: while SVMs can techincally be used in regression, SVMs are mostly used in classification problems.
+      Until recently, Support Vector Machines were the workhorse of machine learning. They were used in all kinds of contexts. One quick example is if you wanted to classify different types of cells, you could use an SVM to sort cells into different types. This worked really well. Another example in Boston is the Casella plant which sorts trash and recycling. Cambridge and our surrounding areas have single stream recycling, and we just dump all recyclable things into a bin. How do they separate it back out? Some of it is manual, as you have to take big things out with your hands (for example, some people put bikes in the recycling for some reason). Magnets are used to get certains metals, but for plastics, there's no easy mechanical way of separating different types of plastics. Because of this, a long time ago when we recycled plastic, we had to use the numbers on the plastic to figure out which bin to throw our recycling into. Now, you don't have to do this, as SVMs come into play! There is a conveyer belt takes a picture of the plastics that move through and using SVMs, we can tell what type of plastic a given item is and automatically send it down the right path. Note: while SVMs can technically be used in regression, SVMs are mostly used in classification problems.
 
       <h2 id="recap10_2">Max Margin (a new objective function)</h2>
 
       Before we dive into SVMs, we have to dive into what max margin is first. What is max margin's relationship to the SVM? The max margin is an objective function that is used in SVMs. Note: because it is an objective function, the max margin can also be used in other techniques, and there is actually a whole family of techniques called margin methods. So far in the past, our objective functions have included negative log likelihood, squared loss, 0/1 loss, hinge loss, log loss, etc. We've really done nothing too special or fancy. While this was okay for regression generally speaking, it wasn't as good for classification. In classification, to put things into full context, we wanted to start with a 0/1 loss, but we realized this was too difficult to optimize, so we created proxies (all the other loss functions we used in classification). Now, we are going to look at the max margin objective.
+
+      <h4>Defining our Goal: </h4>
+
+      Margin on a correctly classified example is the absolute, normalized, orthogonal distance to a boundary. The margin on the data is the minimum margin on correctly label examples. The goal is to find a separator that maximizes the margin of the data. 
 
       <h4>Some Motivation on why we want Max Margin and what it is</h4>
 
@@ -58,7 +66,7 @@ weight: 0
 
       First, to keep things simple, let's look at a binary classification setting, where $\hat{y}$ is 1 or 0. In addition, we're going to focus on the linear case today: $f(x, w) = w^Tx + w_0$  (next class we'll look at the nonlinear case). These previous two sentences refer to general properties we're choosing to keep things simple in our SVM example.<br><br>
 
-      In addition, we're going to assume that the data is separable, which is what makes this a "hard margin" formulation. This isn't required (and also may seem unrealistic for real world data), but makes the initial math set up much easier, and makes it easier for us to later extend this idea to other versionns of SVM. The hard margin SVM will force all the points to be classified correctly (since it is separatable). If you gave non-separatable data to a hard margin SVM it would just say no solution.<br><br>
+      In addition, we're going to assume that the data is separable, which is what makes this a "hard margin" formulation. This isn't required (and also may seem unrealistic for real world data), but makes the initial math set up much easier, and makes it easier for us to later extend this idea to other versionns of SVM. The hard margin SVM will force all the points to be classified correctly (since it is separable). If you gave non-separable data to a hard margin SVM it would just say no solution.<br><br>
 
       <h4>Writing out the Objective of our Hard Margin SVM using Geometric Intuition to Help</h4>
 
@@ -94,13 +102,13 @@ weight: 0
 
       $$r = \frac{w^Tx_n + w_0}{||w||_2}$$
 
-      This above is the signed distance. We can multiply by $y_n$ to get the unsigned distance, which is exactly the margin (this works if everything is correct, as the effect of multiplying by $y_n$ always makes the result positive). This is good, because we now have the margin, so we can actually maximize the min margin.<br><br>
+      This above is the signed distance. We can multiply by $y_n$ to get the unsigned distance, which is exactly the margin (this works if everything is correct, as the effect of multiplying by $y_n$ always makes the result positive). This is good, because we now have the margin, so we can actually maximize the min margin. Note that we are assuming correctly classified examples here, so the margin is always positive. <br><br>
 
       The equation below is saying given one data point, what is the margin.
 
       $$\textrm{margin}(x_n | w, w_o) = y_n(\frac{w^Tx_n + w_0}{||w||_2})$$
 
-      Note on terminology in the equation above. If we remove the normalization factor $||w||_2$, and we look at just the $y_n(w^Tx_n + w_0)$ term, this is known as the functional margin.<br><br>
+      Note on terminology in the equation above. If we remove the normalization factor $||w||_2$, and we look at just the $y_n(w^Tx_n + w_0)$ term, this is known as the functional margin. Note here that the margin is invariant to multiplying $(\textbf{w}, w_0)$ by a scaling factor $\beta > 0$. Recall that this invariance also holds for the decision boundary. Also note that the margin is negative if used on a misclassified example. <br><br>
 
       We want the minimium margin across all the data though, and then we want to maximize that whole term. Let's first write out the minimum margin across the data.
 
@@ -110,7 +118,7 @@ weight: 0
 
       $$max_{w, w_0} min_{x_n} \frac{1}{||w||_2} y_n (w^Tx_n + w_0)$$
 
-      This computation will turn out to be nice.
+      This computation will find a separator if our data is separable. On the other hand, this expression also looks ugly because we have a weight norm in the denominator. When we try to optimize by performing SGD, this may pose an issue. We are looking for a way to solve the hard max0margin formulation. 
 
       <h4>Deal with Overparamaterization and Simplify Objective</h4>
 
@@ -130,13 +138,21 @@ weight: 0
 
       $$max_{w, w_0} \frac{1}{||w||_2} min_n y_n (w^Tx_n + w_0) \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$$
 
-      Here, we pause for intuition. We know from before that we can scale the w's, and the results are really the same. In our problem we want w to be small because we are trying to maximize 1/w, and also minimize $w^Tx + w_0$. This mean's we would really just keep trying to make w smaller, that is, until we hit the new constraint we just set (and this is why we set it). Because of our set up, we also know that this whole term, $min_n y_n (w^Tx_n + w_0) \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$, is going to go to 1, as w keeps getting scaled smaller until we hit the constraint. We can prove this quickly in our heads because if it's not yet at the cosntriant, we aan always continue to scale w to be smaller until we hit the constraint. So now we have:
+      Here, we pause for intuition. We know from before that we can scale the w's, and the results are really the same. In our problem we want w to be small because we are trying to maximize 1/w, and also minimize $w^Tx + w_0$. This mean's we would really just keep trying to make w smaller, that is, until we hit the new constraint we just set (and this is why we set it). Because of our set up, we also know that this whole term, $min_n y_n (w^Tx_n + w_0) \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$, is going to go to 1, as w keeps getting scaled smaller until we hit the constraint. Because we can choose our $\beta$ without changing our optimal solution, one or more of these constraints will be binding. We can prove this quickly in our heads because if it's not yet at the constraint, we can always continue to scale w to be smaller until we hit the constraint. The second part of the term (involving minimizing the functional margin) now drops out, because the minimum margin is now 1. So now we have:
 
       $$max_{w, w_0} \frac{1}{||w||_2} \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$$
 
-      Let's change this now to:
+      Let's change this now to the equivalent formulation:
 
       $$min_{w, w_0} ||w||_2 \textrm{ s.t. } y_n (w^Tx_n + w_0) \geq 1$$
+
+      This is nice because it is convex with a quadratic objective and linear constraint. Because one of these constrains is binding, the margin will be equal to $\frac{1}{||w||_2}$. <br><br>
+
+      <div class="text-center">
+        <img src="{{ site.baseurl }}/images/recap10_6.png" style="width:40%"  alt="Soft Margin SVM"></img>
+      </div><br>
+
+      Using this formula for finding the margin, we can scale appropriately to get the above margin boundaries. 
 
       <h4>Optimization Trick</h4>
 
@@ -144,7 +160,7 @@ weight: 0
 
       <h2 id="recap10_4">Soft Margin SVM</h2>
 
-      What if the data is not separable and we still want a solution? We can have a relaxed soft margin formulation. For any particular point, we can define how badly it is from the margin using slack variables.<br><br>
+      What if the data is not separable and we still want a solution? We can have a relaxed soft margin formulation. For each data point, we can define how far the point on the wrong side of the margin boundary using slack variables.<br><br>
 
       We define the slack variable to be $\xi_n$ for the n'th data point. $\xi_n$ will be 0 if a point is correct and also out of the margin violation. Otherwise, $\xi_n$ will be the distance from the margin. The idea behind this is kind of like hinge loss, where we linearly increase as a point is more and more wrong.<br><br>
 
@@ -161,9 +177,14 @@ weight: 0
       $$y_n(w^Tx_n + w_0) >= 1 - \xi_n$$
       $$\xi_n \geq 0$$
 
-      To give some intuition on this, essentially we are "pretending" that the margin is 1 and writing our constraint in that same way, but allowing for some slack, for some miscliasfied points.<br><br>
+      To give some intuition on this, essentially we are "pretending" that the margin is 1 and writing our constraint in that same way, but allowing for some slack, for some misclassified points.<br><br>
 
       If we make C really big, we will be enforcing the constraints more. How do we set the C though? We would want to find this using cross validation (although sklearn finds it for you automatically). Also, it turns out also that this is still convex, so we can still use solvers! We have converge guarantees!
+
+      We can also write the following equivalent formulation: 
+      $$ \text{min}_{w, w_0} \frac{1}{2} \textbf{w}^T\textbf{w} + C \sum_{n} \text{max}(0, 1-y_n(\textbf{w}^T x_n + w_0))$$
+
+      This is a convex function and differentiable (almost everywhere), which we can optimize using SGD! 
 
       <h2 id="recap10_5">Review of All Loss Functions</h2>
 
@@ -173,5 +194,8 @@ weight: 0
       <div class="text-center">
         <img src="{{ site.baseurl }}/images/recap10_5.png" style="width:80%"  alt="Different Loss Functions"></img>
       </div>
+
+      <br>
+      As a preview of coming attractions (Mickens, 2021), the reason that the SVM loss is better than the logistic function is that it works with basis functions nicely and it supports the dual formulation for soft-margin optimization. 
     </div>
 </section>

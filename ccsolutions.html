@@ -38,11 +38,48 @@ weight: 0
         </li>
 
         <li>
-          Lecture 6 - Probabilistic Classification (February 9, 2021)
+          Lecture 6 - Model Specification (February 11, 2021)
           <ul>
             <li>A: The difference in training and testing may be coming from variance. Adding more data will help for model A. Model B has already been fit, so adding more data may not help (although it may not be the best fit, depending if another model can reach test/validation accuracy of >0.7). </li>
             <li>B: Regularization or ensembles might help because of the high variance in model A. For model B, regularization and early stopping may not be as useful. </li>
             <li>C: If there is high variance in model A, given a new dataset we can expect a different model fit. For model B, we expect similar classifications because it has tended to underfit the data, meaning that most predictions on new datasets will have high bias and low variance. </li>
+          </ul>
+        </li>
+
+        <li>
+          Lecture 7 - Bayesian Model Specification (February 16, 2021)
+          <ul>
+            <li>A: Yes</li>
+            <li>B: $a_0 = 0$ and $a_2 = 1 - a_1$</li>
+            <li>C: 0 to 0.5 uniformly</li>
+            <li>D: .5 with probability 1</li>
+          </ul>
+        </li>
+
+        <li>
+          Lecture 8 - Neural Networks I (February 18, 2021)
+          <ul>
+            <li>A: Yes</li>
+            <li>B: No </li>
+            <li>C: Yes</li>
+          </ul>
+        </li>
+
+        <li>
+          Lecture 9 - Neural Networks II (February 22, 2021)
+          <ul>
+            <li>A: No, the bias can’t get increase. If model A could fit the data well and model B was bigger, then model B can fit the data just as well. </li>
+            <li>B: num. params &#60;&#60; num. data: No; num. params approx. equal num. data: Yes, one perfect model; num. params &#62;&#62; num. data: Yes, many perfect models </li>
+            <li>C: SGD implicitly performs regularization. If there’s a lot of perfect models, we’ll pick one that we don’t have to move far to get to. Then the model selected will have small parameters if we start the SGD with small weights.</li>
+          </ul>
+        </li>
+
+        <li>
+          Lecture 10 - Max Margin (February 26, 2021)
+          <ul>
+            <li>Q1: Removing any of the three points will change the max margin boundary </li>
+            <li>Q2: For very large C, the optimal decision boundary will try to separate the data if possible. As C increases, the formulation is more able to "bend" with the data  </li>
+            <li>Q3: Lower regularization ("may overfit"!)  </li>
           </ul>
         </li>
       </ul>
