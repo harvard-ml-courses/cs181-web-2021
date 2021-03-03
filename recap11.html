@@ -50,14 +50,14 @@ weight: 0
 
       However, one thing ends up being a little tricky. What if x is very high dimensional? There are computations that we need to do here that will become difficult as the size of w and the size of x will get large due to the high dimensionality. Today we are going to consider efficient solutions for high dimensional x. By the end of today's lecture we're going get to more flexible distances (then you can apply SVM even in high dimensions).<br><br> -->
 
-      Last time, we looked at the hard margin problem and the soft margin problem (see last lecture's notes for context). We found those problems to be beautiful because they are convex: specifically, they are quadratic with linear constraints, so they can be solved very efficiently. Today we are going to discuss how SVM can be efficiently solved for high dimensional x. In particular, we will:
+      <a href="recap10.html">Last time</a>, we looked at the hard margin problem and the soft margin problem. We found those problems to be beautiful because they are convex: specifically, they are quadratic with linear constraints, so they can be solved very efficiently. Today we are going to discuss how SVM can be efficiently solved for high dimensional x. In particular, we will:<br><br>
       
       <ol>
           <li>Solve the dual form of the max-margin function, which will allow us to rewrite the discriminant function 
           $$ \hat{y} = \begin{cases} +1 & h(x, w, w_0) > 0
           \\ -1 & \text{ else}
-          \end{cases}$$ in the form 
-          $$ \sum_n \alpha_n y_n x_n^T x + w_0  $$</li>
+          \end{cases} \text{ into the form }
+          \hat{y} = \left ( \sum_n \alpha_n y_n x_n^T x \right ) + w_0  $$</li>
           <li>Use the "kernel trick" to learn in a high-dimensional basis without having to convert our data to such a high-dimensional form. </li>
       </ol>
 
@@ -83,12 +83,14 @@ weight: 0
 
       Note: Interpret the min-max formulation as a game between a minimizer and a maximizer where the minimizer goes first. First, the minimizer chooses $w, w_0$. Once $w, w_0$ is fixed, the maximizer chooses the $\alpha_n$'s maximizing $L$. Thus, the minimizer's goal in the first step is to choose a $w, w_0$ so that the greatest value the maximizer can achieve by choosing the $\alpha$'s is as low as possible. We get the value of the expression by plugging in the optimal $w, w_0, \alpha$'s that the minimizer and maximizer would choose in this game.<br><br>
 
+      <h4>How can we confirm this is the same minimization problem we had in last lecture?</h4>
+
       We claim that the optimal solution to A is also the optimal solution to B by reasoning as follows:
 
       <ol>
-        <li><b>The optimal solution to B must satisfy the constraints of A.</b> If A's constraint $y_n(w^Tx_n + w_0) - 1 \geq 0$ was violated for some $n$, then the corresponding $\alpha_0(y_n(w^Tx_n + w_0) - 1)$ expression in B would be negative. Since the sum is negated, the $n$th term in it is now positive, and its value will be blown up to infinity by setting $\alpha_n$ arbitrarily large when we take the max. However, we wanted the max (which is our loss) to be small, not infinite, so a solution violating A's constraint would therefore not be optimal. </li>
+        <li><b>The optimal solution to B must satisfy the constraints of A.</b> If A's constraint $y_n(w^Tx_n + w_0) - 1 \geq 0$ was violated for some $n$, then the corresponding $\alpha_0(y_n(w^Tx_n + w_0) - 1)$ expression in B would be negative. Since the sum is negated, the $n$th term in it is now positive, and the expression's value will be blown up to infinity by setting $\alpha_n$ arbitrarily large when we take the max. However, we wanted the max (which is our loss) to be small, not infinite, so a solution violating A's constraint would therefore not be optimal and would not be selected by the minimizer. </li>
         <li><b>The optimal solution to B sets $\alpha_n = 0$ on all $x_n$ with $y_n(w^Tx_n + w_0) > 1$.</b> If the constraint is satisfied with slack (so $y_n (w^T x_n + w_0) > 1$), then the maximizer will make $\alpha_n$ = 0. We would be subtracting positive terms, so to keep things maximized, we will want to subtract nothing.</li>
-        <li>By 1 and 2, the optimal solution to B satisfies $\alpha_n(y_n(w^Tx_n + w_0) - 1) = 0$ for all $n$ because for each $n$, we will have either $\alpha_n = 0$ or $y_n(w^Tx_n + w_0) - 1 = 0$. Then the sum term being subtracted in B will be 0, illustrating how solving B is the same as solving A. </li>
+        <li>By 1 and 2, the optimal solution to B satisfies $\alpha_n(y_n(w^Tx_n + w_0) - 1) = 0$ for all $n$ because for each $n$, we will have either $\alpha_n = 0$ or $y_n(w^Tx_n + w_0) - 1 = 0$. Then the sum term being subtracted in B will be 0, leaving us with an expression that looks the same as A. This illustrates how solving B is the same as solving A. </li>
       </ol>
 
 
@@ -119,7 +121,71 @@ weight: 0
       With the above facts, we know that we're solving the same problem as before, which is what we wanted. This gets us closer to our ultimate goal (where we later want to apply a trick to deal with the dimensionality) -->
 
       <h4>Now: Let's Utilize Strong Duality</h4>
+      First, we'll discuss weak duality. With our Lagrangian formulation, we have reformulated hard-SVM as a "min of a max" problem. We argue that swapping the max and the min (so that the maximizer sets values for $\alpha_n$ first, and then the minimizer choose $w$) only leads to a smaller value. Intuitively, we previously had to pick $w$ first, then pick the maximizing $\alpha$.<br><br>
 
+      But now if we switch the min and max, we can pick any minimizing $w$ we want after $\alpha$ is set, giving the minimizer an advantage. In particular, the minimizer will be able to achieve a value at least as small as before. 
+
+      $$\min_{w, w_0} \max_{\alpha \geq 0} L(w, \alpha, w_0) \geq \max_{\alpha \geq 0}\min_{w, w_0} L(w, \alpha, w_0)$$
+
+      This problem actually satisfies strong duality: the two sides are in fact equal. Then we can switch the min and max in our objective.
+
+      $$\min_{w, w_0} \max_{\alpha \geq 0} L(w, \alpha, w_0) = \max_{\alpha \geq 0}\min_{w, w_0} L(w, \alpha, w_0)$$<br><br>
+
+      The duality theory here is out of scope for us, but the idea is that this property holds because the objective in A is quadratic and our constraints are linear. This is a convex analog for duality you may have seen in linear programming. <br><br>
+
+      Now, we have a dual formulation with a max-min structure:
+
+      $$\max_{\alpha \geq 0} \min_{w, w_0} \frac12 w^Tw - \sum_n \alpha_n(y_n(w^Tx_n + w_0)) - 1 $$
+
+      This is easier for us to solve because now that $\alpha$ is set before $w$ is, we can rewrite the expression in terms of $\alpha$ only. For any $\alpha$, the optimal $w, w_0$ must satisfy:
+      
+      $$\frac{\partial L(w, \alpha, w_0)}{\partial w} = w - \sum_n \alpha_n y_n x_n = 0 $$
+
+      \begin{equation}
+          \iff w = \sum_n \alpha_n y_n x_n \tag{*} \label{*}
+      \end{equation}
+
+      Similarly, setting the partial with respect to $w_0$ to 0 yields
+      
+      \begin{equation}
+        \frac{\partial L}{\partial w_0} = -\sum_n \alpha_n y_n = 0 \tag{$\square$}
+      \end{equation}
+
+      We expand terms in our reformulated objective out.
+
+      $$\max_{\alpha \geq 0} \min_{w, w_0}  \frac12 w^Tw - w^T \sum_n \alpha_n y_n x_n - w_0\sum_n \alpha_n y_n + \sum_n \alpha_n $$
+
+      Let's apply constraint (*):
+      
+      $$\max_{\alpha_n} \min_{w, w_0} \frac12 (\sum_n \alpha_n y_n x_n)^T (\sum_{n'} \alpha_n' y_n' x_n') - (\sum_n \alpha_n y_n x_n) (\sum_{n'} \alpha_n' y_n' x_n')^T - w_0 \sum_n \alpha_n y_n + \sum_n \alpha_n$$
+
+      Next, we apply constraint ($\square$), then combine the first two terms, simplifying the expression to:
+
+      $$\max_{\alpha_n} \min_{w, w_0} \frac12 (\sum_n \alpha_n y_n x_n)^T (\sum_{n'} \alpha_n' y_n' x_n') - (\sum_n \alpha_n y_n x_n) (\sum_{n'} \alpha_n' y_n' x_n')^T + \sum_n \alpha_n)$$
+
+      $$= \max_\alpha -\frac12 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' x^T_n x_n' + \sum \alpha_n$$
+
+      With constraints: $\sum_{n} \alpha_n y_n = 0$ and $\alpha_n \geq 0$.<br><br>
+      
+      The above is our <b> dual hard-margin formulation </b> of SVM. There is also a soft-margin formulation where we introduce $c$ with a constraint $c \geq \alpha_n \geq 0$.
+      
+      The discriminant function now looks like
+    
+      $$h(x, \alpha, w_0) = \sum_n \alpha_n y_n x_n^Tx + w_0 $$
+    
+      where our support vectors are 
+    
+      $$ Q = \{\alpha_n: \alpha_n > 0\}.$$
+    
+      The $\alpha_n$ are found by the optimization problem. To find $w_0$, we note that $y_n(w^Tx_n + w_0) = 1$ for only points on the decision boundary. Then we can find some point $x_n$ on the decision boundary and use this to solve for $w_0$.
+      
+      
+      <br><br>
+
+
+
+
+<!-- 
       By a property know as strong duality, we are allowed to switch the order of minimum and maximum. The intuition behind this is beyond the scope of the course, but you are free to look into it yourself!
 
       $$max_{\alpha_n} min_{w, w_0} 1/2 ||w||^2_2 - \sum_n \alpha_n (y_n (w^Tx_n + w_0) - 1)$$
@@ -166,7 +232,7 @@ weight: 0
 
       Note that this is in soe a weighted prediction where we have different weights on our different $y_n$'s, and this is also multiplied some measure of closeness (the $x_n^T x^*$ term). Think of it like taking a vote!
 
-      And then to get $w_0$ back, we can find any n where $\alpha_n$ is greater than 0, which leads to the constraint $y_n (w^T x_n + w_0) = 1$ to be true, which we can use to solve for $w_0$.
+      And then to get $w_0$ back, we can find any n where $\alpha_n$ is greater than 0, which leads to the constraint $y_n (w^T x_n + w_0) = 1$ to be true, which we can use to solve for $w_0$. -->
 
       <h2 id="recap11_3">Why Reframing Was Good: Let's use a Kernel</h2>
 
