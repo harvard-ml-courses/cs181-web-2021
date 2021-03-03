@@ -24,7 +24,7 @@ weight: 0
         <li><a href="#recap11_0">Ethical Considerations</a></li>
         <li><a href="#recap11_1">Support Vector Machines Continued</a></li>
         <li><a href="#recap11_2">Reframing the Problem to Ultimately Utilize Kernel Trick</a></li>
-        <li><a href="#recap11_3">Why Reframing Was Good: Let's use a Kernel</a></li>
+        <li><a href="#recap11_3">Finally: The Kernel Trick</a></li>
         <li><a href="#recap11_4">What is a Valid Kernel?</a></li>
       </ul>
 
@@ -97,7 +97,7 @@ weight: 0
 
       This problem actually satisfies strong duality: the two sides are in fact equal. Then we can switch the min and max in our objective.
 
-      $$\min_{w, w_0} \max_{\alpha \geq 0} L(w, \alpha, w_0) = \max_{\alpha \geq 0}\min_{w, w_0} L(w, \alpha, w_0)$$<br><br>
+      $$\min_{w, w_0} \max_{\alpha \geq 0} L(w, \alpha, w_0) = \max_{\alpha \geq 0}\min_{w, w_0} L(w, \alpha, w_0)$$
 
       The duality theory here is out of scope for us, but the idea is that this property holds because the objective in A is quadratic and our constraints are linear. This is a convex analog for duality you may have seen in linear programming. <br><br>
 
@@ -135,7 +135,7 @@ weight: 0
 
       With constraints: $\sum_{n} \alpha_n y_n = 0$ and $\alpha_n \geq 0$.<br><br>
       
-      The above is our <b> dual hard-margin formulation </b> of SVM. There is also a soft-margin formulation where we introduce $c$ with a constraint $c \geq \alpha_n \geq 0$.
+      The above is our dual hard-margin formulation of SVM. There is also a soft-margin formulation where we introduce $c$ with a constraint $c \geq \alpha_n \geq 0$.
       
       The discriminant function now looks like
     
@@ -147,23 +147,23 @@ weight: 0
     
       The $\alpha_n$ are found by the optimization problem. To find $w_0$, we note that $y_n(w^Tx_n + w_0) = 1$ for only points on the decision boundary. Then we can find some point $x_n$ on the decision boundary and use this to solve for $w_0$.
 
-      <h2 id="recap11_3">Why Reframing Was Good: Let's use a Kernel</h2>
+      <h2 id="recap11_3">Finally: The Kernel Trick</h2>
 
       We've done all this work to obtain a dual formulation. How does it help us? Consider learning with the basis function $\phi: \mathbb R^D \rightarrow \mathbb R^M$. Then we would need to solve
 
-      $$max_\alpha -1/2 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' \Phi(x_n)^T \Phi(x_n') + \sum \alpha_n$$
+      $$max_\alpha -\frac12 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' \phi(x_n)^T \phi(x_n') + \sum \alpha_n$$
           
       with the constraints $\sum_n \alpha_n y_n = 0, c \geq \alpha_n \geq 0$ for all n. 
 
-      The discriminant also becomes $$h(x, \alpha, w_0) = \sum_n \alpha_n y_n \Phi(x_n)^T \Phi(x_n').$$
+      The discriminant also becomes $$h(x, \alpha, w_0) = \sum_n \alpha_n y_n \phi(x_n)^T \phi(x_n').$$
 
-      Key idea - we can replace all appearances of the $\Phi$'s with a kernel function 
+      <b>Key idea.</b> We can replace all appearances of the $\phi$'s with a kernel function 
 
-      $$K(x, z) = \Phi(x)^T\Phi(z)$$
+      $$K(x, z) = \phi(x)^T\phi(z)$$
 
-      because the $\Phi$'s never appear outside of this product form thanks to how we reformulated the problem. 
+      because thanks to how we reformulated the problem, the $\phi$'s never appear outside of this product form.
 
-      Furthermore, we can compute we can compute the inner product $K$ without ever computing $\Phi(x)$ or $\Phi(z)$ itself. This means we can take the distance between $x$ and $z$ in a high-dimensional basis without actually bringing $x$ and $z$ into a high dimension! Mapping $x$ and $z$ to a high dimension (plus storing and doing calculations with the result) is a lot of work. By saving us that work, the kernel trick is extremely powerful.  <br></br>
+      Furthermore, we can compute we can compute the inner product $K$ without ever computing $\phi(x)$ or $\phi(z)$ itself. This means we can take the distance between $x$ and $z$ in a high-dimensional basis without actually bringing $x$ and $z$ into a high dimension! Mapping $x$ and $z$ to a high dimension (plus storing and doing calculations with the result) is a lot of work. By saving us that work, the kernel trick is extremely powerful.  <br></br>
     
       <h4>Example: Quadratic and Polynomial Kernels</h4>
 
@@ -174,16 +174,16 @@ weight: 0
         \\ &= (x_1z_1 + x_2z_2)^2 
         \\ &= x_1^2z_1^2 + 2x_1z_1x_2z_2 + x_2^2z_2^2 
         \\ &= (x_1^2, x_1x_2, x_2x_1, x_2^2)^T(z_1^2, z_1z_2, z_2z_1, z_2^2) 
-        \\ &= \Phi(x)^T\Phi(z)
+        \\ &= \phi(x)^T\phi(z)
       \end{align*}
       
-      where $\Phi$ takes $x$ into the basis using all degree-2 terms. 
+      where $\phi$ maps $x$ into the basis using all degree-2 terms. 
 
       For further generalization,
 
-      $$K(z, z) = (1 + x^Tz)^2$$
+      $$K(x, z) = (1 + x^Tz)^2$$
      
-      is a kernel for the degree-2 basis also including linear and constant terms. In general for $q \geq 2,
+      is a kernel for the degree-2 basis also including linear and constant terms. In general for $q \geq 2$,
 
       $$K_{poly}(x, z) = (1 + x^Tz)^q$$ 
       
@@ -198,7 +198,7 @@ weight: 0
 
       <h2 id="recap11_4">What is a valid kernel?</h2>
 
-      Now that we know kernels are great, how can we tell if a function will be a kernel for some basis? <br><br>
+      How can we tell if a function will be a kernel for some basis? <br><br>
 
       One way to view the kernel function $K$ is that it defines a $n \times n$ Gram matrix on the data $x_1, ..., x_n$ where the $n, n'$th entry is equal to $K(x_n, x_{n'})$. The Gram matrix stores all possible inner products of datapoints in the data set. <br><br>
 
