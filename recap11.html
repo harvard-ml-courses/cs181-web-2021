@@ -7,17 +7,23 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: March 4, 2020 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfktADzS0wx-dgeQRaEbrbWu1Lx7irQAVkQL-l8wA5C5h4PDg/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfktADzS0wx-dgeQRaEbrbWu1Lx7irQAVkQL-l8wA5C5h4PDg/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: March 2, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLScU6ffyRapkbFLUC939W-f7zlT6ABLi0DFQR4fQP45gpGcqjQ/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLScU6ffyRapkbFLUC939W-f7zlT6ABLi0DFQR4fQP45gpGcqjQ/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 5.4</h4>
+      More updates have been made to the textbook for clarity - please make sure to get the new version!
       <h4>Cube: Supervised, Discrete, Nonprobabilistic</h4>
 
       <br>
 
+      <h4><a href="https://harvard.zoom.us/rec/play/UdBa60KwKU4xoGDcPjGWLHf0g4kFBmsLn9lkE0j0pJNysohv-utU0jdPHC5HcukYXeJkX-Pkkk6_XwAN.eAka4iYQ1A_h_lyX">Lecture Video</a></h4>
+      <h4><a href="files/lecture11_ipad.pdf" target="_blank">iPad Notes</a></h4>
+      <h4><a href="files/lecture11_slides.pdf" target="_blank">Slides</a></h4>
+
       <h3>Lecture 11 Summary</h3>
 
       <ul>
-        <li><a href="#recap11_1">Intro: Support Vector Machines Continued</a></li>
-        <li><a href="#recap11_2">Reframing the Problem to Ultimately Utilize Dimension Trick</a></li>
+        <li><a href="#recap11_0">Ethical Considerations</a></li>
+        <li><a href="#recap11_1">Support Vector Machines Continued</a></li>
+        <li><a href="#recap11_2">Reframing the Problem to Ultimately Utilize Kernel Trick</a></li>
         <li><a href="#recap11_3">Why Reframing Was Good: Let's use a Kernel</a></li>
         <li><a href="#recap11_4">What is a Valid Kernel?</a></li>
       </ul>
@@ -28,15 +34,65 @@ weight: 0
         <li><a href="https://www.youtube.com/watch?v=x51otMMymPs&list=PLrH1CxyJ7Vqb-pHzfUClJNXBDAKajHE74&index=11&t=0s">SVM (Soft Margin)</a></li>
       </ul>
 
-      <h2 id="recap11_1">Intro: Support Vector Machine Continued</h2>
+      <!-- <br><br> -->
 
-      Last time, we looked at the hard margin problem and the soft margin problem (see last lecture's notes for context). Also as a refresher, the reason we found those problems to be beautiful was beacuse they are convex problems: specifically, they are quadratic with linear constriants, so they can be solved very efficiently.<br><br>
+      <h2 id="recap11_0">Ethical Considerations</h2>
 
-      However, one thing ends up being a little tricky. What if x is very high dimensional? There are computations that we need to do here that will become difficult as the size of w and the size of x will get large due to the high dimensionality. Today we are going to consider efficient solutions for high dimensional x. By the end of today's lecture we're going get to more flexible distances (then you can apply SVM even in high dimensions).<br><br>
+      We need to be careful about discriminatory stereotyping through data, such as was seen with redlining policies in the 1930s. In particular, data features that seem nondiscriminatory are often actually proxies for features like race and income. <br><br>
 
-      <h2 id="recap11_2">Reframing the Problem to Ultimately Utilize Dimension Trick</h2>
+      Exclusion from a dataset is another form of biased data. Consider a model trained on a medical database with a lot of data on white patients, but little data on people of color. This model may learn harmful associations that lead to poor care for patients of color, simply because they were not included in the data. For example it might make predictions as though "people of color are less likely to get sick because they don't come to this hospital much", which is clearly undesirable. <br><br>
 
-      Let's begin by reframing the minimization we did in the last class. Right now it may seem unclear why we are doing this, but at a high level, once we reframe the problem, we will see that there is a trick we can implement to make SVMs to still be usable in high dimensional situations.<br><br>
+      Question: Should organizations be prohibited from collecting data on race? This initially sounds like a way to prevent bias, but it also makes it harder to check our models and systems for bias. <br><br>
+
+      <h2 id="recap11_1">Support Vector Machine Continued</h2>
+
+      <!-- Last time, we looked at the hard margin problem and the soft margin problem (see last lecture's notes for context). Also as a refresher, the reason we found those problems to be beautiful was beacuse they are convex problems: specifically, they are quadratic with linear constriants, so they can be solved very efficiently.<br><br>
+
+      However, one thing ends up being a little tricky. What if x is very high dimensional? There are computations that we need to do here that will become difficult as the size of w and the size of x will get large due to the high dimensionality. Today we are going to consider efficient solutions for high dimensional x. By the end of today's lecture we're going get to more flexible distances (then you can apply SVM even in high dimensions).<br><br> -->
+
+      Last time, we looked at the hard margin problem and the soft margin problem (see last lecture's notes for context). We found those problems to be beautiful because they are convex: specifically, they are quadratic with linear constraints, so they can be solved very efficiently. Today we are going to discuss how SVM can be efficiently solved for high dimensional x. In particular, we will:
+      
+      <ol>
+          <li>Solve the dual form of the max-margin function, which will allow us to rewrite the discriminant function 
+          $$ \hat{y} = \begin{cases} +1 & h(x, w, w_0) > 0
+          \\ -1 & \text{ else}
+          \end{cases}$$ in the form 
+          $$ \sum_n \alpha_n y_n x_n^T x + w_0  $$</li>
+          <li>Use the "kernel trick" to learn in a high-dimensional basis without having to convert our data to such a high-dimensional form. </li>
+      </ol>
+
+      <h2 id="recap11_2">Reframing the Problem to Ultimately Utilize Kernel Trick</h2>
+
+      Let's begin by reframing the minimization we did in the last class. Reframing the problem will reveal a trick for doing SVM in high dimensions.<br><br>
+
+      First, we'll rewrite the hard-margin form as a Lagrangian, which we've seen before as an optimization tool. (This time, our optimization problem is constrained by inequalities rather than equalities, so the form will look slightly different. The details of rewriting in the Lagrangian here are out of the scope of this class.) <br><br>
+
+      Our original formulation was
+      
+      \begin{equation}
+          \min_{w, w_0} \frac12 w^Tw \tag{A} \label{A}
+      \end{equation}
+      
+      with constraint: $y_n(w^Tx_n + w_0) \geq 1$ for all $n$. 
+
+      We now rewrite this as:
+
+      \begin{equation}\min_{w, w_0} \left ( \max_{\alpha_n} L(w, \alpha, w_0) \right ) = \min_{w, w_0} \left ( \max_{\alpha_n} \frac{1}{2} w^Tw - \sum_n \alpha_n (y_n (w^Tx_n + w_0) - 1) \right ) \tag{B} \label{B}\end{equation}
+
+      With constraint $\alpha_n > 0$.
+
+      Note: Interpret the min-max formulation as a game between a minimizer and a maximizer where the minimizer goes first. First, the minimizer chooses $w, w_0$. Once $w, w_0$ is fixed, the maximizer chooses the $\alpha_n$'s maximizing $L$. Thus, the minimizer's goal in the first step is to choose a $w, w_0$ so that the greatest value the maximizer can achieve by choosing the $\alpha$'s is as low as possible. We get the value of the expression by plugging in the optimal $w, w_0, \alpha$'s that the minimizer and maximizer would choose in this game.<br><br>
+
+      We claim that the optimal solution to A is also the optimal solution to B by reasoning as follows:
+
+      <ol>
+        <li><b>The optimal solution to B must satisfy the constraints of A.</b> If A's constraint $y_n(w^Tx_n + w_0) - 1 \geq 0$ was violated for some $n$, then the corresponding $\alpha_0(y_n(w^Tx_n + w_0) - 1)$ expression in B would be negative. Since the sum is negated, the $n$th term in it is now positive, and its value will be blown up to infinity by setting $\alpha_n$ arbitrarily large when we take the max. However, we wanted the max (which is our loss) to be small, not infinite, so a solution violating A's constraint would therefore not be optimal. </li>
+        <li><b>The optimal solution to B sets $\alpha_n = 0$ on all $x_n$ with $y_n(w^Tx_n + w_0) > 1$.</b> If the constraint is satisfied with slack (so $y_n (w^T x_n + w_0) > 1$), then the maximizer will make $\alpha_n$ = 0. We would be subtracting positive terms, so to keep things maximized, we will want to subtract nothing.</li>
+        <li>By 1 and 2, the optimal solution to B satisfies $\alpha_n(y_n(w^Tx_n + w_0) - 1) = 0$ for all $n$ because for each $n$, we will have either $\alpha_n = 0$ or $y_n(w^Tx_n + w_0) - 1 = 0$. Then the sum term being subtracted in B will be 0, illustrating how solving B is the same as solving A. </li>
+      </ol>
+
+
+      <!-- Let's begin by reframing the minimization we did in the last class. Right now it may seem unclear why we are doing this, but at a high level, once we reframe the problem, we will see that there is a trick we can implement to make SVMs to still be usable in high dimensional situations.<br><br>
 
       To reframe the problem, we are going to use a Lagrangian. You may have seen this in your calculus classes (in the form of $\bar{v}_{objective} + \lambda \bar{v}_{constraint} = 0$). The intution behind this is out of scope of the course, but at a high level, the purpose of using a Lagrangian is to rewrite the same minimization problem in a different way.<br><br>
 
@@ -60,7 +116,7 @@ weight: 0
         <li>$\alpha_n$ can only be non-zero if $y_n(w^Tx_n + w_0) = 1$, which shows that we have the equivalent situation as before.</li>
       </ol>
 
-      With the above facts, we know that we're solving the same problem as before, which is what we wanted. This gets us closer to our ultimate goal (where we later want to apply a trick to deal with the dimensionality)
+      With the above facts, we know that we're solving the same problem as before, which is what we wanted. This gets us closer to our ultimate goal (where we later want to apply a trick to deal with the dimensionality) -->
 
       <h4>Now: Let's Utilize Strong Duality</h4>
 
