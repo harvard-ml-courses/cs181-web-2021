@@ -131,7 +131,7 @@ weight: 0
 
       $$\max_{\alpha_n} \min_{w, w_0} \frac12 (\sum_n \alpha_n y_n x_n)^T (\sum_{n'} \alpha_n' y_n' x_n') - (\sum_n \alpha_n y_n x_n) (\sum_{n'} \alpha_n' y_n' x_n')^T + \sum_n \alpha_n$$
 
-      $$= \max_\alpha -\frac12 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' x^T_n x_n' + \sum \alpha_n$$
+      $$= \max_\alpha -\frac12 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' x_n x_n' + \sum \alpha_n$$
 
       With constraints: $\sum_{n} \alpha_n y_n = 0$ and $\alpha_n \geq 0$.<br><br>
       
@@ -163,7 +163,7 @@ weight: 0
 
       because thanks to how we reformulated the problem, the $\phi$'s never appear outside of this product form.
 
-      Furthermore, we can compute we can compute the inner product $K$ without ever computing $\phi(x)$ or $\phi(z)$ itself. This means we can take the distance between $x$ and $z$ in a high-dimensional basis without actually bringing $x$ and $z$ into a high dimension! Mapping $x$ and $z$ to a high dimension (plus storing and doing calculations with the result) is a lot of work. By saving us that work, the kernel trick is extremely powerful.  <br></br>
+      Furthermore, we can compute the inner product $K$ without ever computing $\phi(x)$ or $\phi(z)$ itself. This means we can take the distance between $x$ and $z$ in a high-dimensional basis without actually bringing $x$ and $z$ into a high dimension! Mapping $x$ and $z$ to a high dimension (plus storing and doing calculations with the result) is a lot of work. By saving us that work, the kernel trick is extremely powerful.  <br></br>
     
       <h4>Example: Quadratic and Polynomial Kernels</h4>
 
