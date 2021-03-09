@@ -7,18 +7,24 @@ weight: 0
 
 <section class="main-container text">
     <div class="main">
-      <h4>Date: March 4, 2020 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSfktADzS0wx-dgeQRaEbrbWu1Lx7irQAVkQL-l8wA5C5h4PDg/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfktADzS0wx-dgeQRaEbrbWu1Lx7irQAVkQL-l8wA5C5h4PDg/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: March 2, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLScU6ffyRapkbFLUC939W-f7zlT6ABLi0DFQR4fQP45gpGcqjQ/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLScU6ffyRapkbFLUC939W-f7zlT6ABLi0DFQR4fQP45gpGcqjQ/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 5.4</h4>
+      More updates have been made to the textbook for clarity - please make sure to get the new version!
       <h4>Cube: Supervised, Discrete, Nonprobabilistic</h4>
 
       <br>
 
+      <h4><a href="https://harvard.zoom.us/rec/play/UdBa60KwKU4xoGDcPjGWLHf0g4kFBmsLn9lkE0j0pJNysohv-utU0jdPHC5HcukYXeJkX-Pkkk6_XwAN.eAka4iYQ1A_h_lyX">Lecture Video</a></h4>
+      <h4><a href="files/lecture11_ipad.pdf" target="_blank">iPad Notes</a></h4>
+      <h4><a href="files/lecture11_slides.pdf" target="_blank">Slides</a></h4>
+
       <h3>Lecture 11 Summary</h3>
 
       <ul>
-        <li><a href="#recap11_1">Intro: Support Vector Machines Continued</a></li>
-        <li><a href="#recap11_2">Reframing the Problem to Ultimately Utilize Dimension Trick</a></li>
-        <li><a href="#recap11_3">Why Reframing Was Good: Let's use a Kernel</a></li>
+        <li><a href="#recap11_0">Ethical Considerations</a></li>
+        <li><a href="#recap11_1">Support Vector Machines Continued</a></li>
+        <li><a href="#recap11_2">Reframing the Problem to Ultimately Utilize Kernel Trick</a></li>
+        <li><a href="#recap11_3">Finally: The Kernel Trick</a></li>
         <li><a href="#recap11_4">What is a Valid Kernel?</a></li>
       </ul>
 
@@ -28,122 +34,176 @@ weight: 0
         <li><a href="https://www.youtube.com/watch?v=x51otMMymPs&list=PLrH1CxyJ7Vqb-pHzfUClJNXBDAKajHE74&index=11&t=0s">SVM (Soft Margin)</a></li>
       </ul>
 
-      <h2 id="recap11_1">Intro: Support Vector Machine Continued</h2>
+      <h2 id="recap11_0">Ethical Considerations</h2>
 
-      Last time, we looked at the hard margin problem and the soft margin problem (see last lecture's notes for context). Also as a refresher, the reason we found those problems to be beautiful was beacuse they are convex problems: specifically, they are quadratic with linear constriants, so they can be solved very efficiently.<br><br>
+      We need to be careful about discriminatory stereotyping through data, such as was seen with redlining policies in the 1930s. In particular, data features that seem nondiscriminatory are often actually proxies for features like race and income. <br><br>
 
-      However, one thing ends up being a little tricky. What if x is very high dimensional? There are computations that we need to do here that will become difficult as the size of w and the size of x will get large due to the high dimensionality. Today we are going to consider efficient solutions for high dimensional x. By the end of today's lecture we're going get to more flexible distances (then you can apply SVM even in high dimensions).<br><br>
+      Exclusion from a dataset is another form of biased data. Consider a model trained on a medical database with a lot of data on white patients, but little data on people of color. This model may learn harmful associations that lead to poor care for patients of color, simply because they were not included in the data. For example it might make predictions as though "people of color are less likely to get sick because they don't come to this hospital much", which is clearly undesirable. <br><br>
 
-      <h2 id="recap11_2">Reframing the Problem to Ultimately Utilize Dimension Trick</h2>
+      Question: Should organizations be prohibited from collecting data on race? This initially sounds like a way to prevent bias, but it also makes it harder to check our models and systems for bias. <br><br>
 
-      Let's begin by reframing the minimization we did in the last class. Right now it may seem unclear why we are doing this, but at a high level, once we reframe the problem, we will see that there is a trick we can implement to make SVMs to still be usable in high dimensional situations.<br><br>
+      <h2 id="recap11_1">Support Vector Machine Continued</h2>
 
-      To reframe the problem, we are going to use a Lagrangian. You may have seen this in your calculus classes (in the form of $\bar{v}_{objective} + \lambda \bar{v}_{constraint} = 0$). The intution behind this is out of scope of the course, but at a high level, the purpose of using a Lagrangian is to rewrite the same minimization problem in a different way.<br><br>
+      <a href="recap10.html">Last time</a>, we looked at the hard margin problem and the soft margin problem. We found those problems to be beautiful because they are convex: specifically, they are quadratic with linear constraints, so they can be solved very efficiently. Today we are going to discuss how SVM can be efficiently solved for high dimensional x. In particular, we will:<br><br>
+      
+      <ol>
+          <li>Solve the dual form of the max-margin function, which will allow us to rewrite the discriminant function 
+          $$ \hat{y} = \begin{cases} +1 & h(x, w, w_0) > 0
+          \\ -1 & \text{ else}
+          \end{cases} \text{ into the form }
+          \hat{y} = \left ( \sum_n \alpha_n y_n x_n^T x \right ) + w_0  $$</li>
+          <li>Use the "kernel trick" to learn in a high-dimensional basis without having to convert our data to such a high-dimensional form. </li>
+      </ol>
 
-      So first, start with what we had before in the hard margin case:
+      <h2 id="recap11_2">Reframing the Problem to Ultimately Utilize Kernel Trick</h2>
 
-      $$min_{w, w_0} \frac{1}{2} ||W||^2_2$$
+      Let's begin by reframing the minimization we did in the last class. Reframing the problem will reveal a trick for doing SVM in high dimensions.<br><br>
 
-      With constraint: $y_n(w^Tx_n + w_0) \geq 1$.
+      First, we'll rewrite the hard-margin form as a Lagrangian, which we've seen before as an optimization tool. (This time, our optimization problem is constrained by inequalities rather than equalities, so the form will look slightly different. The details of rewriting in the Lagrangian here are out of the scope of this class.) <br><br>
+
+      Our original formulation was
+      
+      \begin{equation}
+          \min_{w, w_0} \frac12 w^Tw \tag{A} \label{A}
+      \end{equation}
+      
+      with constraint: $y_n(w^Tx_n + w_0) \geq 1$ for all $n$. 
 
       We now rewrite this as:
 
-      $$min_{w, w_0} max_{\alpha_n} \frac{1}{2} ||w||^2_2 - \sum_n \alpha_n (y_n (w^Tx_n + w_0) - 1)$$
+      \begin{equation}\min_{w, w_0} \left ( \max_{\alpha_n} L(w, \alpha, w_0) \right ) = \min_{w, w_0} \left ( \max_{\alpha_n} \frac{1}{2} w^Tw - \sum_n \alpha_n (y_n (w^Tx_n + w_0) - 1) \right ) \tag{B} \label{B}\end{equation}
 
-      With constraint, $alpha_n > 0$.
+      With constraint $\alpha_n > 0$. <br><br>
+
+      Note: Interpret the min-max formulation as a game between a minimizer and a maximizer where the minimizer goes first. First, the minimizer chooses $w, w_0$. Once $w, w_0$ is fixed, the maximizer chooses the $\alpha_n$'s maximizing $L$. Thus, the minimizer's goal in the first step is to choose a $w, w_0$ so that the greatest value the maximizer can achieve by choosing the $\alpha$'s is as low as possible. We get the value of the expression by plugging in the optimal $w, w_0, \alpha$'s that the minimizer and maximizer would choose in this game.<br><br>
 
       <h4>How can we confirm this is the same minimization problem we had in last lecture?</h4>
 
+      We claim that the optimal solution to A is also the optimal solution to B by reasoning as follows:
+
       <ol>
-        <li>If the constraint is violated, we can make the Lagrangian objective infinite becuase the $(y_n (w^Tx_n + w_0) - 1)$ term would then be negative, which makes the summation postive now, not negative. This then means we can make $\alpha$ infinite, leading to infinite loss, which ruins what we want to do, because really we want to minimize the whole term with respect to w and $w_0$.</li>
-        <li>If the constraint is satisifed with slack (this means that $y_n (w^T x_n + w_0) > 1$), then we want to make $\alpha_n$ = 0, since we're forced to subtract, to keep things maximized, we will want to subtract nothing.</li>
-        <li>$\alpha_n$ can only be non-zero if $y_n(w^Tx_n + w_0) = 1$, which shows that we have the equivalent situation as before.</li>
+        <li><b>The optimal solution to B must satisfy the constraints of A.</b> If A's constraint $y_n(w^Tx_n + w_0) - 1 \geq 0$ was violated for some $n$, then the corresponding $\alpha_0(y_n(w^Tx_n + w_0) - 1)$ expression in B would be negative. Since the sum is negated, the $n$th term in it is now positive, and the expression's value will be blown up to infinity by setting $\alpha_n$ arbitrarily large when we take the max. However, we wanted the max (which is our loss) to be small, not infinite, so a solution violating A's constraint would therefore not be optimal and would not be selected by the minimizer. </li>
+        <li><b>The optimal solution to B sets $\alpha_n = 0$ on all $x_n$ with $y_n(w^Tx_n + w_0) > 1$.</b> If the constraint is satisfied with slack (so $y_n (w^T x_n + w_0) > 1$), then the maximizer will make $\alpha_n$ = 0. We would be subtracting positive terms, so to keep things maximized, we will want to subtract nothing.</li>
+        <li>By 1 and 2, the optimal solution to B satisfies $\alpha_n(y_n(w^Tx_n + w_0) - 1) = 0$ for all $n$ because for each $n$, we will have either $\alpha_n = 0$ or $y_n(w^Tx_n + w_0) - 1 = 0$. Then the sum term being subtracted in B will be 0, leaving us with an expression that looks the same as A. This illustrates how solving B is the same as solving A. </li>
       </ol>
 
-      With the above facts, we know that we're solving the same problem as before, which is what we wanted. This gets us closer to our ultimate goal (where we later want to apply a trick to deal with the dimensionality)
 
       <h4>Now: Let's Utilize Strong Duality</h4>
+      First, we'll discuss weak duality. With our Lagrangian formulation, we have reformulated hard-SVM as a "min of a max" problem. We argue that swapping the max and the min (so that the maximizer sets values for $\alpha_n$ first, and then the minimizer choose $w$) only leads to a smaller value. Intuitively, we previously had to pick $w$ first, then pick the maximizing $\alpha$.<br><br>
 
-      By a property know as strong duality, we are allowed to switch the order of minimum and maximum. The intuition behind this is beyond the scope of the course, but you are free to look into it yourself!
+      But now if we switch the min and max, we can pick any minimizing $w$ we want after $\alpha$ is set, giving the minimizer an advantage. In particular, the minimizer will be able to achieve a value at least as small as before. 
 
-      $$max_{\alpha_n} min_{w, w_0} 1/2 ||w||^2_2 - \sum_n \alpha_n (y_n (w^Tx_n + w_0) - 1)$$
+      $$\min_{w, w_0} \max_{\alpha \geq 0} L(w, \alpha, w_0) \geq \max_{\alpha \geq 0}\min_{w, w_0} L(w, \alpha, w_0)$$
 
-      Now this turns out to be great, because now we can actually take some derivatives to solve for w. In other words, if were given $\alpha$, solving for w is analytic. Let's do it.
+      This problem actually satisfies strong duality: the two sides are in fact equal. Then we can switch the min and max in our objective.
 
-      $$\nabla_w L = w - \sum_n \alpha_n y_n x_n = 0$$
+      $$\min_{w, w_0} \max_{\alpha \geq 0} L(w, \alpha, w_0) = \max_{\alpha \geq 0}\min_{w, w_0} L(w, \alpha, w_0)$$
 
-      $$w = \sum_n \alpha_n y_n x_n$$
+      The duality theory here is out of scope for us, but the idea is that this property holds because the objective in A is quadratic and our constraints are linear. This is a convex analog for duality you may have seen in linear programming. <br><br>
 
-      Notes: x is a vector, w is a vector, alpha is a scalar, y is scalar.<br><br>
+      Now, we have a dual formulation with a max-min structure:
 
-      To compose the w, we are going to use the weighted x's. In other words, W is a weighted combination of data points, which is interesting to note!<br><br>
+      $$\max_{\alpha \geq 0} \min_{w, w_0} \frac12 w^Tw - \sum_n \alpha_n(y_n(w^Tx_n + w_0)) - 1 $$
 
-      Below is a constraint that also comes along.
+      This is easier for us to solve because now that $\alpha$ is set before $w$ is, we can rewrite the expression in terms of $\alpha$ only. For any $\alpha$, the optimal $w, w_0$ must satisfy:
+      
+      $$\frac{\partial L(w, \alpha, w_0)}{\partial w} = w - \sum_n \alpha_n y_n x_n = 0 $$
 
-      $$\frac{\partial L}{\partial w_0} = -\sum_n \alpha_n y_n = 0$$
+      \begin{equation}
+          \iff w = \sum_n \alpha_n y_n x_n \tag{*} \label{*}
+      \end{equation}
 
-      Now let's substitute back in:
+      Similarly, setting the partial with respect to $w_0$ to 0 yields
+      
+      \begin{equation}
+        \frac{\partial L}{\partial w_0} = -\sum_n \alpha_n y_n = 0 \tag{$\square$}
+      \end{equation}
 
-      $$max_{\alpha_n} min_{w, w_0} 1/2 (\sum_n \alpha_n y_n x_n)^T (\sum_{n'} \alpha_n' y_n' x_n') - \sum_n \alpha_n y_n (\sum_{n'} \alpha_n' y_n' x_n')^Tx_n - w_0 \sum_n \alpha_n y_n + \sum_n \alpha_n)$$
+      We expand terms in our reformulated objective out.
 
-      We know from constraint that $w_0 \sum_n \alpha_n y_n$ is 0. So w can simplify to:
+      $$\max_{\alpha \geq 0} \min_{w, w_0}  \frac12 w^Tw - w^T \sum_n \alpha_n y_n x_n - w_0\sum_n \alpha_n y_n + \sum_n \alpha_n $$
 
-      $$max_{\alpha_n} min_{w, w_0} 1/2 (\sum_n \alpha_n y_n x_n)^T (\sum_{n'} \alpha_n' y_n' x_n') - \sum_n \alpha_n y_n (\sum_{n'} \alpha_n' y_n' x_n')^Tx_n + \sum_n \alpha_n)$$
+      Let's apply constraint (*):
+      
+      $$\max_{\alpha_n} \min_{w, w_0} \frac12 (\sum_n \alpha_n y_n x_n)^T (\sum_{n'} \alpha_n' y_n' x_n') - (\sum_n \alpha_n y_n x_n) (\sum_{n'} \alpha_n' y_n' x_n')^T - w_0 \sum_n \alpha_n y_n + \sum_n \alpha_n$$
 
-      $$max_\alpha -1/2 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' x^T_n x_n' + \sum \alpha_n$$
+      Next, we apply constraint ($\square$), then combine the first two terms, simplifying the expression to:
 
-      With constraints: $\sum_{n} y_n \alpha_n = 0$ and $\alpha_n \geq 0$.<br><br>
+      $$\max_{\alpha_n} \min_{w, w_0} \frac12 (\sum_n \alpha_n y_n x_n)^T (\sum_{n'} \alpha_n' y_n' x_n') - (\sum_n \alpha_n y_n x_n) (\sum_{n'} \alpha_n' y_n' x_n')^T + \sum_n \alpha_n$$
 
-      This is still quadratic with linear constraints! We are looking at something quadratic in alpha (quadratric in the objective), and we have constraints that are linear in terms of $\alpha$.<br><br>
+      $$= \max_\alpha -\frac12 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' x_n x_n' + \sum \alpha_n$$
 
-      <u>Student question: What does n' mean?</u> The reason we have this is because we happen to already be using n in the overall summation, so we use n' to denote the fact that there is a different summation going on within. For clarity, we could of also picked i, anything would've worked.<br><br>
+      With constraints: $\sum_{n} \alpha_n y_n = 0$ and $\alpha_n \geq 0$.<br><br>
+      
+      The above is our dual hard-margin formulation of SVM. There is also a soft-margin formulation where we introduce $c$ with a constraint $c \geq \alpha_n \geq 0$.
+      
+      The discriminant function now looks like
+    
+      $$h(x, \alpha, w_0) = \sum_n \alpha_n y_n x_n^Tx + w_0 $$
+    
+      where our support vectors are 
+    
+      $$ Q = \{\alpha_n: \alpha_n > 0\}.$$
+    
+      The $\alpha_n$ are found by the optimization problem. To find $w_0$, we note that $y_n(w^Tx_n + w_0) = 1$ for only points on the decision boundary. Then we can find some point $x_n$ on the decision boundary and use this to solve for $w_0$.
 
-      <h4>How do recover the actual $w$ and $w_0$ solutions after getting $\alpha$?</h4>
+      <h2 id="recap11_3">Finally: The Kernel Trick</h2>
 
-      Once we solve the above problem we get what \alpha is. But how do we get $w$ and $w_0$? We can do a substitution of $\alpha$ back into the term:
+      We've done all this work to obtain a dual formulation. How does it help us? Consider learning with the basis function $\phi: \mathbb R^D \rightarrow \mathbb R^M$. Then we would need to solve
 
-      $$w^* = \sum_n \alpha^*_n y_n x_n$$
+      $$max_\alpha -\frac12 \sum_n \sum_{n'} \alpha_n \alpha_n' y_n y_n' \phi(x_n)^T \phi(x_n') + \sum \alpha_n$$
+          
+      with the constraints $\sum_n \alpha_n y_n = 0, c \geq \alpha_n \geq 0$ for all n. 
 
-      Note, this leads our final prediction form to look like the following after we sub in w^* from our original equation for a new point $x^*$:
+      The discriminant also becomes $$h(x, \alpha, w_0) = \sum_n \alpha_n y_n \phi(x_n)^T \phi(x_n').$$
 
-      $$\sum_n \alpha^*_n y_n x_n^T x^* + w_0$$
+      <b>Key idea.</b> We can replace all appearances of the $\phi$'s with a kernel function 
 
-      Note that this is in soe a weighted prediction where we have different weights on our different $y_n$'s, and this is also multiplied some measure of closeness (the $x_n^T x^*$ term). Think of it like taking a vote!
+      $$K(x, z) = \phi(x)^T\phi(z)$$
 
-      And then to get $w_0$ back, we can find any n where $\alpha_n$ is greater than 0, which leads to the constraint $y_n (w^T x_n + w_0) = 1$ to be true, which we can use to solve for $w_0$.
+      because thanks to how we reformulated the problem, the $\phi$'s never appear outside of this product form.
 
-      <h2 id="recap11_3">Why Reframing Was Good: Let's use a Kernel</h2>
+      Furthermore, we can compute the inner product $K$ without ever computing $\phi(x)$ or $\phi(z)$ itself. This means we can take the distance between $x$ and $z$ in a high-dimensional basis without actually bringing $x$ and $z$ into a high dimension! Mapping $x$ and $z$ to a high dimension (plus storing and doing calculations with the result) is a lot of work. By saving us that work, the kernel trick is extremely powerful.  <br></br>
+    
+      <h4>Example: Quadratic and Polynomial Kernels</h4>
 
-      This is good because now we are solving with respect to n, not d: we only need the $x^n x_n'$ terms. There are a few things we could do next. With this set up, we can do a couple of things since we are really just looking for an inner product.
+      Consider the following kernel for $x,z \in \mathbb R^2$: $K(x,z) = (x^Tz)^2$.
 
-      We could reuse what we've done in the past, as in we can transform x to $\phi(x)$, doing explicit feature mapping (which we've seen so far in our expert engineering, neural networks). However this would still involve the dimensions if you did this mapping explicitly.
+      Then \begin{align*} 
+        K(x,z) &= (x^Tz)^2 
+        \\ &= (x_1z_1 + x_2z_2)^2 
+        \\ &= x_1^2z_1^2 + 2x_1z_1x_2z_2 + x_2^2z_2^2 
+        \\ &= (x_1^2, x_1x_2, x_2x_1, x_2^2)^T(z_1^2, z_1z_2, z_2z_1, z_2^2) 
+        \\ &= \phi(x)^T\phi(z)
+      \end{align*}
+      
+      where $\phi$ maps $x$ into the basis using all degree-2 terms. 
 
-      Our new method is something very elegant. Essentially we are going to do implicit feature mapping! We can define a kernel function: $K(x, x') = \phi(x)^T \phi(x')$ which will skip the the actual explicit manual process of applying the actual $\phi$ to each of $x$ and $x'$ and multiplying it out. The function directly spits out the result of $\phi(x)^T \phi(x')$!<br><br>
+      For further generalization,
 
-      <h4>Example kernels:</h4>
+      $$K(x, z) = (1 + x^Tz)^2$$
+     
+      is a kernel for the degree-2 basis also including linear and constant terms. In general for $q \geq 2$,
 
-      First, let's just put the trivial case out there: this is if we're not actaully doing anything special:
+      $$K_{poly}(x, z) = (1 + x^Tz)^q$$ 
+      
+      is the kernel for polynomials including all terms up to degree $q$. For polynomials of degree $q$, the basis would have $O(D^q)$ terms. So without using the kernel trick, the computing power needed for these higher bases would grow at an exponential rate. 
+      
+      <h4>Example: Gaussian Kernel</h4>
 
-      $$K(x, x') = x^Tx$$
-
-      Then we also have these examples:
-
-      $$K(x, x') = (1 + x^tx)^q$$
-
-      $$K(x, x') = exp(-||x-x'||^2/(2\sigma^2))$$
-
-      The last example is the radial basis kernel. It turns out, this is a really nice trick because turns out this kernel function actually corresponds to an infinitely sized basis! And that's the whole point, we are able to do this implicit mapping and get the effect of as if we used an infintitely sized basis even though we can directly compute the inner product by skipping the step and going directly to our $K(x, x')$ function.<br><br>
-
-      Why is this important in a real world context? This now means we can apply SVMs to anything, even if there are a lot of dimensions in the x. Besides letting us use infinitely sized bases, it also helps us in contexts where some features make more sense than others. We can work on music, we can can work on documents, (which all have a lot of input content, high dimensionality), because all we need is a Kernel function that extracts the important features from the music or document data fast enough (we can handcraft these functions)!
+      $$K_{gauss}(x, z) = \exp(\frac{-||x - z||_2^2}{\lambda})$$ 
+      with bandwidth $\lambda > 0$, decays exponentially in squared distance. 
+      
+      This is the Gaussian kernel, which corresponds to a basis of infinite dimension! 
 
       <h2 id="recap11_4">What is a valid kernel?</h2>
 
-      The detils of this are mainly out of the scope of the course, but at a high level we consider Mercer's theorem. Specifically, we define a matrix K of $K(x_n, x_n')$ for any set of data or inputs x. If K is postivie semi-definite, that is $z^TKz \geq 0$ for any z, then K is a valid kernel. Intuitively this means something along the lines of: when you take the inner product, it should be positive, since intuitively this term means distance, and we want distance to be positive.<br><br>
+      How can we tell if a function will be a kernel for some basis? <br><br>
 
-      Alternatively this can be expressed as:
+      One way to view the kernel function $K$ is that it defines a $n \times n$ Gram matrix on the data $x_1, ..., x_n$ where the $n, n'$th entry is equal to $K(x_n, x_{n'})$. The Gram matrix stores all possible inner products of datapoints in the data set. <br><br>
 
-      $$\int_{x, x'} f(x)f(x')K(x, x') dx dx' \geq 0$$
+      The details of this are mainly out of the scope of the course, but at a high level we consider Mercer's theorem, which states that if and only if the Gram matrix defined by $K$ is positive semidefinite (meaning all of its eigenvalues are nonnegative), $K$ is a valid kernel for some basis.<br><br>
 
-      For all f.
-    </div>
+      Since certain operations on PSD matrices are guaranteed to yield PSD matrices, we can apply these operations to existing kernels to generate new kernels, such as by adding kernels or taking polynomials of kernels. 
+
 </section>

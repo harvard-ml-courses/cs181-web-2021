@@ -227,7 +227,7 @@ lectures:
 
 
   - topic: Unsupervised Learning
-    subtopic: Clustering
+    subtopic: <a href="/cs181-web/recap13">Clustering</a>
     section:
     readings: 6
     hw:
