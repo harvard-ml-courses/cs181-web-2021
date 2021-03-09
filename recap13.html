@@ -113,13 +113,13 @@ weight: 0
 
        We can go back to the objective function and set its derivative with respect to $\mu_k$ to 0 to show that the step we take in Lloyd's algorithm minimizes the loss.
 
-       $$L = min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 = \sum_n z_nk (x_n - \mu_k)^T(x_n - \mu_k)$$
+       $$L = min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 = \sum_n z_{nk} (x_n - \mu_k)^T(x_n - \mu_k)$$
        
        We can take this derivative with respect to just $\mu_k$.
 
        $$\frac{\partial L}{\partial \mu_k} = - 2 \sum z_{nk} (x_n - \mu_k) = 0$$
 
-       $$\left ( \sum_n z_{nk} \right )\mu_k = \left (\sum_n z_{nk} x_n \right )$$
+       $$\left ( \sum_n z_{nk} \right )\mu_k = \sum_n z_{nk} x_n$$
 
        We can pull out the $\mu$ since it doesn't depend on n.
 
@@ -147,26 +147,40 @@ weight: 0
           <li>K-means++ gives a more specific way to initialize clusters</li>
           <li>K-medoids chooses the centermost datapoint in the cluster as the prototype instead of the centroid. (The centroid may not correspond to a datapoint.)</li>
         </ol>
-        
+
       </ol>
 
 
 
       <h2 id="recap13_3">Nonprobabilistic Clustering: Hierarchical Agglomerative Clustering</h2>
+      <h4>The Algorithm</h4>
 
-      The Hierarchical Agglomerative Clustering (HAC) algorithm is as follows: Every example starts in its own cluster. While there is more than 1 cluster, we merge the two “closest” clusters.<br><br>
-
+      The Hierarchical Agglomerative Clustering (HAC) algorithm is as follows: 
+      
+      <ol>
+        <li>Every example starts in its own cluster.</li>
+        <li>While there is more than 1 cluster, we merge the two “closest” clusters.</li>
+        </li>
+      </ol>
+      
       This forms a hierarchy of clusters, which can be visualized as a dendrogram (a tree) over the data where nodes are clusters, and a node $x$’s children represent the clusters that were at one point merged into node $x$.<br><br>
 
       <div class="text-center">
         <img src="{{ site.baseurl }}/images/recap13_1.png" style="width:60%"  alt="Dendrogram Example"></img>
       </div>
     
-      Some features of HAC include: HAC is nonparametric (as seen in the above algorithm, there isn't a finite number of parameters that can describe what's going), and it is also deterministic because there is no random intialization (whereas in K-Means we actually have to do some random initialization). Unlike in K-means, there is no need to specify the number of clusters.  Its complexity scales as $O(n^2)$ because we need to make pairwise distance comparisons. <br><br>
-
+      Some features of HAC include: 
+      
+      <ul>
+        <li>HAC is nonparametric</li>
+        <li>It is also deterministic because there is no random intialization involved</li>
+        <li>We do not need to specify a number of clusters to find</li>
+        <li>Complexity scales as $O(n^2)$ because the algorithm is based off of pairwise distance comparisons.</li>
+      </ul>
+      
       <h4>Distance Between Points and Distance Between Clusters</h4>
 
-      But now we need two measures of distance:
+      For HAC, we need two measures of distance:
       <ul>
         <li>$d(x, x’)$ will measure the distance between individual points</li>
         <li>A linkage function will measure the distance between two clusters of points. This is how we determine what the "closest" pair of clusters are. Some options for the linkage function are</li>
@@ -179,12 +193,12 @@ weight: 0
         </ul>
       </ul>
 
-      The min linkage is more likely to merge large clusters together. The min linkage will also tend to merge clusters into “chains” or “strings”.  The max linkage will prefer compact clusters instead. The average and centroid linkages are compromises between the min and max ones.   <br><br>
+      The min linkage is more likely to merge large clusters together. The min linkage will also tend to merge clusters into “chains” or “strings”.  The max linkage will prefer compact clusters instead. The average and centroid linkages are compromises between the min and max ones. You will need to pick a linkage depending on what you want your output to look like. <br><br>
 
       <div class="text-center">
         <img src="{{ site.baseurl }}/images/recap13_2.png" style="width:60%"  alt="Comparison of different linkage functions"></img>
       </div>
 
-      You will need to pick a linkage depending on what you want your output to look like. 
+      
     </div>
 </section>
