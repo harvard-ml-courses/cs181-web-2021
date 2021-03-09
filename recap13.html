@@ -46,38 +46,6 @@ weight: 0
 
       Today we’ll cover clustering, a method for putting data into groups. 
 
-      <!-- <h4>Intro to Unsupervised Learning</h4>
-
-      So far in the class, we've been doing supervised learning, where we were trying to predict y's given x's. Now, we'll look at unsupervised learning, where there are no more y's, and only x's. The task instead then, is to look at the data and "summarize" the data (the x's).<br><br>
-
-      <h4>Intro to Clustering</h4>
-
-      One specific type of unsupervised learning that we're covering today is clustering. Some real world examples are the following: perhaps we're looking at a huge network, and we want to identify different types of groupings within the networks, for example in social media. These groups of people might have certain shared interests or activities that we'd like to find out. Another exmaple is: perhaps we have a bunch of genes and we know the interactions between them, but we want to find genes that are similar so that we can understand the science behind what's going on. Overall, putting things into groups is a way we can undersatnd things better. This may seem a little fuzzy and undefined for now, but as we go through the lecture and formalize things in the math, things will make more sense.
-
-      <h2 id="recap13_2">General Look at Unsupervised Learning</h2>
-
-      One way to look at unsupervised learning at the broadest, most general level is to go back to that idea of "summarization". Essentially, our unsupervised learning is a "summarization task" that we're trying to complete. As we think about this, it's important to consider three questions.
-
-      <ol>
-        <li>Why might we to do this?</li>
-          <ol>
-            <li>Hypothesis Generation (we might want to look at summaries or patterns in science so that we can start asking the right questions about why certain things look the way they do)</li>
-            <li>Compression: we may want to compress images, music, or videos in order to save storage space</li>
-            <li>Organization: perhaps we are organizing news articles, and we to only show a few headlines that kind of represent all of the headlines. To phrase this another way: we might be trying to summarize the news into a few headlines</li>
-          </ol>
-        <li>How do we evaluate our summarization?</li>
-
-        We have a goal in mind: maybe we want to group a bunch of movies into different genres. But we need a formal way of writing this in the math, and we need a goal. We can use reconstruction error.
-
-        $$\sum_n || x - \textrm{decode(encode(x))}||^2$$
-
-        We can think of the encode(x) as the summary step (in the movie example: what cluster does this movie belong to) and the decode as the conversion of the summary to our new version (best guess) of x based off just the summary. We can call this $\hat{x}$. The || || notation here represents the distance metric notation. This could really be anything: edit distance, Hamming distance, cosine similarity, etc. Remember that there are lots of types of metrics out there: gemoetry, density, stability, etc.<br><br>
-
-        Note: Remember that this is a general framework for the summarization task. We've set it up in a way that this also works for examples like say compressing an image (where we can encode by compressing, and decode by decompressing), as well as the clustering of the movies example. In the movie example, it may feel like overkill, but it still works out. The encoding is picking the genre. The decoding is trying to convert the genre back to the movie. Obviously, that is impossible, so we will incur some loss for sure, but the logic here is that even though we've lost some info in the process, categorizing a movie by the correct genre would reduce to a smaller error than if you categorized a movie a wrong genre.<br><br>
-
-        <li>How do we do it? There are a couple different ways, but today we're going to focus on nonprobabilistic clustering.</li>
-      </ol> -->
-
       <h2 id="recap13_3">Nonprobabilistic Clustering: K-Means</h2><br>
 
       <h4>Scenario and Notation</h4>
@@ -104,7 +72,7 @@ weight: 0
         <li>We may be given a number $K$ of desired clusters to find</li>
         <li>We want an algorithm that outputs group assignments $z_{nk}$, where $z_{nk}$ tells us if $x_n$ is in cluster $k$. That is,
           $$	z_{nk} =  \begin{cases} 
-          0 & x_n \text{ is not in cluster } k //
+          0 & x_n \text{ is not in cluster } k \\
           1 & x_n \text{ is in cluster } k
           \end{cases} $$ </li>
       </ul>
@@ -119,28 +87,11 @@ weight: 0
 
       We use the following objective for the K-means problem. The idea is that we want to find the $\mu$’s (cluster centers) and $z$’s (cluster assignments) so that data points $x_n$ are close to the centers of the clusters they got assigned to.
 
-      $$min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2 $$
+      $$min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 $$
 
       Recall that $z_{nk}$ is either 0 or 1 depending on if $x_n$ is in cluster $k$. In the sum, we multiply the distances by $z_{nk}$ so that only distances from $\mu_k$ to points in cluster $k$ count in our loss.  This is just like how we've used indicator variables in the past. <br><br>
 
       It turns out this optimization is NP hard and non convex, so it's difficult to solve. Luckily, Lloyd’s algorithm helps us find a pretty good local optimum. <br><br>
-
-      <!-- With the set up out of the way, we now shoud start with our objective function, which is what will get us going in the right direction. We had an objective from before:
-
-      $$\sum_n || x - \textrm{decode(encode(x))}||^2$$
-
-      We're going to rewrite this into our specific K-Means situation.
-
-      $$min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||$$
-
-      Note on explaining how we rewrote it: The $\sum_k z_{nk}$ part will make sure to pick out the correct cluster for each point (as in, the cluster that point $x_n$ is assigned to). This is similar to the way we've used indicator variables in the past. The $||x_n - \mu_k||$ term represents the decode encode part. Because we are doing clustering, the summary or "encoding" is the prototype $\mu_k$ and the loss we get is described exactly by $||x_n - \mu_k||$ since $\mu_k$ is our best option of how to describe a given point, and represents the decoding part as we have to use $\mu_k$ as our best guess for all the points in this cluster k.<br><br>
-
-
-      It turns out this optimization is NP hard and very non convex, so it's going to be difficult to solve this objective. Luckily we can solve this using an algorithm to find a pretty good local optima.
-
-      Note: at this point in time, we note that we will square the objective, as it won't affect the minimization ultimately, but will make the math more intuitive down the road. Details to come later. Now the objective is:
-
-      $$min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||^2$$<br> -->
 
       <h4>Lloyd's Algorithm</h4>
       We can find clustering assignments for K-means by following this algorithm:
@@ -168,31 +119,6 @@ weight: 0
           This idea of alternating optimization (aka coordinate descent) is going to be key in our unsupervised learning, because now we have two sets of unknowns to find, the global $\mu$’s and the data-specific z's).
 
 
-<!--           
-      In the above section, we just have the objective. Remember that there is also an algorithm necessary, and that these are two very different things. The K-Means objective (what we wrote above) is ultimately is the loss we're trying to minimize. And now we'll look at the actual K-Means algorithm, which is used to solve the above objective and different from the objective itself.
-
-      Note: this K-Means algorithm is also known as Lloyd's algorithm, and is a variation of block coordinate ascent. Block coordinate ascent (aka. alternating minimization) is an important concept overall so definitely note it down.<br><br>
-
-      <u>Block Coordinate Ascent:</u> The core idea of block coordinate ascent is: given $\mu$, solving z is easy. And given z, easy to solve for $\mu$. Intuitively this makes sense in the K-Means situation. Let's first look at when given $\mu$, solving for z: if you had the prototypes, you can just assign the points to clusters by picking the closest prototype, which will minimize the objective. Then if we are given z, and need to pick $\mu$, we can pick the means easily just by taking the average, which will also minimize the loss.<br><br>
-
-      <u>Back to Algorithm</u>
-
-      <ol>
-        <li>Randomly assign points to clusters (as in randomly assigning $z_{nk}$)</li>
-        <li>Loop until converged:
-          <ul>
-            <li>for k = 1, ... K:</li>
-            <li>$\mu_k = \textrm{mean}(x_n\textrm{ such that }z_nk = 1) = \frac{1}{n_k} \sum z_nk x_n$</li>
-            <li>where $n_k$ is obtained by $\sum_n z_{nk}$</li>
-
-            <li>for n = 1, ... N:</li>
-            <li>Assign $x_n$ to $\textrm{argmin}_k ||x_n - \mu_k ||$</li>
-          </ul>
-        </li>
-      </ol>
-
-      Note: Usually you will do several restarts and then pick the best because it is non convex)<br><br> -->
-
        <h4>Why Lloyd's Algorithm Works</h4>
 
        At a high level, this algorithm works because in each step (the calculating z step, and the calculating $\mu$ step), we are reducing the loss. Since we are doing this until convergence, we will reach some local minimum.<br><br>
@@ -201,33 +127,23 @@ weight: 0
 
        When we calculate the $z$’s, we are assigning each point to the cluster with the closest prototype. Of course this is the choice that would minimize loss for the current locations of prototypes, as we are shortening (or not changing) the distance between points and their prototypes.<br><br>
 
-       <!-- At every step in the loop across each data point n, the loss is getting smaller because we are assigning points to the the closest prototype, so by definition we are minimizing the loss, since we are shortening (or at not changing) the distance between points and their prototypes.<br><br> -->
-
        <u>For calculating $\mu$:</u><br><br>
 
-       We will do a bit of math to show this. Let us go back to the objective function and take the derivative with just respect to $\mu_k$ to show that our step we took was minimizing the loss.
+       We can go back to the objective function and set its derivative with respect to $\mu_k$ to 0 to show that the step we take in Lloyd's algorithm minimizes the loss.
 
-       $$L = \sum_n z_nk (x_n - \mu_k)^T(x_n - \mu_k)$$
-
+       $$L = min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 = \sum_n z_nk (x_n - \mu_k)^T(x_n - \mu_k)$$
+       
        We can take this derivative with respect to just $\mu_k$.
 
-       $$\frac{\partial L}{\partial \mu k} = - 2 \sum z_{nk} (x_n - \mu_k) = 0$$
+       $$\frac{\partial L}{\partial \mu_k} = - 2 \sum z_{nk} (x_n - \mu_k) = 0$$
 
-       $$(\sum_n z_{nk})(\mu_k) = (\sum_n z_{nk} x_n)$$
+       $$\left ( \sum_n z_{nk} \right )\mu_k = \left (\sum_n z_{nk} x_n \right )$$
 
-       We can rearrange and also pull out the $\mu$ since it doesn't depend on the n.
+       We can pull out the $\mu$ since it doesn't depend on n.
 
-       $$\mu_k = (\sum_n z_{nk} x_n)/(\sum_n z_{nk})$$
+       $$\mu_k = \frac{\sum_n z_{nk} x_n}{\sum_n z_{nk}} = \frac{\sum_n z_{nk} x_n}{N_k$$
 
-       <!-- As you can see, this is exactly what the algorithm was doing, so it indeed was minimizing.<br><br> -->
-
-       This is exactly  what we set $\mu_k$ to when running our algorithm, illustrating how the algorithm finds a local minimum for $\mu$.<br><br>
-
-       <!-- <u>Conclusion:</u><br><br>
-
-       Again, to recap, because it's minimizing at both the z and $\mu$ steps and we can keep running this until convergence, we know that this will indeed work and get us to a local optima at least. Before we hand waved saying that taking the means made sense, using just intuition. Now, we've just gone through the math more formally to show why exactly this algorithm works.<br><br>
-
-       <u>Student Question: Do the starting values affect the result?</u> Yes, they do, great question. Some algorithms address this. One quick example is the kmeans++ algorithm.<br><br> -->
+       This is exactly what we set $\mu_k$ to when running our algorithm, illustrating how the algorithm finds a local minimum for $\mu$.<br><br>
 
        <h4>Additional Considerations of K-Means</h4>
 
@@ -251,15 +167,6 @@ weight: 0
 
 
       <h2 id="recap13_4">Nonprobabilistic Clustering: Hierarchical Agglomerative Clustering</h2>
-
-      <!-- Hierarchical clustering constructs a tree over the data, where the leaves are individual data items, while the root is a single cluster that contains all of the data. The algorithm is as follows:
-
-      <ol>
-        <li>Start with n clusters, one for each data point</li>
-        <li>Measure the distance between clusters. This will require an inter-cluster distance measurement that we will define below</li>
-        <li>Merge the two ‘closest’ clusters together, reducing the number of clusters by 1, and also record the distance between these two merged clusters for the dendrogram (more on this later)</li>
-        <li>Repeat step 2 until we’re left with only a single cluster</li>
-      </ol> -->
 
       The Hierarchical Agglomerative Clustering (HAC) algorithm is as follows: Every example starts in its own cluster. While there is more than 1 cluster, we merge the two “closest” clusters.<br><br>
 
@@ -296,20 +203,6 @@ weight: 0
         <img src="{{ site.baseurl }}/images/recap13_2.png" style="width:60%"  alt="Comparison of different linkage functions"></img>
       </div>
 
-<!-- 
-      As usual, we always need our definition of distance between points as a base for anything to work. Commonly, we may choose to use the Euclidian distnace. But as mentioned above, for the algorithm to work, we also need the intra-cluster distance. This is actually very important, and is really the main decision we make when customize and use HAC; this selection of the intra-cluster distance criterion will affect the results. This intra-cluster distance is also known as linkage criteria. Some examples are below:<br><br>
-
-      <h4>Example Linkages</h4>
-
-      <ul>
-        <li>Minimum distance between two groups: given two groups, find the two closest pair of points across the two groups, and we will use that to represent the distance between two groups</li>
-        <li>Maximum distance between two groups: given two groups, find the two furthest pair of points across the two groups, and we will use that to represent the distance between two groups</li>
-      </ul>
-
-      It turns out that min distance will result in more stringy and snakey clusters, as merging will be biased towards points that are close together, so groups of points essentially almost lined up together will start to form. Whereas on the other hand, max distance will result in more compact, rounded, complete, clusters, as groups will swallow in things from all around. This is beacuse the max distance will consider a lot more other groups to be possibly close before picking how to merge right away.<br><br>
-
-      There are also compromises between the two above: you can also use these linkages: average pairwise distances, distances between centroids.<br><br> -->
-
-      You will need to pick a linkage depending on what you want your output to look like. We discuss these because it's imporant to be able to think about the difference linkages, in case you need specific types of outputs for specific situations in the real world.<br><br>
+      You will need to pick a linkage depending on what you want your output to look like. 
     </div>
 </section>
