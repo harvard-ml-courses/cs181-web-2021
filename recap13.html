@@ -71,7 +71,7 @@ weight: 0
 
       We use the following objective for the K-means problem. The idea is that we want to find the $\mu$’s (cluster centers) and $z$’s (cluster assignments) so that data points $x_n$ are close to the centers of the clusters they got assigned to.
 
-      $$min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 $$
+      $$\min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 $$
 
       Recall that $z_{nk}$ is either 0 or 1 depending on if $x_n$ is in cluster $k$. In the sum, we multiply the distances by $z_{nk}$ so that only distances from $\mu_k$ to points in cluster $k$ count in our loss.  This is just like how we've used indicator variables in the past. <br><br>
 
@@ -133,7 +133,7 @@ weight: 0
        
        <h4>More Comments About K-Means</h4>
 
-       <ol>
+       <ul>
 
          <li>K-means is a parametric method, where the parameters are the prototypes.</li>
 
@@ -148,7 +148,7 @@ weight: 0
           <li>K-medoids chooses the centermost datapoint in the cluster as the prototype instead of the centroid. (The centroid may not correspond to a datapoint.)</li>
         </ol>
 
-      </ol>
+      </ul>
 
 
 
@@ -185,7 +185,7 @@ weight: 0
         <li>$d(x, x’)$ will measure the distance between individual points</li>
         <li>A linkage function will measure the distance between two clusters of points. This is how we determine what the "closest" pair of clusters are. Some options for the linkage function are</li>
         <ul>
-          <li>Minimum distance between two elements of the clusters</li>
+          <li>Minimum distance between two elements of the clusters (where "distance" here is measured by our distance function $d$)</li>
           <li>Maximum distance between two elements of the clusters</li>
           <li>Average distance between elements in the different clusters</li>
           <li>Distance between the centroids of the clusters
@@ -193,7 +193,7 @@ weight: 0
         </ul>
       </ul>
 
-      The min linkage is more likely to merge large clusters together. The min linkage will also tend to merge clusters into “chains” or “strings”.  The max linkage will prefer compact clusters instead. The average and centroid linkages are compromises between the min and max ones. You will need to pick a linkage depending on what you want your output to look like. <br><br>
+      The min linkage is more likely to merge large clusters together, as there will be a greater chance of some element of cluster A being close to some element of cluster B when A and B are large. The min linkage will also tend to merge clusters into “chains” or “strings”.  The max linkage will prefer compact clusters instead. The average and centroid linkages are compromises between the min and max ones. You will need to pick a linkage depending on what you want your output to look like. <br><br>
 
       <div class="text-center">
         <img src="{{ site.baseurl }}/images/recap13_2.png" style="width:60%"  alt="Comparison of different linkage functions"></img>
