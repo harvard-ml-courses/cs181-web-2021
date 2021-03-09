@@ -23,9 +23,8 @@ weight: 0
 
       <ul>
         <li><a href="#recap13_1">Intro to Unsupervised Learning</a></li>
-        <li><a href="#recap13_2">General Summarization Task</a></li>
-        <li><a href="#recap13_3">Nonprobabilistic Clustering: K-Means</a></li>
-        <li><a href="#recap13_4">Nonprobabilistic Clustering: Hierarchical Agglomerative Clustering</a></li>
+        <li><a href="#recap13_2">Nonprobabilistic Clustering: K-Means</a></li>
+        <li><a href="#recap13_3">Nonprobabilistic Clustering: Hierarchical Agglomerative Clustering</a></li>
       </ul>
 
       <h2 id="recap2_1">Relevant Videos</h2>
@@ -46,22 +45,7 @@ weight: 0
 
       Today we’ll cover clustering, a method for putting data into groups. 
 
-      <h2 id="recap13_3">Nonprobabilistic Clustering: K-Means</h2><br>
-
-      <h4>Scenario and Notation</h4>
-
-      Let us dive into the K-Means clustering algorithm. First, to set up our scenario:
-
-      <ul>
-        <li>We have our data $x_1, x_2, ..., x_n$</li>
-        <li>We have a measure of similarity/distance, $d(x, x') = ||x - x'||$</li>
-        <li>Start off by supposing we are given k (as in we know that there are k classes)</li>
-        <li>Let $z_{nk}$ indicate group assignment. As in if $x_n$ is in cluster $k$, $z_{nk}$ is 1. And if $x_n$ is not in cluster $k$, $z_{nk}$ is 0.</li>
-        <li>For today, let's assume the distance metric is Euclidian.</li>
-        <li>$\mu_k$ is a "prototype" of the cluster. It's like a prototype that represents the cluster. The idea is it either represents or defines the middle point a gaven cluster (we will formalize this bellow). Note: it should also be a dimension d item, the same as the dimensions of x. It's true that it might not be possible that you might use the medioids instead of the average, for example, to select your "prototypes". For now, we're keeping things again, as general as possible.</li>
-      </ul>
-
-      <br><br>
+      <h2 id="recap13_2">Nonprobabilistic Clustering: K-Means</h2><br>
 
       <h4>Scenario and Notation</h4>
 
@@ -95,8 +79,6 @@ weight: 0
 
       <h4>Lloyd's Algorithm</h4>
       We can find clustering assignments for K-means by following this algorithm:
-
-      <h4>The Algorithm (K-Means, Lloyd's algorithm)</h4>
           <ol>
             <li>Randomly initialize prototypes $\mu_k$</li>
             <li>Repeat until converged:</li>
@@ -107,9 +89,9 @@ weight: 0
 
               <li>For each $k$, set $\mu_k$ to the centroid (mean) of the examples assigned to this cluster 
 
-                $$\mu_k = \textrm{mean}(x_n\textrm{ such that }z_{nk} = 1) = \frac{1}{n_k} \sum z_{nk} x_n,$$
+                $$\mu_k = \textrm{mean}(x_n\textrm{ such that }z_{nk} = 1) = \frac{1}{N_k} \sum z_{nk} x_n,$$
 
-                where $n_k$, the number of items in the cluster, is obtained by $\sum_n z_{nk}$</li>
+                where $N_k$, the number of items in the cluster, is obtained by $\sum_n z_{nk}$</li>
             </ol>
 
           </ol>
@@ -141,32 +123,36 @@ weight: 0
 
        We can pull out the $\mu$ since it doesn't depend on n.
 
-       $$\mu_k = \frac{\sum_n z_{nk} x_n}{\sum_n z_{nk}} = \frac{\sum_n z_{nk} x_n}{N_k$$
+       $$\mu_k = \frac{\sum_n z_{nk} x_n}{\sum_n z_{nk}} = \frac{\sum_n z_{nk} x_n}{N_k}$$
 
        This is exactly what we set $\mu_k$ to when running our algorithm, illustrating how the algorithm finds a local minimum for $\mu$.<br><br>
 
-       <h4>Additional Considerations of K-Means</h4>
+       <h4>Selecting K</h4>
+
+        How many clusters should we pick? We plot the lowest loss achieved for different values of K and look for the value of K corresponding to a bend in the loss curve. This is also known as the elbow method. The idea is that as we increase K, the loss will keep decreasing. In fact, if we set K to be as big as n, the number of data points we have, each point can be its own cluster and the loss will be 0. So it doesn’t make sense for us to minimize the loss. Instead, we look to see where the plot of loss vs. clusters makes an elbow shape - this is when the improvement in loss levels off as we add more clusters, and the returns on adding more clusters are diminishing. 
+       
+       <h4>More Comments About K-Means</h4>
 
        <ol>
-         <li>
-          How many clusters should we pick? We plot the lowest loss achieved for different values of K and look for the value of K corresponding to a bend in the loss curve. This is also known as the elbow method. The idea is that as we increase K, the loss will keep decreasing. In fact, if we set K to be as big as n, the number of data points we have, each point can be its own cluster and the loss will be 0. So it doesn’t make sense for us to minimize the loss. Instead, we look to see where the plot of loss vs. clusters makes an elbow shape - this is when the improvement in loss levels off as we add more clusters, and the returns on adding more clusters are diminishing. 
-         </li>
 
          <li>K-means is a parametric method, where the parameters are the prototypes.</li>
 
          <li> Inflexible; the decision boundary is linear.</li>
 
          <li>Fast! The update steps can be parallelized.</li>
+
+         <li>There are several variations on the basic K-means algorithm</li>
+
+         <ol>
+          <li>K-means++ gives a more specific way to initialize clusters</li>
+          <li>K-medoids chooses the centermost datapoint in the cluster as the prototype instead of the centroid. (The centroid may not correspond to a datapoint.)</li>
+        </ol>
+        
       </ol>
 
-      <h4>Variations on K-Means</h4>
-      <ol>
-        <li>K-means++ gives a more specific way to initialize clusters</li>
-        <li>K-medoids chooses the centermost datapoint in the cluster as the prototype instead of the centroid. (The centroid may not correspond to a datapoint.)</li>
-      </ol>
 
 
-      <h2 id="recap13_4">Nonprobabilistic Clustering: Hierarchical Agglomerative Clustering</h2>
+      <h2 id="recap13_3">Nonprobabilistic Clustering: Hierarchical Agglomerative Clustering</h2>
 
       The Hierarchical Agglomerative Clustering (HAC) algorithm is as follows: Every example starts in its own cluster. While there is more than 1 cluster, we merge the two “closest” clusters.<br><br>
 
@@ -177,10 +163,6 @@ weight: 0
       </div>
     
       Some features of HAC include: HAC is nonparametric (as seen in the above algorithm, there isn't a finite number of parameters that can describe what's going), and it is also deterministic because there is no random intialization (whereas in K-Means we actually have to do some random initialization). Unlike in K-means, there is no need to specify the number of clusters.  Its complexity scales as $O(n^2)$ because we need to make pairwise distance comparisons. <br><br>
-<!-- 
-      <h4>Dendrogram</h4>
-
-      It is easier to understand the dendrogram once you have a high level understanding of the HAC algorithm and also the concept of the intra-cluster distance. I include this section here first just in case people are curious, but I would recommend reading what's below first, then coming back to this paragraph. At a high level, the dendrogram is the tree that represents all the merges that you made. Since it's not as effective to simply put a static dendrogram here because the fashion in which is drawn is completely lost, instead here's a ivdeo that does a good job of explaining and drawing it out! So after understanding the above and below, check out this <a href="https://www.youtube.com/watch?v=OcoE7JlbXvY" target="_blank">video that touches on the dendrogram</a>.<br><br> -->
 
       <h4>Distance Between Points and Distance Between Clusters</h4>
 
