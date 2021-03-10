@@ -35,10 +35,10 @@ weight: 0
 
       <h2 id="recap13_1">Intro to Unsupervised Learning</h2><br>
 
-      So far in the class, we've been doing supervised learning, where we try to predict y's (labels) given x's (data). Now, we'll look at unsupervised learning, where there are no more y's, and only x's.  Instead of labeling the data, the task is now to "summarize" the data (the x's).  At the most general level, unsupervised learning is a "summarization task" that we're trying to complete. This is helpful for:
+      So far in the class, we've been doing supervised learning, where we try to predict y's (labels) given x's (data). Now, we'll look at unsupervised learning, where there are no more y's, and only x's.  Instead of labeling the data, the task is now to "summarize" the data.  At the most general level, unsupervised learning is a "summarization task" that we're trying to complete. This is helpful for:
      
       <ol>
-        <li>Figuring out what classes or labels to later use with this data in a supervised learning model.</li>
+        <li>Figuring out what classes or labels to later use with this data in a supervised learning model</li>
         <li>Compressing high-dimensional data, like images, to lower dimensions in order to save storage space</li>
         <li>Organizing data, like grouping news articles covering the same topic or songs with the same style together</li>
       </ol>
@@ -61,11 +61,11 @@ weight: 0
           \end{cases} $$ </li>
       </ul>
 
-      Intuitively, we want to split the data into K clusters so that examples are similar to other members of their same cluster, but not similar to the members of other clusters. To accomplish this, we’ll need some way to measure how different two datapoints are. We have a number of options: we could use Euclidean distance, edit distance for text data, or Hamming distance. For today, we will just use Euclidean distance: 
+      Intuitively, we want to split the data into K clusters so that examples are similar to other members of their same cluster, but not similar to the members of other clusters. To accomplish this, we’ll need some way to measure how different two datapoints are. We have a number of options; we could use Euclidean distance, edit distance for text data, or Hamming distance. For today, we will just use Euclidean distance: 
       
       $$d(x, x') = ||x - x'||_2.$$
 
-      For K-means clustering, the point $\mu_k$ will a "prototype" of the cluster $k$. The idea is that $\mu_k$ represents or defines the middle point of cluster $k$. Note: $\mu_k$ should have the same dimensions as each datapoint $x_i$.
+      For K-means clustering, the point $\mu_k$ will be a "prototype" of the cluster $k$. The idea is that $\mu_k$ defines cluster $k$ by representing its center point. Note: $\mu_k$ should have the same dimensions as each datapoint $x_i$.
 
       <h4>The Objective</h4>
 
@@ -87,7 +87,7 @@ weight: 0
 
                 $$x_n = \textrm{argmin}_k ||x_n - \mu_k ||_2$$</li>
 
-              <li>For each $k$, set $\mu_k$ to the centroid (mean) of the examples assigned to this cluster 
+              <li>For each cluster $k$, set $\mu_k$ to the centroid (mean) of the examples assigned to this cluster 
 
                 $$\mu_k = \textrm{mean}(x_n\textrm{ such that }z_{nk} = 1) = \frac{1}{N_k} \sum z_{nk} x_n,$$
 
@@ -113,15 +113,15 @@ weight: 0
 
        We can go back to the objective function and set its derivative with respect to $\mu_k$ to 0 to show that the step we take in Lloyd's algorithm minimizes the loss.
 
-       $$L = min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 = \sum_n z_{nk} (x_n - \mu_k)^T(x_n - \mu_k)$$
+       $$L = \min_{z, u} \sum_n \sum_k z_{nk} ||x_n - \mu_k||_2^2 = \sum_n z_{nk} (x_n - \mu_k)^T(x_n - \mu_k)$$
        
-       We can take this derivative with respect to just $\mu_k$.
+       We can take this derivative with respect to $\mu_k$.
 
        $$\frac{\partial L}{\partial \mu_k} = - 2 \sum z_{nk} (x_n - \mu_k) = 0$$
 
        $$\left ( \sum_n z_{nk} \right )\mu_k = \sum_n z_{nk} x_n$$
 
-       We can pull out the $\mu$ since it doesn't depend on n.
+       We pulled out the $\mu$ since it doesn't depend on n.
 
        $$\mu_k = \frac{\sum_n z_{nk} x_n}{\sum_n z_{nk}} = \frac{\sum_n z_{nk} x_n}{N_k}$$
 
