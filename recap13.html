@@ -175,7 +175,7 @@ weight: 0
         <li>HAC is nonparametric</li>
         <li>It is also deterministic because there is no random intialization involved</li>
         <li>We do not need to specify a number of clusters to find</li>
-        <li>Complexity scales as $O(n^2)$ because the algorithm is based off of pairwise distance comparisons.</li>
+        <li>Complexity scales as $O(Tn^2)$, where T is the number of iterations (merges) used, because the algorithm is based off of pairwise distance comparisons. If we merge until all clusters are combined, T will be $O(N)$. </li>
       </ul>
       
       <h4>Distance Between Points and Distance Between Clusters</h4>
