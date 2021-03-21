@@ -109,7 +109,7 @@ weight: 0
 
       <h5>Set Things Up using Expectations</h5>
 
-      First, let's set up the problem in the right way. As mentioned in the this subtopic heading, this method is a bit different than the first method as it attempts to approximate the log likelihood, $\sum_n \log p(x_n|w)$ (not the complete data log likelihood). But in order to do this, we start with the fact that a lower bound on $\sum_n \log p(x_n|w)$ is given by the following (no need to know the proof for the class, <a href="https://piazza.com/class_profile/get_resource/k5fnxwvfh7p7mi/k8ax6xzi7vy77p" target="_blank">but click here if interested</a>):
+      First, let's set up the problem in the right way. As mentioned in the this subtopic heading, this method is a bit different than the first method as it attempts to approximate the log likelihood, $\sum_n \log p(x_n|w)$ (not the complete data log likelihood). But in order to do this, we start with the fact that a lower bound on $\sum_n \log p(x_n|w)$ is given by the following (no need to know the proof for the class, <a href="images/recap14_1.png" target="_blank">but click here if interested</a>):
 
       $$\sum_n E_z[\log p(x_n, z_n | w)]$$
 
@@ -149,7 +149,7 @@ weight: 0
 
       $$\pi_k = \frac{\sum_n q_{nk}}{N}$$
 
-      Where $q_{nk}$'s are indicating how likely you are to belong to a particular clsuter, and where N is the total number of points in a dataset. This basically tells you what every single data point believes about the likeliness of a given cluster k, which intuitively seems correct.
+      Where $q_{nk}$'s are indicating how likely you are to belong to a particular cluster, and where N is the total number of points in a dataset. This basically tells you what every single data point believes about the likeliness of a given cluster k, which intuitively seems correct.
 
       $$\mu_k = \frac{\sum_n q_{nk} x_n}{\sum_n q_{nk}}$$
 
