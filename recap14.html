@@ -145,7 +145,7 @@ weight: 0
 
       <u>2nd step: Maximization Step</u><br><br>
 
-      Next, we maximize $\sum_n E_z[\log p(x_n, z_n; w)]$ which we broke down to the form of $\sum_n \sum_k q_{nk} \log N(x_n; \mu_k, \Sigma_k) + q_{nk} \log \pi_k]$ and determined that we will be able to solve for our parameters given $q_{nk}$ (see section above). Specifically, we maximize this with respect to $\pi$, $\mu$, and $\Sigma$ to find exactly those parameters. We omit the math on how exactly to solve them, but we give the solutions below so we can discuss the intuition:
+      Next, we maximize $\sum_n E_z[\log p(x_n, z_n; w)]$ which we broke down to the form of $\sum_n \sum_k [q_{nk} \log N(x_n; \mu_k, \Sigma_k) + q_{nk} \log \pi_k]$ and determined that we will be able to solve for our parameters given $q_{nk}$ (see section above). Specifically, we maximize this with respect to $\pi$, $\mu$, and $\Sigma$ to find exactly those parameters. We omit the math on how exactly to solve them, but we give the solutions below so we can discuss the intuition:
 
       $$\pi_k = \frac{\sum_n q_{nk}}{N}$$
 
