@@ -37,13 +37,13 @@ weight: 0
 
       <h2 id="recap15_1">Intro: Embeddings (and an example: PCA)</h2>
 
-      Our past two lectures covered settings with a discrete hidden variable z. In those scenarios, we wanted to cluster our data into different groups, where z told us what group a data point should go in. Today, we switch to a situation where we have a continuous z, which we call our embedding (because it’s an embedding of all the info in the x's into a z with lower dimension). Instead of grouping things into k discrete clusters, what if we tried to summarize the data into k continuous dimensions? <br><br>
+      Our past two lectures covered settings with a discrete hidden variable z. In those scenarios, we wanted to cluster our data into different groups, where z told us what group a data point $x$ should go in. Today, we switch to a situation where we have a continuous z, which we call our embedding (because it’s an embedding of all the info in the x's into a z with lower dimension). Instead of grouping things into k discrete clusters, what if we tried to summarize the data into k continuous dimensions? <br><br>
 
-      Recall: Continuous and discrete z are the analogs of continuous and discrete y from the supervised learning topics we covered. Previously, we were given y, but now we do not know what the categories z are and need to infer them ourselves.<br><br>
+      Recall: Continuous and discrete z are the analogs of continuous and discrete y from the supervised learning topics we covered. Previously, we were given y, but now we do not know what the categories or embeddings z are and need to infer them ourselves.<br><br>
       
       One example of a nonprobablistic embeddings algorithm is Principal Component Analysis (PCA), which is the focus of today’s lecture. <br><br>
       
-      For an initial example, imagine if we had two-dimensional data on people’s heights and leg lengths. The heights and leg lengths are highly correlated. In a 2D plot, the points all lie very close to some line with positive slope. In this case, that line is a low dimensional axis (it’s just one dimension) that explains our data very well. It seems like we may not need two dimensions to represent our data, because we can approximate each point pretty well using just points along this one line.<br><br>
+      For an initial example, imagine if we had two-dimensional data on people’s heights and leg lengths. The heights and leg lengths are highly correlated. In a 2D plot, the points all lie very close to some line with positive slope. In this case, that line is a low dimensional axis (it’s just one dimension) that explains our data very well. It seems like we may not need two dimensions to represent our data, because we can approximate each piece of data pretty well using just points along this one line.<br><br>
       
       The problem we’ll explore today is, how can we identify this hidden axis?<br><br>
 
@@ -51,13 +51,13 @@ weight: 0
 
       <h2 id="recap15_2">Getting Started: Let's Make This Linear</h2>
 
-      Suppose we try to find a set of K D-dimensional vectors {$u_k$} such that we can approximate some x as:
+      Say we have $N$ datapoints $x_n$, each with dimension $D$. Suppose we try to find a set of K D-dimensional vectors {$u_k$} such that we can approximate some $x_n$ as a linear combination of them:
 
-      $$x \approx z_1u_1 + z_2u_2 + z_3u_3 + ... + z_ku_k$$
+      $$x_n \approx z_{n1}u_1 + z_{n2}u_2 + z_{n3}u_3 + ... + z_{nK}u_K = Uz_n$$
 
-      Here, $z_1$, $z_2$, etc are scalar, and $u_1$, $u_2$, etc are vectors. $z_1 ... z_k$ is a K-dimensional vector that describes the position of x with respect to basis u.<br><br>
+      Here, $z_{n1}$, $z_{n2}$, etc are scalar, and $u_1$, $u_2$, etc are vectors. $z_n = (z_{n1}$, $z_{n2},...)$ is a K-dimensional vector that describes the position of x with respect to basis U. If we think of $z_n$ as a vector and $U$ as a matrix whose rows are the $u_k$s, we can rewrite this approximation as the matrix-vector product $Uz_n$.<br><br>
 
-      We are specifically interested in cases where K &#60; D, which means we are compressing the data from D dimensions to K dimensions.By having our reconstruction of x be a linear combination of the z's and the u’s, we are expressing x in the bases of our K basis vectors (the u’s).<br><br>
+      We are specifically interested in cases where K &#60; D, which means we are compressing the data from D dimensions to K dimensions. Another view is that we are embedding D-dimensional data into K dimensions. By having our reconstruction of x be a linear combination of the z's and the u’s, we are expressing x in terms of our K basis vectors (the u’s).<br><br>
   
       <!-- 
       Suppose we try to find a set of D-dimensional vectors {$u_k$} such that we can describe some x as:
@@ -72,11 +72,11 @@ weight: 0
 
       <h2 id="recap15_3">Minimizing the Reconstruction Error</h2>
 
-      We want our approximation of x to be accurate. That is, the loss we are looking to minimize is a measure of the difference between x and its approximation:
+      We want our approximation of $x_n$ to be accurate. That is, the loss we are looking to minimize is a measure of the difference between $x_n$ and its approximation $Uz_n$:
 
       <!-- Let's tie this back into the formal framework we introduced in the K-means lecture with regards to reconstruction error. Essentially, we have the following: -->
 
-      $$L({z_n}_{n=1}^N, U) = \frac{1}{N} \sum^N_n ||x_n - U z_n||^2_2$$
+      $$L(\{z_n\}_{n=1}^N, U) = \frac{1}{N} \sum^N_n ||x_n - U z_n||^2_2$$
 
       Where our $x_n$ is a D by 1 data point, our U is a D by K matrix (its rows are the basis vectors $u_k$) and our $z_n$ is a K by 1 vector (embedding). Like before, we are trying to minimize the resonctruction error.<br><br>
 
@@ -90,32 +90,32 @@ weight: 0
 
       We will have:<br><br>
 
-      &lt $u_k$, $u_k$ &gt = 1 (constrains any scaling)<br>
-      &lt $u_k$, $u_{k'}$ &gt = 0 when $k \neq k'$ (makes the basis vectors orthogonal)<br><br>
+      $\langle u_k, u_k \rangle = 1$ (constrains any scaling)<br>
+      $\langle u_k, u_{k'} \rangle = 0$ when $k \neq k'$ (makes the basis vectors orthogonal)<br><br>
 
       We get some nice linear algebra properties from setting the above constraints. Specifically, we can easiy recover z given x. We have:<br><br>
 
-      $$x \approx z_1U_1 + z_2U_2 + ... + z_kU_k$$
+      $$x_n \approx z_{n1}u_1 + z_{n2}u_2 + z_{n3}u_3 + ... + z_{nK}u_K$$
 
       We can multiply by $U_k^T$ on both sides:
 
-      $$xU_k^T = z_1U_1U_k^T + z_2U_2U_k^T + ... + z_kU_kU_k^T$$
+      $$x_nU_k^T = z_{n1}U_1U_k^T + z_{n2}U_2U_k^T + ... + z_{nk}U_kU_k^T$$
 
       Using the rules we learned from before, we know that when the k's are not equal, the terms $U_1U_k^T$, $U_2U_k^T$, etc become 0. Leaving us with:
 
-      $$xU_k^T = z_kU_kU_k^T$$
+      $$x_nU_k^T = z_{nk}U_kU_k^T$$
 
-      $U_kU_k^T$ evaluates to 1, so we conclude that:
+      $U_kU_k^T$ evaluates to 1, so by considering what would happen if we multiplied by the entire $U^T$ instead of just $U_k^T$, we conclude that:
 
-      $$xU_k^T = z_k$$
+      $$x_nU_k^T = z_{nk}$$
 
-      $$xU^T = z$$
+      $$\implies x_nU^T = z_n$$
 
       <h2 id="recap15_4">Let's Make Things More Interpretable</h2>
 
-      Let's improve upon our first attempt at the problem. Specifically, instead of reconstructing the whole thing, let's try to reconstruct the difference of the data from the mean. Below, we break down the data in this way, where x is approximated as a perturbation from the mean datapoint $bar{x}$:
+      Let's improve upon our first attempt at the problem. Specifically, instead of reconstructing the whole thing, let's try to reconstruct the difference of the data from the mean. Below, we break down the data in this way, where x is approximated as a perturbation from the mean datapoint $\bar{x}$:
 
-      $$x \approx \bar{x} + z_1U_1 + z_2U_2 + ... + z_kU_k$$
+      $$x_n \approx \bar{x} + z_{n1}U_1 + z_{n2}U_2 + ... + z_{nk}U_k$$
 
       Now, the bases are helping us capture variation from the mean instead of being used to approximate all of $x$ like before. Our new optimization is as follows:
 
@@ -123,7 +123,7 @@ weight: 0
 
       Where $(x_n - \bar{x})$ is the new variable we are trying to reconstruct. We also keep our constraint that U is orthonormal. From linear algebra, we know that if K = D, {U_1 ... U_d}, we would have perfect reconstruction and incur no loss, because we are keeping x in the same dimension as before. Now we will use that fact to imagine we have extra $U_{k + 1}, … U_d$ to use and rewrite x as the following:
 
-      $$x = z_1U_1 + ... + z_kU_k + ... z_DU_D + \bar{x}$$
+      $$x_n = z_{n1}U_1 + ... + z_{nk}U_k + ... z_{nD}U_D + \bar{x}$$
 
       Then, we can substitute in the expression for $\bar{x}$ above.
 
@@ -195,7 +195,7 @@ weight: 0
 
       We want to maximize var(z):
 
-      $$max_U U^T \Sigma U \textrm{ such that } U^TU = 1$$
+      $$\max_U U^T \Sigma U \textrm{ such that } U^TU = 1$$
 
       Apply the Lagrangian and we'll see that $\Sigma u = \lambda u$, where we pick the biggest $\lambda$.
 
