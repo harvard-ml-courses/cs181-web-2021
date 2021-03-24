@@ -42,7 +42,7 @@ weight: 0
 
       $z_n$ ~ $\pi$ (probability of being in a cluster k; for example the sexes in the height example)<br>
 
-      $x_n$ ~ $p(x_n | z_n, w)$ (probability of height being this value given the sex and the parameters, which are the means and variances of the Gaussians of the different sexes)<br><br>
+      $x_n$ ~ $p(x_n | z_n; w)$ (probability of height being this value given the sex and the parameters, which are the means and variances of the Gaussians of the different sexes)<br><br>
 
       In the past, in generative classification, we were able to solve the following:
       <ol>
@@ -65,31 +65,31 @@ weight: 0
 
       First, we look at the $\log p(x, z | w)$, also known as the "Complete" Data Log-Likelihood because it assumes that we have both our observation x and the class z that x came from:
 
-      $$\log p(x, z | w) = \sum_n \log p(x_n, z_n | w)$$
+      $$\log p(x, z ; w) = \sum_n \log p(x_n, z_n ; w)$$
 
-      $$\log p(x, z | w) = \sum_n \log p(x_n|z_n, w) + \log p(z_n | w)$$
+      $$\log p(x, z ; w) = \sum_n \log p(x_n|z_n; w) + \log p(z_n ; w)$$
 
-      $$\log p(x, z | w) = \sum_n \log N(x_n ; \mu_{z_n}, \Sigma_{z_n}) + \log \pi_{z_n}$$
+      $$\log p(x, z ; w) = \sum_n \log N(x_n ; \mu_{z_n}, \Sigma_{z_n}) + \log \pi_{z_n}$$
 
-      $$\log p(x, z | w) = \sum_n \sum_k z_{nk} \log N(x_n; \mu_k, | \Sigma_k) + z_{nk} \log \pi_k$$
+      $$\log p(x, z ; w) = \sum_n \sum_k z_{nk} \log N(x_n; \mu_k, \Sigma_k) + z_{nk} \log \pi_k$$
 
       We notice that, if we are given $z_{nk}$, then solving for the maximum likelihood of $\pi$, $\mu$, and $\Sigma$, is actually pretty easy, which would correspond to what we did before in generative classification. But without $z_{nk}$, this is hard, and non convex. We won't be able to solve for the maximmum likelihood of $\pi$, $\mu$, and $\Sigma$.
 
-      Note also that, this equation above looks like the K-Means objective. If the $\pi_k$ were uninformative, and did not really prefer a particular cluster, then the $ z_{nk} \log(\pi_k)$ wouldn't really matter. The other term, $z_{nk} \log N(x_n; \mu_k, | \Sigma_k)$, is taking the log of the Gaussian, and since the PDF of a normal is exponential, after taking the log of it we just end up with the squared term (that was inside the exponentia). This is exactly like the K-Means objective we had from before. This helps us confirm and note the similarities between clustering and mixture models.
+      Note also that, this equation above looks like the K-Means objective. If the $\pi_k$ were uninformative, and did not really prefer a particular cluster, then the $ z_{nk} \log(\pi_k)$ wouldn't really matter. The other term, $z_{nk} \log N(x_n; \mu_k, \Sigma_k)$, is taking the log of the Gaussian, and since the PDF of a normal is exponential, after taking the log of it we just end up with the squared term (that was inside the exponentia). This is exactly like the K-Means objective we had from before. This helps us confirm and note the similarities between clustering and mixture models.
 
       <h4>Let's Try Log-Likelihood (doesn't work as is)</h4>
 
-      We should also consider the normal log-likelihood (not the "complete") that we usually do. What if we integrate out the z? Technically, we don't care about z itself, we are just trying to explain the dataset of x's we're seeing. We could argue that we just need: $\sum_n \log p(x_n|w)$. The z's were just a way for us to provide summarization, but it's okay for us to integrate it out, one could argue.
+      We should also consider the normal log-likelihood (not the "complete") that we usually do. What if we integrate out the z? Technically, we don't care about z itself, we are just trying to explain the dataset of x's we're seeing. We could argue that we just need: $\sum_n \log p(x_n;w)$. The z's were just a way for us to provide summarization, but it's okay for us to integrate it out, one could argue.
 
       How does this relate to the previous situation? Before, we had $p(x_n, z_n | w)$, so to get $p(x_n|w)$ we would just need to sum out the z's. We would end up with:
 
-      $$p(x_n|w) = \sum_k p(x_n, z_n | w)$$
-      $$p(x_n|w) = \sum_k \pi_k p(x_n | z_n, w)$$
+      $$p(x_n|w) = \sum_k p(x_n, z_n ; w)$$
+      $$p(x_n|w) = \sum_k \pi_k p(x_n | z_n; w)$$
       $$p(x_n|w) = \sum_k \pi_k N(x_n; \mu_k, \Sigma_k)$$
 
-      To explain the intuition on this, we're essentially summing across all clusters, and for each cluster, we're incorporating the $\pi_k$, the probability of that cluster, by multiplying it with the $p(x_n, z_n | w)$ term. Then we can sub it into the full term we were looking for:
+      To explain the intuition on this, we're essentially summing across all clusters, and for each cluster, we're incorporating the $\pi_k$, the probability of that cluster, by multiplying it with the $p(x_n, z_n ; w)$ term. Then we can sub it into the full term we were looking for:
 
-      $$\sum_n \log p(x_n|w) = \sum_n \log(\sum_k \pi_k N(x_n; \mu_k, \Sigma_k))$$
+      $$\sum_n \log p(x_n;w) = \sum_n \log(\sum_k \pi_k N(x_n; \mu_k, \Sigma_k))$$
 
       Turns out, there are no analytic solutions here and the gradients are messy, so we must try something else, using our block coodrinate ascent approach (aka alternating optimization).
 
@@ -103,27 +103,27 @@ weight: 0
         <li>Find best z given the $\pi$, $\mu$, and $\Sigma$'s (essentially update z that minimizes the loss)</li>
       </ol>
 
-      <h4>How to Solve: Expectation Maximization which will approximate $\sum_n \log p(x_n|w)$ (Method 2)</h4>
+      <h4>How to Solve: Expectation Maximization which will approximate $\sum_n \log p(x_n;w)$ (Method 2)</h4>
 
       This second method tackles the log likelihood and tries to approximate it since as we saw above, there is no way to solve the log likelihood.
 
       <h5>Set Things Up using Expectations</h5>
 
-      First, let's set up the problem in the right way. As mentioned in the this subtopic heading, this method is a bit different than the first method as it attempts to approximate the log likelihood, $\sum_n \log p(x_n|w)$ (not the complete data log likelihood). But in order to do this, we start with the fact that a lower bound on $\sum_n \log p(x_n|w)$ is given by the following (no need to know the proof for the class, <a href="images/recap14_1.png" target="_blank">but click here if interested</a>):
+      First, let's set up the problem in the right way. As mentioned in the this subtopic heading, this method is a bit different than the first method as it attempts to approximate the log likelihood, $\sum_n \log p(x_n;w)$ (not the complete data log likelihood). But in order to do this, we start with the fact that a lower bound on $\sum_n \log p(x_n;w)$ is given by the following (no need to know the proof for the class, <a href="images/recap14_1.png" target="_blank">but click here if interested</a>):
 
-      $$\sum_n E_z[\log p(x_n, z_n | w)]$$
+      $$\sum_n E_z[\log p(x_n, z_n ; w)]$$
 
       In words, we can describe the above equation in the following way: the expected complete data log likelihood is the lower bound for p(x|w), so optimizing this means optimizing for the worst p(x|w) can be.
 
       Let's expand the inside of the expectation in the same way we did previously:
 
-      $$\sum_n E_z[\log p(x_n|z_n, w) + \log p(z_n | w)]$$
+      $$\sum_n E_z[\log p(x_n|z_n; w) + \log p(z_n ; w)]$$
 
       Then, we can expand out the expectation:
 
-      $$\sum_n \sum_k [p(z_n = k | x_n, \pi, \mu, \Sigma) \log N(x_n; \mu_k, \Sigma_k) + p(z_n = k | x_n, \pi, \mu, \Sigma) \log \pi_k]$$
+      $$\sum_n \sum_k [p(z_n = k | x_n; \pi, \mu, \Sigma) \log N(x_n; \mu_k, \Sigma_k) + p(z_n = k | x_n; \pi, \mu, \Sigma) \log \pi_k]$$
 
-      To keep things visually cleaner, we'll define $q_{nk} = p(z_n = k | x_n, \pi, \mu, \Sigma)$ so we can write it as:
+      To keep things visually cleaner, we'll define $q_{nk} = p(z_n = k | x_n; \pi, \mu, \Sigma)$ so we can write it as:
 
       $$\sum_n \sum_k [q_{nk} \log N(x_n; \mu_k, \Sigma_k) + q_{nk} \log \pi_k]$$
 
@@ -131,21 +131,21 @@ weight: 0
 
       <h5>Actually Optimizing It: The EM Algorithm</h5>
 
-      Now that we're done setting up, we describe the expectation maximization algorithm. At a high level, we are first going to randomly initialize our parameters, and use those to calculate $q_{nk}=p(z|x, w)$ by considering expectations across all {z} (the expectation step). Then, with $q_{nk}$ in hand, we can find the maximum likelihood of all the parameters ($\mu_k$, $\Sigma_k$) using the equation we set up above (maximization step). Then, with those parameters, we will repeat the expectation step, then the maximizations step, etc.
+      Now that we're done setting up, we describe the expectation maximization algorithm. At a high level, we are first going to randomly initialize our parameters, and use those to calculate $q_{nk}=p(z|x; w)$ by considering expectations across all {z} (the expectation step). Then, with $q_{nk}$ in hand, we can find the maximum likelihood of all the parameters ($\mu_k$, $\Sigma_k$) using the equation we set up above (maximization step). Then, with those parameters, we will repeat the expectation step, then the maximizations step, etc.
 
       <u>1st step: Expectation Step</u><br><br>
 
-      We want to find $p(z|x, w)$ (where w represents all the parameters) and it turns out that:
+      We want to find $p(z|x; w)$ (where w represents all the parameters) and it turns out that:
 
-      $$p(z|x, w) \propto p(z) p(x|z)$$
+      $$p(z|x; w) \propto p(z;w) p(x|z;w)$$
 
-      $$p(z|x, w) \propto \pi_k p(x | z, w_k)$$
+      $$p(z = k|x; w) \propto \pi_k p(x; w_k)$$
 
-      This is easy because we know this by definition. In this example we know $p(x | z, w_k)$ is Gaussian and we have the parameters (randomly intialized the first time through, but afterwards we have it from the maximization step), and we also have the x's. But it's not only Guassians that are easy, literally any fuction works because we have all the values we need to plug in!<br><br>
+      This is easy because we know this by definition. In this example we know $p(x; w_k)$ is Gaussian and we have the parameters (randomly intialized the first time through, but afterwards we have it from the maximization step), and we also have the x's. But it's not only Guassians that are easy, literally any fuction works because we have all the values we need to plug in!<br><br>
 
       <u>2nd step: Maximization Step</u><br><br>
 
-      Next, we maximize $\sum_n E_z[\log p(x_n, z_n | w)]$ which we broke down to the form of $\sum_n \sum_k q_{nk} \log N(x_n; \mu_k, \Sigma_k) + q_{nk} \log \pi_k]$ and determined that we will be able to solve for our parameters given $q_{nk}$ (see section above). Specifically, we maximize this with respect to $\pi$, $\mu$, and $\Sigma$ to find exactly those parameters. We omit the math on how exactly to solve them, but we give the solutions below so we can discuss the intuition:
+      Next, we maximize $\sum_n E_z[\log p(x_n, z_n; w)]$ which we broke down to the form of $\sum_n \sum_k q_{nk} \log N(x_n; \mu_k, \Sigma_k) + q_{nk} \log \pi_k]$ and determined that we will be able to solve for our parameters given $q_{nk}$ (see section above). Specifically, we maximize this with respect to $\pi$, $\mu$, and $\Sigma$ to find exactly those parameters. We omit the math on how exactly to solve them, but we give the solutions below so we can discuss the intuition:
 
       $$\pi_k = \frac{\sum_n q_{nk}}{N}$$
 
