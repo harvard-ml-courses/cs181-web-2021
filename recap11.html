@@ -73,7 +73,7 @@ weight: 0
 
       \begin{equation}\min_{w, w_0} \left ( \max_{\alpha_n} L(w, \alpha, w_0) \right ) = \min_{w, w_0} \left ( \max_{\alpha_n} \frac{1}{2} w^Tw - \sum_n \alpha_n (y_n (w^Tx_n + w_0) - 1) \right ) \tag{B} \label{B}\end{equation}
 
-      With constraint $\alpha_n > 0$. <br><br>
+      With constraint $\alpha_n \geq 0$. <br><br>
 
       Note: Interpret the min-max formulation as a game between a minimizer and a maximizer where the minimizer goes first. First, the minimizer chooses $w, w_0$. Once $w, w_0$ is fixed, the maximizer chooses the $\alpha_n$'s maximizing $L$. Thus, the minimizer's goal in the first step is to choose a $w, w_0$ so that the greatest value the maximizer can achieve by choosing the $\alpha$'s is as low as possible. We get the value of the expression by plugging in the optimal $w, w_0, \alpha$'s that the minimizer and maximizer would choose in this game.<br><br>
 
