@@ -81,7 +81,7 @@ weight: 0
 
       We should also consider the normal log-likelihood (not the "complete") that we usually do. What if we integrate out the z? Technically, we don't care about z itself, we are just trying to explain the dataset of x's we're seeing. We could argue that we just need: $\sum_n \log p(x_n;w)$. The z's were just a way for us to provide summarization, but it's okay for us to integrate it out, one could argue.
 
-      How does this relate to the previous situation? Before, we had $p(x_n, z_n | w)$, so to get $p(x_n|w)$ we would just need to sum out the z's. We would end up with:
+      How does this relate to the previous situation? Before, we had $p(x_n, z_n ; w)$, so to get $p(x_n|w)$ we would just need to sum out the z's. We would end up with:
 
       $$p(x_n|w) = \sum_k p(x_n, z_n ; w)$$
       $$p(x_n|w) = \sum_k \pi_k p(x_n | z_n; w)$$
