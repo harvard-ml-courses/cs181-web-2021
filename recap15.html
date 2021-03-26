@@ -93,7 +93,7 @@ weight: 0
       $\langle u_k, u_k \rangle = 1$ (constrains any scaling)<br>
       $\langle u_k, u_{k'} \rangle = 0$ when $k \neq k'$ (makes the basis vectors orthogonal)<br><br>
 
-      We get some nice linear algebra properties from setting the above constraints. Specifically, we can easiy recover z given x. We have:<br><br>
+      We get some nice linear algebra properties from setting the above constraints. Specifically, we can easily recover z given x. We have:<br><br>
 
       $$x_n \approx z_{n1}u_1 + z_{n2}u_2 + z_{n3}u_3 + ... + z_{nK}u_K$$
 
@@ -125,7 +125,7 @@ weight: 0
 
       $$x_n = z_{n1}U_1 + ... + z_{nk}U_k + ... z_{nD}U_D + \bar{x}$$
 
-      Then, we can substitute in the expression for $\bar{x}$ above.
+      Then, we can take our loss and substitute in the expression for $\bar{x}$ above.
 
       $$L({z, u}) = \frac{1}{N} \sum_n ||\sum^D_{d=1} z_{nd} U_d - \sum^K_{d=1} z_{nd} U_d||^2_2$$
 
@@ -135,7 +135,7 @@ weight: 0
 
       This can be split into:
 
-      $$L({z, u}) = \frac{1}{N} \sum_n (\sum^D_{d=K+1} z_{nd} U_d) (\sum^D_{d=K+1} z_{nd} U^T_d)$$
+      $$L({z, u}) = \frac{1}{N} \sum_n \left(\sum^D_{d=K+1} z_{nd} U_d \right ) \left (\sum^D_{d=K+1} z_{nd} U^T_d \right )$$
 
       And invoking orthonormality (as in $U_d^TU_{d'} = 0$ since $d \neq d'$) we can simplify into:
 
@@ -171,7 +171,9 @@ weight: 0
 
       $$\textrm{min}_U \sum^D_{d=K+1} U^T_d \Sigma U_d = \sum^D_{d=K+1} U^T_d \lambda_d U_d = \sum^D_{d=K+1} \lambda_d$$
 
-      Remember that our ultimate goal was to minimize the reconstruction error. It turns out, that we will be able to do this if we “leave out” the directions (eigenvectors of $\Sigma$) with the smallest eigenvalues. This is like making sure the error is small. In an alternative view, we are able to minimize the error when we KEEP the eigenvectors with the top K eigenvalues of $\Sigma$. Luckily, this computation is very easy using SVD (eigendecomposition)! Since $\Sigma$ is symmetric, it is guaranteed to have D real eigenvalues by spectral theorem. <br><br>
+      Remember that our ultimate goal was to minimize the reconstruction error. It turns out that we will be able to do this if we “leave out” the directions (eigenvectors of $\Sigma$) with the smallest eigenvalues. This is like making sure the error is small. In an alternative view, we are able to minimize the error when we KEEP the eigenvectors with the top K eigenvalues of $\Sigma$. Luckily, this computation is very easy using SVD (eigendecomposition)! Since $\Sigma$ is symmetric, it is guaranteed to have D real eigenvalues by spectral theorem.<br><br>
+      
+      <!-- We only formally showed that this argument works when k = 1, but the claim we make extends to cases with general k if we consider iteratively "peeling off" the next <br><br> -->
       
       <!-- Remember that our ultiamte goal was to minimize the reconstruction error. It turns out, that we will be able to do this if we leave out the directions with the smallest eigenvalues. Or alternatively, we are able to minimize the error when we KEEP the top K eigenvectors of $\Sigma$. Luckily, the computation on this is actually very easy, we can do this using SVD (eigendecomposition)! -->
 
@@ -197,7 +199,7 @@ weight: 0
 
       $$\max_U U^T \Sigma U \textrm{ such that } U^TU = 1$$
 
-      Apply the Lagrangian and we'll see that $\Sigma u = \lambda u$, where we pick the biggest $\lambda$.
+      Apply the Lagrangian and we'll see that $\Sigma u = \lambda u$, where we pick the biggest $\lambda$. See Section 7.3.4, "Identifying Directions of Maximal Variance in our Data", in the textbook for a more thorough walkthrough of this derivation. 
 
       <h2 id="recap15_7">Final Notes</h2>
 
