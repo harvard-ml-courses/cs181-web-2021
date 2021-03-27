@@ -76,9 +76,9 @@ weight: 0
         
         
 
-      For example, perhaps we had k=0 represent heart disease and k=1 represent having a cold. $\theta_0$ would tell us the distribution of the codes (the actual x data we should see) given that the person has heart disease underneath the hood (our z), and our $Dir(\beta)$ is representing the distribution of the codes. Then, $\theta_1$ would be the distribution of the codes for if the person just had a cold (which would look quite different from the distribution for $\theta_1$, since having a cold and having a heart disease lead to different symptoms).
+      As another example, perhaps we had $k=0$ represent heart disease and $k=1$ represent having a cold. $\theta_0$ would tell us the distribution of the codes (the actual x data we should see) given that the person has heart disease underneath the hood (our z), and our $Dir(\beta)$ is representing the distribution of the codes. Then, $\theta_1$ would be the distribution of the codes for if the person just had a cold (which would look quite different from the distribution for $\theta_1$, since having a cold and having a heart disease lead to different symptoms).
 
-      The whole $\theta$ hence is a D by K matrix of probabilities of seeing item d in mixture k<br><br>
+      The whole $\theta$ hence is a $D$ by $K$ matrix of probabilities of seeing item d in mixture k<br><br>
 
       <u>Part 2: Parameters for your probabilities of being in a mixture k</u><br><br>
 
@@ -86,11 +86,11 @@ weight: 0
 
       <h4>The Procedure of How the $x_n$'s are Created</h4>
 
-      $x_n$ is a count vector of items per data point, which is what we observe. In the Pompei example, it would be like: 3 chairs, 2 chests, 0 spoons, etc. We are going to look into how the procedure of how these are created.<br><br>
+      $x_n$ is a count vector of items per data point (a data point is any corpus, like a legal document, book chapter, or restaurant menu), which is what we observe. In the Pompei example, it would be like: 3 chairs, 2 chests, 0 spoons, etc. We are going to look into how the procedure of how these are created.<br><br>
 
       First, create the $\theta$'s. For each data point n, we're going to sample $\pi_n \sim Dir(\alpha)$, and then we're going to use our $\pi_n$ to create our data $x_n$. Namely, $x_n \sim Mult(\theta \pi_n, L)$ where L is the total# of codes, menu items, or words, whichever topic you're working on.<br><br>
 
-      Note: when you multiply out $\theta$ (which is D by K) and $\pi$ (K by 1), you will get your probabilities for the items in the x (which is patient specific, or document specific, etc, whichever domain you are in) which is D by 1. So we have all the final probabilities we need for that given patient, and then we enter this in as the parameters of the multinomial, with our $x_n$ generated in that distribution's manner.<br><br>
+      Note: when you multiply out $\theta$ (which is D by K) and $\pi$ (K by 1), you will get your probabilities for the items in the x (which is patient specific, or document specific, etc, whichever domain you are in) which is D by 1. So we have all the final probabilities we need for that given patient, and then we enter this in as the parameters of the multinomial, with our $x_n$ generated in that distribution's manner. You can basically consider each probability in this $Dx1$ output matrix, multiplied by the length $L$, to estimate the count of words in the corpus. For instance, if $\pi_n$ gave a probability of $\pi_{n,1} = 0.2$ of being a medical review and $\pi_{n,2} =0.8$ of being a political piece, and  <br><br>
 
       To tie this back into the general setting that we've discussed many times now in our unsupervised learning lectures, where $z_n$ produces the $x_n$ and the w (the global parameters) also affects the $x_n$, here $z_n$ corresponds to our $\pi_n$ and w corresponds to our $\theta$.
 
