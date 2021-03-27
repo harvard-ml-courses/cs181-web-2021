@@ -41,7 +41,7 @@ weight: 0
       $$A \sim N(0, \mathbb{1})$$
       $$x = Az + \epsilon$$
 
-      In factor analysis, we had z (vector of length $k$) drawn from some normal distribution, and x was given by some matrix A $(Dxk)$ times z plus some noise. This is an example of a probabilistic model where we posited that there is some latent k dimensional z that somehow leads the data to become a D dimensional x. The analog in the Pompei example is if we theorized that perhaps a combination of purposes of a given room leads to certain items that are found in the room (which became our x data) in certain counts. Also something to note is specifically, in factor analysis, we are assuming that there's some linear relationship in the mixture of purposes of the room to the counts of items in the room. 
+      In factor analysis, we had z (vector of length $k$) drawn from some normal distribution, and x was given by some matrix A $(Dxk)$ times z plus some noise, $\epsilon$. This is an example of a probabilistic model where we posited that there is some latent k dimensional z that somehow leads the data to become a D dimensional x. The analog in the Pompei example is if we theorized that perhaps a combination of purposes of a given room leads to certain items that are found in the room (which became our x data) in certain counts. Also something to note is specifically, in factor analysis, we are assuming that there's some linear relationship in the mixture of purposes of the room to the counts of items in the room. 
         
       <h4>Variational Autoenconder</h4>
 
@@ -52,9 +52,9 @@ weight: 0
         
       $$p(z|x,\theta) = q_{\phi}(z)$$  
         
-      Here, $q_{\phi}$ is a new neural network with parameters $\phi$. The key thing to note about both approaches is that we are jumping back and forth between updating the local parameters $z$ given the global parameters and vice versa. Doing so makes the inference more tractable. 
+      Here, $q_{\phi}$ is a new neural network with parameters $\phi$. The key thing to note about both approaches is that we are alternating between updating the local parameters $z$ given the global parameters and vice versa. Doing so makes the inference much more tractable. 
 
-      <h2 id="recap16_3">Deep Dive into Topic Models Speciifcally</h2>
+      <h2 id="recap16_3">Deep Dive into Topic Models Specifically</h2>
 
       We're now going to take a deep dive into topic models specifically. While this is indeed a specific model, many of the concepts and patterns here will be generalizable to other similar models, so keep the big picture in mind when we're working on this topic.<br><br>
 
@@ -64,7 +64,7 @@ weight: 0
 
       Another way of thinking about this in another context is looking at the story of restaurants. A given resturant might have a general restaurant food type or perhaps a fuison of food types (z) that affects the menu items (the x data we see).<br><br>
 
-      And to add one more way of thinking, you could think of the context of looking at documents. A given document might have a mixture of document types (the z's) that affect the specific words on the document (and also the counts of words on the document).<br><br>
+      And to add one more way of thinking, you could think of the context of looking at documents. A given document might have a mixture of document types (the z's) that affect the specific words on the document (and also the counts of words on the document). In class, we mentioned that some examples might be that a political article about Joe Biden may also intersect heavily with updates in the area of medicine, and topic models can provide a basis for understanding how to group articles accordingly. <br><br>
 
       <h4>Let's Look at the Math</h4>
 
@@ -72,7 +72,9 @@ weight: 0
 
       <u>Part 1: Parameters for seeing the d items (given you're in mixture k)</u><br><br>
 
-      $\theta_k \sim Dir(\beta)$ is a D dimensional vector that describes the probability of seeing item d if you are in mixture k.<br><br>
+      $\theta_k \sim Dir(\beta)$ is a D dimensional vector that describes the probability of seeing item $d$ if you are in mixture $k$. For instance, given that you are in a medical setting $k_0$, the probability of seeing one of the $D$ data points ($d_3$ for instance) is different than if you were modeling in a sports analytics setting. Pictorially, this may be represented as below: <br><br>
+        
+        
 
       For example, perhaps we had k=0 represent heart disease and k=1 represent having a cold. $\theta_0$ would tell us the distribution of the codes (the actual x data we should see) given that the person has heart disease underneath the hood (our z), and our $Dir(\beta)$ is representing the distribution of the codes. Then, $\theta_1$ would be the distribution of the codes for if the person just had a cold (which would look quite different from the distribution for $\theta_1$, since having a cold and having a heart disease lead to different symptoms).
 
