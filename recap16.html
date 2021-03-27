@@ -38,16 +38,21 @@ weight: 0
       <h4>Factor Analysis</h4>
 
       $$z \sim N(0, \mathbb{1})$$
+      $$A \sim N(0, \mathbb{1})$$
       $$x = Az + \epsilon$$
 
-      In factor analysis, we had z drawn from some normal distribution, and x was given by some matrix A times z plus some noise. This is an example of a probabilistic model where we posited that there is some latent k dimensional z that somehow leads the data to become a D dimensional x. The analog in the Pompei example is if we theorized that perhaps a combination of purposes of a given room leads to certain items that are found in the room (which became our x data) in certain counts. Also something to note is specifically, in factor analysis, we are assuming that there's some linear relationship in the mixture of purposes of the room to the counts of items in the room.
-
+      In factor analysis, we had z (vector of length $k$) drawn from some normal distribution, and x was given by some matrix A $(Dxk)$ times z plus some noise. This is an example of a probabilistic model where we posited that there is some latent k dimensional z that somehow leads the data to become a D dimensional x. The analog in the Pompei example is if we theorized that perhaps a combination of purposes of a given room leads to certain items that are found in the room (which became our x data) in certain counts. Also something to note is specifically, in factor analysis, we are assuming that there's some linear relationship in the mixture of purposes of the room to the counts of items in the room. 
+        
       <h4>Variational Autoenconder</h4>
 
       $$z \sim N(0, \mathbb{1})$$
-      $$x = f(z) + \epsilon$$
+      $$x = f_{\theta}(z) + \epsilon$$
 
-      Now, we have pretty much the same thing, but our f is nonlienar. So it could be the same story from before regarding Pompei, but this time we believe there's some more complex, nonlinear relationship in the mixture of purposes of the room to the counts of items in the room.
+      Now, we have pretty much the same thing, but our $f_{\theta}$ is nonlinear wrt $z$, where $f_{\theta}$ is a neural network characterized by $\theta$, and $\theta$ are the global parameters. So it could be the same story from before regarding Pompei, but this time we believe there's some more complex, nonlinear relationship in the mixture of purposes of the room to the counts of items in the room. We learn an inference network to solve this by making the following simplification: 
+        
+      $$p(z|x,\theta) = q_{\phi}(z)$$  
+        
+      Here, $q_{\phi}$ is a new neural network with parameters $\phi$. The key thing to note about both approaches is that we are jumping back and forth between updating the local parameters $z$ given the global parameters and vice versa. Doing so makes the inference more tractable. 
 
       <h2 id="recap16_3">Deep Dive into Topic Models Speciifcally</h2>
 
