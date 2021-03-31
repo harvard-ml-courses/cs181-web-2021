@@ -8,7 +8,7 @@ weight: 0
 <section class="main-container text">
     <div class="main">
 
-      <h4>Date: March 30, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSdr91YP3VKBv2ldfZpjFLP8tt9PGZOqL8oLyuRACzgEHtd00w/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSdr91YP3VKBv2ldfZpjFLP8tt9PGZOqL8oLyuRACzgEHtd00w/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: March 30, 2021 (<a href="https://docs.google.com/forms/d/e/1FAIpQLSdPFqXZpt1gdKSsuQ5fy91ddIUqsa9mxsxMZ-9G9eKrSqLruw/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPFqXZpt1gdKSsuQ5fy91ddIUqsa9mxsxMZ-9G9eKrSqLruw/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
       <h4>Relevant Textbook Sections: 8</h4>
       <h4>Cube: Probabilistic</h4>
 
@@ -51,7 +51,7 @@ weight: 0
 
       <h2 id="recap17_2">Graphical Models</h2>
 
-      The purpose of a graphical model is to create a visual and structured representation of the probabilistic relationships in a given problem formulation. Graphical models help us visualize models, communicate about models, and consolidate all relevant information about a model. To construct graphical models, we introduce a notational system to unambiguously convey a problem setup.<br>
+      Graphical models provide a structured representation of the probabilistic relationships in a problem. Graphical models help us visualize and communicate about models.<br><br>
 
       We've already been informally drawing graphical models for a long time! In supervised learning, we considered cases where a hidden label y generated x’s (generative), or a hidden label x generated y’s (discriminative). We diagrammed the generative scenario with an arrow pointing from y to x, and the discriminative scenario with an arrow from x to y.<br><br>
 
@@ -64,7 +64,7 @@ weight: 0
 
       More recently, we’ve seen scenarios with more complicated diagrams. For mixture models, which are depicted in Figure 1 left, a hidden z generated x’s. We draw this in a plate to denote that we have a whole set of N z’s generated this way. The z’s and x’s were also affected by our parameters $\pi, \mu, \Sigma$.<br><br>
 
-      We also saw topic models, which lead to the even more complicated diagram in Figure 1 right. These diagrams are examples of \<b>Bayesian Networks</b>, which help encode the structure of the data, including relationships between variables. <br><br>
+      We also saw topic models, which lead to the even more complicated diagram in Figure 1 right. These diagrams help encode the structure of the data, including relationships between variables. <br><br>
       
       <!-- The first graph on the far left represents a generative process where labels $y$ are used to generate features $x$.<br><br>
 
@@ -142,9 +142,7 @@ weight: 0
 
       <h2 id="recap17_3">Bayesian Networks</h2>
 
-      A Bayesian Network is a special kind of graphical model. Bayesian Networks (Bayes Nets) are DAGs (directed acyclic graphs) where nodes represent random variables, and directed arrows represent dependency relationships between random variables. In a DAG, nodes have directed arrows between them and there are no cycles (directed paths you can follow in a loop). In DAGS, we will be able to simplify joint probabilities nicely.<br>
-
-      For example, the joint distribution of random variables $(A, B, C, D, E)$ can be inferred from the dependency relationships specified by this Bayes Net:
+      A Bayesian Network is a special kind of graphical model. Bayesian Networks (Bayes Nets) are DAGs (directed acyclic graphs) where nodes represent random variables, and directed arrows represent dependency relationships between random variables. In a DAG, nodes have directed arrows between them and there are no cycles (directed paths you can follow in a loop). In DAGS, we will be able to simplify joint probabilities nicely.<br><br>
 
       <div id="images">
           <a>
@@ -152,11 +150,12 @@ weight: 0
               <div class="caption">Figure 2</div>
           </a>
       </div>
-
+      
+      For example, the joint distribution of random variables $(A, B, C, D, E)$ can be inferred from the dependency relationships specified by the Bayes Net in Figure 2 above:
 
     \begin{align*}
     p(A,B,C,D,E) &= p(A)p(B|A)p(C|B,A)p(D|A,B,C)p(E|A,B,C,D)
-    \\ &= P(A)p(B|A)p(C|A)p(D|C,A)p(E|D)
+    \\ &= p(A)p(B|A)p(C|A)p(D|C,A)p(E|D)
     \end{align*}
 
       <!-- $$p(A, B, C, D, E) = p(A) p(D | A) p(B | A) p(C | A, B) p(E | C)$$
@@ -192,22 +191,22 @@ weight: 0
 
       <div id="images">
           <a>
-              <img src="{{ site.baseurl }}/images/recap17_3.png" style="width:40%"  alt="bayes2"></img>
+              <img src="{{ site.baseurl }}/images/recap17_3.png" style="width:60%"  alt="bayes2"></img>
               <div class="caption">Figure 3</div>
           </a>
       </div>
 
-      We will begin by defining the principle of local independence: \<b>every node is conditionally independent of its non-descendants, given only its parents.</b><br><br>
+      We will begin by defining the principle of local independence: <b>every node is conditionally independent of its non-descendants, given only its parents.</b><br><br>
 
       Imagine that students have skill level S and diligence D, which affect how they do in a course as shown in Figure 3. Observe that we’re using our prior beliefs about how these variables interact to bring structure to the data. <br><br>
      
-      Example:  Given $G$ and $U$, $E \perp H, S, D$ (or $E$ is conditionally independent ($\perp$) of $H$, $S$, and $D$).<br><br>
+      Given $G$ and $U$, $E \perp H, S, D$ (or $E$ is conditionally independent ($\perp$) of $H$, $S$, and $D$) by local independence.<br><br>
 
       Q: Given $S$, are $G$ and $U$ independent?<br>
       A: Yes: local independence says that $G$ and $U$, which are non-descendants, are independent given their parent $S$. In the graph, this means that G and U are related only through S, their parent. So given the parent, they are independent.<br><br>
       
       Q: Given $E$, are $G$ and $U$ independent?<br>
-      A: No.  First notice here that we cannot apply the principle of local independence, because $E$ is not a parent of $G$ or $U$.<br><br>
+      A: No. We cannot apply the principle of local independence because $E$ is not a parent of $G$ or $U$.<br><br>
 
       Intuitively, if you know that someone did well on their exam, and you find out that they really understood the material,  then you may have less idea of if they are a good test taker. Knowing that they really understood the material already “explains" their high performance on the exam.  Therefore conditioned on observing the student's exam score, understanding the material and being a good test taker are dependent variables.  This general phenomenon is called the explaining-away effect.<br><br>
 
@@ -217,7 +216,7 @@ weight: 0
 
       <b>Two variables $A$ and $B$ are D-separated, or independent, if every undirected path from $A$ to $B$ is “blocked".</b><br><br>
 
-      There are 3 base cases to determining if a path is "blocked":<br>
+      There are several ways a path can be "blocked":<br>
 
       <div id="images">
           <a>
@@ -226,17 +225,17 @@ weight: 0
           </a>
       </div>
 
-      <u>Case 1 and 2:</u><br><br>
+      <u>Case 1 and 2:</u>
 
-      In Case 1, if we have observed $C$, then $B$, which is a descendant, will be independent of $A$ (by local independence). Case 2 is the same, but flipped around. <br><br>
+      In Case 1, if we have observed $C$, then $B$, which is a descendant, will be independent of $A$ (by local independence). Case 2 is symmetric. <br><br>
       
-      <u>Case 3:</u><br><br>
+      <u>Case 3:</u>
 
-      In Case 3, $C$ is the parent of both $A$ and $B$.  Because $A$ and $B$ are non-descendents, $A$ and $B$'s conditional independence follows by local independence.<br><br>
+      In Case 3, $C$ is the parent of both $A$ and $B$.  Because $A$ and $B$ are not descendents of each other, $A$ and $B$'s conditional independence follows by local independence.<br><br>
 
       <!-- Another contextualized example is: say $C$ represents the bias of a coin.  $A$ and $B$ represent two independent flips of the coin.  When $C$ is unobserved, then $A$ and $B$ are dependent, as observing the result of flip $A$ may give information about the bias $C$ of the coin, which also gives information about $B$.  But once $C$, the bias of the coin, is observed, then $A$ is now independent of $B$.<br><br> -->
 
-      <u>Case 4:</u><br><br>
+      <u>Case 4:</u>
 
       In Case 4, not observing C blocks the path.  When C is observed, it induces a correlation, or dependency between $A$ and $B$.<br>
 
@@ -258,7 +257,7 @@ weight: 0
       $$A \longrightarrow B: p(A, B) = p(A) p(B | A)$$
       $$B \longrightarrow A: p(A, B) = p(B) p(A | B)$$
 
-      A statistical interpretation allows for multiple orderings, but one ordering may require the fewest parameters and most independences.<br><br>
+      A statistical interpretation allows for multiple orderings, but one ordering may require the fewest parameters and contain the most independences.<br><br>
 
 
       <!-- <div id="images">
@@ -280,8 +279,8 @@ weight: 0
 
       <div id="images">
           <a>
-              <img src="{{ site.baseurl }}/images/recap17_5.png" style="width:40%"  alt="bayes5"></img>
-              <div class="caption">Figure 6</div>
+              <img src="{{ site.baseurl }}/images/recap17_5.png" style="width:60%"  alt="bayes5"></img>
+              <div class="caption">Figure 5</div>
           </a>
       </div>
 
@@ -301,12 +300,12 @@ weight: 0
 
       <h4>Re-ordering the Network</h4>
 
-      We can change the topology (ordering) of the net, while preserving the same dependency relationships between variables.  For example, this net has a re-ordered topology, preserving the relationships above:
+      We can change the topology (ordering) of the net, while preserving the same dependency relationships between variables.  For example, the network in Figure 7 is the one from Figure 6 with a re-ordered topology, preserving the relationships from Figure 6:
 
       <div id="images">
           <a>
-              <img src="{{ site.baseurl }}/images/recap17_6.png" style="width:70%"  alt="bayes6"></img>
-              <div class="caption">Figure 7</div>
+              <img src="{{ site.baseurl }}/images/recap17_6.png" style="width:60%"  alt="bayes6"></img>
+              <div class="caption">Figure 6</div>
           </a>
       </div>
 
@@ -318,7 +317,7 @@ weight: 0
 
       We add $G$ to the network.  $G$ depends on $E$ and $S$, so we draw arrows from $E$ and $S$ to $G$.<br><br>
 
-      Finally we add D, which depends on U and S.<br><br>
+      Finally we add $D$, which depends on $U$ and $S$.<br><br>
 
       This new network respects all the dependencies of the original network.  Note that the new network contains more dependencies (or arrows) than our original network.<br><br>
 
@@ -366,8 +365,8 @@ weight: 0
 
       <div id="images">
           <a>
-              <img src="{{ site.baseurl }}/images/recap17_7.png" style="width:40%"  alt="undirected"></img>
-              <div class="caption">Undirected model.</div>
+              <img src="{{ site.baseurl }}/images/recap17_7.png" style="width:80%"  alt="undirected"></img>
+              <div class="caption">Figure 7</div>
           </a>
       </div>
 
@@ -377,7 +376,7 @@ weight: 0
 
       where $z$ is a normalizing constant and $\phi$ is a function.<br><br>
 
-      Undirected graphical models are very popular in settings such as image segmentation (you can make graphs over pixels in an image).  In practice, they're hard to work with as normalizing constant $z$ is hard to find to make $P(A, B, C, D, E)$ a valid probability distribution which sums to $1$.
+      Undirected graphical models are very popular in settings such as image segmentation (you can make graphs over pixels in an image).  In practice, they're hard to work with because finding the normalizing constant $z$ that makes $P(A, B, C, D, E)$ a valid probability distribution is hard.
 
       <h4>Factor Graphs</h4>
 
@@ -385,8 +384,8 @@ weight: 0
 
       <div id="images">
           <a>
-              <img src="{{ site.baseurl }}/images/recap17_8.png" style="width:40%"  alt="factor"></img>
-              <div class="caption">Factor graph.</div>
+              <img src="{{ site.baseurl }}/images/recap17_8.png" style="width:80%"  alt="factor"></img>
+              <div class="caption">Figure 8.</div>
           </a>
       </div>
 
