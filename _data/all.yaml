@@ -330,13 +330,13 @@ lectures:
     type: 'sec'
 
   - topic:  #Apr 8
-    subtopic: <a href="/cs181-web/recap17">Hidden Markov Models</a>
+    subtopic: <a href="/cs181-web/recap19">Hidden Markov Models</a>
     section:
     readings: 10
     hw:
     type:
   - topic: #Apr 10
-    subtopic: <a href="/cs181-web/recap18">Markov Decision Processes</a>
+    subtopic: <a href="/cs181-web/recap20">Markov Decision Processes</a>
     section:
     readings: SB 3.1-3.6, SB 4.1-4.4 *
     demos:
@@ -356,7 +356,7 @@ lectures:
     type: 'sec'
 
   - topic: RL
-    subtopic: <a href="/cs181-web/recap19">Reinforcement Learning 1</a>
+    subtopic: <a href="/cs181-web/recap21">Reinforcement Learning 1</a>
     section:
     readings:
     hw: <a href="/cs181-web/homework#hw6">HW6 (Inference in Graphical Models, MDPs)</a> released
@@ -379,12 +379,12 @@ lectures:
     type: 'sec'
 
   - topic:
-    subtopic: <a href="/cs181-web/recap21">Reinforcement Learning 2</a>
+    subtopic: <a href="/cs181-web/recap22">Reinforcement Learning 2</a>
     section:
     readings: SB 1.1-1.4, SB 6.1-6.5 *
     hw:
   - topic: # Apr 24
-    subtopic: <a href="/cs181-web/recap22">Interpretability</a>
+    subtopic: <a href="/cs181-web/recap23">Interpretability</a>
     section:
     readings:
     demos:

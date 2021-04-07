@@ -79,7 +79,7 @@ weight: 0
 
       <h4>Collection 1: Given Globals, Solve for Locals</h4>
 
-      Given the $p_0$, $T$, and $\Omega$, we want to be able to find out things about z and x. Some specific values we might want to find are: <br><br>
+      Given the $p_0$, $T$, and $\Omega$, we want to be able to find out things about z and x. Some specific values we might want to find are:
       <ol>
 
         <li>Filtering: $p(z_t|x_1, …, x_t)$. This is real time prediction. We can only use the data we have so far from observations before time t to make a prediction about time t. Say x’s are radar measurements and z is the potential location of a missile. We want to use the data we’ve seen so far to estimate where the missile might be right now.</li>
@@ -88,11 +88,13 @@ weight: 0
 
         <li>Probability of Sequence: $p(x1 ... x_T)$. This is the probability that a particular sequence occurred. Perhaps we want to detect outliers in audio, to determine whether a section of the recording was just background noise. We can use the probability of the sequence as a way to tell if it is an outlier or not. Sequence probabilities are also useful for model selection.</li>
 
-        <li>Best Path: $argmax_z p(z_1 ... z_T|x_1 ... x_T)$. Finding the best latents. Imagine we have audio of someone speaking, and we want to know the most probable set of words they’ve spoken (z’s) that would produce the data in the recording (the x’s). </li>
+        <li>Best Path: $\argmax_z p(z_1 ... z_T|x_1 ... x_T)$. Finding the best latents. Imagine we have audio of someone speaking, and we want to know the most probable set of words they’ve spoken (z’s) that would produce the data in the recording (the x’s). </li>
 
         <li>Predict measurements: $p(x_t | x_1 ... x_{t-1})$. We can also try to predict the next observation x, instead of predicting the latent z like we have in most of the previous points. Example: we may want to predict the hospital utilization rate tomorrow given what has happened so far.</li>
       
       </ol>
+
+      <br><br>
 
       <h4>Collection 2: Given x's, Solve for Globals</h4>
 
@@ -104,7 +106,7 @@ weight: 0
 
       The full joint probability of seeing a particular set of x’s and z’s in an HMM is
 
-      $$p(x_1,…,x_T,z_1,…,z_T) = p_0(z_1)\prod_{t=1}^{T-1} \underbrace{p_T(z_{t+1} | z_t)}_{A} \prod_{t=1}^{T} \underbrace{p_{\Omega}(x_t | z_t)}$$
+      $$p(x_1,…,x_T,z_1,…,z_T) = p_0(z_1)\prod_{t=1}^{T-1} \underbrace{p_T(z_{t+1} | z_t)}_{A} \prod_{t=1}^{T} \underbrace{p_{\Omega}(x_t | z_t)}_{B}$$
 
       Where A represents the terms from all the transition probabilities, which describe the probabilities of the $z_t$’s being the values we observed given each $z_t$’s ancestor state $z_{t-1}$, and B represents the terms from all of the observation probabilities, which describe the probabilities of the $x_t$’s being the values we observed given the $z_t$’s.<br><br>
 
@@ -122,9 +124,9 @@ weight: 0
 
       In order to solve the questions in Collection 1, we are going to use the forward-backward algorithm from last class. The Forward-Backward algorithm is a special case of last class’s algorithm for this specific time series structure. You can think of this either as a review of last class to make sure we really get it, or as a deep dive into a particular scenario.<br><br>
 
-      <h4>Diagram Depicting Forward and Backward Messages</h4>
+      <!-- <h4>Diagram Depicting Forward and Backward Messages</h4> -->
 
-      As we go through the algorithm, we notice some interesting properties about the math we do. Specifically, at a conceptual level, we'll see later how we essentially have these $\alpha$ terms that are "messages" that feed information forward, and these $\beta$ terms that are "messages" that feed information backward (hence the name). 
+      As we go through the algorithm, we will notice some interesting properties about the math we do. Specifically, at a conceptual level, we'll see later how we essentially have these $\alpha$ terms that are "messages" that feed information forward, and these $\beta$ terms that are "messages" that feed information backward (hence the name). 
 
       <h4>A Dive Into the Math</h4>
 
@@ -174,7 +176,7 @@ weight: 0
     
       We can think of these two sum terms as incorporating different pieces of information about what $x_2$ might be. In the diagram below, the colors match up portions of the joint probability expression with the associated section of the graphical model. The $\sum_{z_2} p_{\Omega}(x_2 | z_2)$ describes how the value of $z_2$ affects what $x_2$ will be (red). The $\sum_{z_1} p_T(z_2 | z_1) p_{\Omega}(x_1 | z_1)p_0(z_1)$ accounts for how $x_1$ affects our estimate of what $z_1$ was (green), and how $z_1$’s value affects what we think $z_2$ was (through the transition matrix; blue). <br><br>
     
-      If we glue together these two pieces of information, we get our joint probability $p(x_2, x_1)$.   
+      If we glue together these two pieces of information, we get our joint probability $p(x_2, x_1)$.   <br><br>
 
       <div class="text-center">
         <img src="{{ site.baseurl }}/images/recap19_2.png" style="width:80%"  alt="Forward"></img>
@@ -288,7 +290,7 @@ weight: 0
 
       Now, which of the problems mentioned earlier do we know how to solve? <br><br>
       
-      Filtering can be solved with $alpha$’s. Smoothing can be solved with $\alpha$’s and $\beta$’s. The sequence and prediction problems can be solved by summing out the $\alpha$’s at the last timestep. <br><br>
+      Filtering can be solved with $\alpha$’s. Smoothing can be solved with $\alpha$’s and $\beta$’s. The sequence and prediction problems can be solved by summing out the $\alpha$’s at the last timestep. <br><br>
       
       The only problem we haven’t covered is the best path problem, which we’ll touch on now. The best path problem is the one where we look for $\max p(z_1…z_t | x1…x_T)$. We will not go through this in great detail, but just sketch out the main idea.<br><br>
       
@@ -300,7 +302,7 @@ weight: 0
       
       Then $$\gamma_{T-1}(z) = \sum_{z’} \gamma_{T-1}(z’)P_T(z’ | z)$$
       
-      Where the gamma, a one-hot vector, is basically picking out the best z to be at in each element of the sum.<br><br>
+      Where the $\gamma$, a one-hot vector, is basically picking out the best z to be at in each element of the sum.<br><br>
       
       Finally, take a backwards step. We “know” the last value of z because we just set it to the maximizer. Now what is our $\alpha_{T-1}\gamma_{T-1}$? It’s a new vector combining our information about both the past and the future, and we can pick the best $z_{T-1}$ that maximizes it.
       
