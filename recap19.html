@@ -86,7 +86,7 @@ weight: 0
 
         <li>Probability of Sequence: $p(x1 ... x_T)$. This is the probability that a particular sequence occurred. Perhaps we want to detect outliers in audio, to determine whether a section of the recording was just background noise. We can use the probability of the sequence as a way to tell if it is an outlier or not. Sequence probabilities are also useful for model selection.</li>
 
-        <li>Best Path: $\argmax_z p(z_1 ... z_T|x_1 ... x_T)$. Finding the best latents. Imagine we have audio of someone speaking, and we want to know the most probable set of words they’ve spoken (z’s) that would produce the data in the recording (the x’s). </li>
+        <li>Best Path: $\arg\max_z p(z_1 ... z_T|x_1 ... x_T)$. Finding the best latents. Imagine we have audio of someone speaking, and we want to know the most probable set of words they’ve spoken (z’s) that would produce the data in the recording (the x’s). </li>
 
         <li>Predict measurements: $p(x_t | x_1 ... x_{t-1})$. We can also try to predict the next observation x, instead of predicting the latent z like we have in most of the previous points. Example: we may want to predict the hospital utilization rate tomorrow given what has happened so far.</li>
       
@@ -230,7 +230,7 @@ weight: 0
       
       After finding all the $\gamma$’s, choose each state $z^*_t$ in the optimal path based on the highest $\gamma_t(z_t)$. Start with $z^*_T$ and work backwards.
       
-      $$z^*_t = \argmax_{z_t} \gamma_t(z_t)p_T(z^*_{t+1} | z_t) $$
+      $$z^*_t = \arg\max_{z_t} \gamma_t(z_t)p_T(z^*_{t+1} | z_t) $$
       
       Each $\gamma_t(z_t)$ refers to the path for getting to $z_t$. $z^*_{t+1}$ will already be fixed because we are working backwards, so $p_T(z^*_{t+1} | z_t)$ is like also incorporating information about the likelihood of going from $z_t$ to $z^*_{t+1}$.
           
