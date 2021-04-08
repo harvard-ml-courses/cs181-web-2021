@@ -141,7 +141,7 @@ weight: 0
 
       <h2 id="recap18_5">What does the min cost of inference depend on?</h2>
 
-      How do we determine the minimum cost of inference? This will depend on something called <a href="https://en.wikipedia.org/wiki/Treewidth">treewdith</a>. One way to think about it is the maximum number of interacting variables. For us, our bottleneck was p(C|A, B), a triple dependency between variables. We definitely can't do anything better than that.<br><br>
+      How do we determine the minimum cost of inference? This will depend on something called <a href="https://en.wikipedia.org/wiki/Treewidth">treewidth</a>. One way to think about it is the maximum number of interacting variables. For us, our bottleneck was p(C|A, B), a triple dependency between variables. We definitely can't do anything better than that.<br><br>
 
       In general, finding the optimal order of elminatin is NP hard. But if we have a specific structure, polytrees specifically, it's easy. A <a href="https://en.wikipedia.org/wiki/Polytree">polytree</a> is a directed acyclic graph whose underlying undirected graph is a tree (which means the undirected graph is both connected and acyclic).
 
