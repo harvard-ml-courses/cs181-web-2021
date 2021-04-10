@@ -53,10 +53,31 @@ weight: 0
 
       To explain the setup diagram above, the agent can send actions to the world, and the world will return observations that we call $o$ and rewards that we call $r$.<br><br>
 
-      $o$ represents observations<br><br>
+      $S = \{1, \dots, |S|\}$ represents the states<br><br>
+      $A = \{1, \dots, |A|\}$ represents the actions<br><br>
+      $P(s'|s, a)$ defines the transition model <br><br>
+      $\pi(a|s)$ is the probability of taking action $a$ given that we are currently in state $a$. This is also known as the policy. <br><br>
       $r$ represents rewards<br><br>
       $t$ represents the time stamp<br><br>
       $\gamma$ is our discount factor which is between [0, 1) (in the future, rewards are worth less by a factor of $\gamma$ per round of time)<br><br>
+
+      <h4>Definitions: </h4>
+      Markov Assumption: $P_t(s_{t+1}| s_1, s_2, \dots, s_t, a_1, a_2, \dots, a_t) = P_t(s_{t+1}| s_t, a_t)$ <br><br>
+      Stationarity assumption: $P_t(S_{t+1} | S_{t}, a_t) = P_t(S_{t+1} | S_{t}, a_t)$. Notice here that we have dropped the subscript $t$, and that the transition model is time invariant. In other words, we can move the time around, and as long as we have the same state $s$ and action $a$, the probability should remain the same. 
+
+      <h4>Types of problems:</h4>
+      The MDPs that we are trying to solve are dependent on the set of variables given by MDP(S, A, r, P), where the state and action spaces are discrete. This means that the transition and reward functions can be more easily computed. 
+      <ul>
+        <li>Planning: the input is an MDP and the output is the optimal policy. </li>
+        <li>Reinforcement learning: the input is the access to the world and the outputs are the actions (ie. the policy). This is equivalent to learning from feedback to optimize a policy. </li>
+      </ul>
+
+      <h4>Objective:</h4>
+      <ul>
+        <li>Infinite Horizon: $max_{\pi} E\left[\sum_{t=0}^\infty \gamma^t r_t \right\]$</li>
+        <li>Reinforcement learning: the input is the access to the world and the outputs are the actions (ie. the policy). This is equivalent to learning from feedback to optimize a policy. </li>
+      </ul>
+
 
       With the above information, we have:<br><br>
 
