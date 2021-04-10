@@ -115,17 +115,33 @@ weight: 0
 
       <h4>Objective:</h4>
       <ul>
-        <li>Infinite Horizon: $max_{\pi} E_{T, p_0}\left[\sum_{t=0}^\infty \gamma^t r_t \right]$</li>. Our goal here is to find the policy $\pi$ that maximizes the expected value of this expression. 
-        <li>Finite Horizon: $max_\pi E_{T, p_0} \left[ \sum_{t=0}^T r_t \right]$ With a finite time horizon, we do not need to discount, but we are still trying to maximize expected reward from the policy </li>
+        <li>Infinite Horizon: $max_{\pi} E_{T, p_0}\left[\sum_{t=0}^\infty \gamma^t r_t \right]$. Our goal here is to find the policy $\pi$ that maximizes the expected value of this expression. </li>
+        <li>Finite Horizon: $max_\pi E_{T, p_0} \left[ \sum_{t=0}^T r_t \right]$ With a finite time horizon, we do not need to discount (although we may choose to), but we are still trying to maximize expected reward from the policy. For an infinite time horizon, we needed to discount to have convergence of our expectation.  </li>
       </ul>
 
-      Here, $T$ and $p_0$ represent transition probabilities and the initial starting state of the world.  The agent does not have control over the world.  The agent does control its own actions. We are trying to determine the best actions for the agent to take: the actions that maximize the agent's returns that it gets in the world. <br><br>
+      Here, $T$ and $p_0$ represent transition probabilities and the initial starting state of the world.  The agent does not have control over the world.  The agent does control its own actions. We are trying to determine the best actions for the agent to take: the actions that maximize the agent's rewards that it gets in the world. <br><br>
 
       <h2 id="recap20_3">How to Solve using Policy Iteration (Method 1)</h2>
 
       Over the this lecture and next, we will cover three methods of sovling an MDP. Each will have their pros and cons. There's a lot of literature on this topic that includes more complex methods, but overall the three we cover are intuitive and scale relatively well. Additionally, the complex methods build off these simpler methods here, so this is laying down important groundwork.<br><br>
 
       First, let's explore policy iteration.  At a high level, policy iteration iteratively evaluates a proposed policy, and then performs policy improvement.
+      <h4>Finite Horizon Planning, Value Iteration</h4>
+      
+      Define V^*_{(t)} (s) = total value from state $s$ under optimal policy with $t$ steps to go. Notice that in this notation, $t$ counts the $\textit{remaining}$ steps, and does not count the current time step. As such, iterating to the next time step will decrease the index $t$ to $t-1$. 
+
+      Taking a page from dynamic programming, we can derive a principle of optimality to work backward from the last time step. The principle of optimality states that:
+      <ul>
+        An optimal policy consists of: 
+        <li>An optimal first action</li>
+        <li>Followed by an optimal policy from the successive state</li>
+      </ul>
+
+      This brings us to the algorithm for value iteration
+      <ul>
+        <li>Base case: V^*_{(1)(s)} = max_a r(s,a)</li>
+        <li>Inductive case: V^*_{(t+1)}(s) = max_{a}\left[ r(s,a) + \sum_{s'\in S p(s'|s,a) V^*_{(t)}(s')}\right]. Notice that we have already calculated V^*_{(t)}(s'), which is similar to how we might think about dynamic programming. $s'$ is the very next state. </li>
+      </ul>
 
       <h4>Policy Evaluation</h4>
 
