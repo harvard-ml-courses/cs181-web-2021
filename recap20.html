@@ -128,7 +128,7 @@ weight: 0
       First, let's explore policy iteration.  At a high level, policy iteration iteratively evaluates a proposed policy, and then performs policy improvement.
       <h4>Finite Horizon Planning, Value Iteration</h4>
       
-      Define V^*_{(t)} (s) = total value from state $s$ under optimal policy with $t$ steps to go. Notice that in this notation, $t$ counts the $\textit{remaining}$ steps, and does not count the current time step. As such, iterating to the next time step will decrease the index $t$ to $t-1$. 
+      Define $V^*_{(t)} (s)$ as the total value from state $s$ under optimal policy with $t$ steps to go. Notice that in this notation, $t$ counts the $\textit{remaining}$ steps, and does not count the current time step. As such, iterating to the next time step will decrease the index $t$ to $t-1$. 
 
       Taking a page from dynamic programming, we can derive a principle of optimality to work backward from the last time step. The principle of optimality states that:
       <ul>
@@ -139,8 +139,8 @@ weight: 0
 
       This brings us to the algorithm for value iteration
       <ul>
-        <li>Base case: V^*_{(1)(s)} = max_a r(s,a)</li>
-        <li>Inductive case: V^*_{(t+1)}(s) = max_{a}\left[ r(s,a) + \sum_{s'\in S p(s'|s,a) V^*_{(t)}(s')}\right]. Notice that we have already calculated V^*_{(t)}(s'), which is similar to how we might think about dynamic programming. $s'$ is the very next state. </li>
+        <li>Base case: $V^*_{(1)(s)} = max_a r(s,a)$</li>
+        <li>Inductive case: $V^*_{(t+1)}(s) = max_{a}\left[ r(s,a) + \sum_{s'\in S p(s'|s,a) V^*_{(t)}(s')}\right]$. Notice that we have already calculated $V^*_{(t)}(s')$, which is similar to how we might think about dynamic programming. $s'$ is the very next state. </li>
       </ul>
 
       <h4>Policy Evaluation</h4>
