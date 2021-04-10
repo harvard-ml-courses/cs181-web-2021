@@ -74,8 +74,8 @@ weight: 0
 
       <h4>Objective:</h4>
       <ul>
-        <li>Infinite Horizon: $max_{\pi} E\left[\sum_{t=0}^\infty \gamma^t r_t \right]$</li>
-        <li>Reinforcement learning: the input is the access to the world and the outputs are the actions (ie. the policy). This is equivalent to learning from feedback to optimize a policy. </li>
+        <li>Infinite Horizon: $max_{\pi} E\left[\sum_{t=0}^\infty \gamma^t r_t \right]$</li>. Our goal here is to find the policy $\pi$ that maximizes the expected value of this expression. 
+        <li>Finite Horizon: $max_\pi E \left[ \sum_{t=0}^T r_t \right]$ With a finite time horizon, we do not need to discount, but we are still trying to maximize expected reward from the policy </li>
       </ul>
 
 
