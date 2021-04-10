@@ -31,7 +31,15 @@ weight: 0
 
       To best illustrate this, let's cover a few real world examples. Imagine we're using a map system to go from a starting point to a destination. The map system might have predictive tools that tell us where the traffic is (using realtime data of where cars are right now), and how long different routes take from start to finish. Modeling was used here to figure out all this traffic information and which routes are slower and faster. But now, we need to make a decision. Which route do we take? We might have different objectives. Maybe we want the route that is the shortest in expectation. Maybe we're okay with being a little slower on average, if there is a guarantee that we'll be there by some time (say we're trying to make an important interview). These are decisions that don't take place at the prediction time. In order to make these decisions, we'll need to formalize a reward function.<br><br>
 
-      Another real world example is autonomous vehicles. There are tons of predictions that come into place for autonomous vehicles, including where the road is, where the lines on the road are, whether there are signs ahead or not, whether there are pedestrians crossing or not, etc. These are all predictive, and is what we've been doing so far in CS181. Once we have this data, how do we decide what to do next? How should the car drive to be safe? Those are the types of things we will start looking at across the next three lectures.
+      Another real world example is autonomous vehicles. There are tons of predictions that come into place for autonomous vehicles, including where the road is, where the lines on the road are, whether there are signs ahead or not, whether there are pedestrians crossing or not, etc. These are all predictive, and is what we've been doing so far in CS181. Once we have this data, how do we decide what to do next? How should the car drive to be safe? 
+
+      Another example is shown below, where we have a reinforcement learning algorithm that is being used to predict when to creep at a stop sign to position a camera on the vehicle to see if the car is indeed parked or waiting at the stop sign. We also have uses for reinforcement learning in the context of delayed rewards. Alpha Go recently used a method of reinforcement learning, and had to learn strategies despite having rewards delayed far in the future. Those are the types of things we will start looking at across the next three lectures.
+
+      <div class="text-center">
+        <img src="{{ site.baseurl }}/images/recap20_5.png" style="width:50%"  alt="MDP Setup"></img>
+      </div>
+
+      Let us define a few key concepts about reinforcement learning. Firstly, we have a state. This is something we can observe about the world around us. We then have a decision problem regarding choosing an appropriate action from that state. That action will come with a reward, and the learning problem will be to optimize the choice of actions given states to maximize the reward. One key question remains how to quantify rewards (ie. the reward function), which will guide the learning problem. 
 
       <h2 id="recap20_2">Intro: Markov Decision Processes</h2>
 
