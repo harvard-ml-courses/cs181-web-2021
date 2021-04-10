@@ -140,108 +140,36 @@ weight: 0
       This brings us to the algorithm for value iteration
       <ul>
         <li>Base case: $V^*_{(1)(s)} = max_a r(s,a)$</li>
-        <li>Inductive case: $V^*_{(t+1)}(s) = max_{a}\left[ r(s,a) + \sum_{s'\in S p(s'|s,a) V^*_{(t)}(s')}\right]$. Notice that we have already calculated $V^*_{(t)}(s')$, which is similar to how we might think about dynamic programming. $s'$ is the very next state. </li>
+        <li>Inductive case: $V^*_{(t+1)}(s) = max_{a}\left[ r(s,a) + \sum_{s'\in S} p(s'|s,a) V^*_{(t)}(s')\right]$. Notice that we have already calculated $V^*_{(t)}(s')$, which is similar to how we might think about dynamic programming. $s'$ is the very next state. </li>
       </ul>
 
-      <h4>Policy Evaluation</h4>
-
-      To understand policy iteration, we first much understand policy evaluation.  Policy evaluation is used to estimate the expected reward at each state given a particular policy $\pi$ to follow at each state.
-
-      More formally, given a $\pi$, policy evaluation calculates $E[\sum \gamma^t r_t]$. Let's start with some definitions...<br><br>
-
-      Define $V^\pi(s) = E_{\pi, T}[\sum \gamma^t r_t]$<br><br>
-
-      Here, the notation $V^\pi(s)$ represents the ``value'' of policy $\pi$.  We define the value as the expected sum of discounted rewards the agent will receive.  Note: the $\pi$ is in the expecation just in case it's a stochastic policy. If $\pi$ was deterministic, we wouldn't need to do this.<br><br>
-
-      Define $Q^\pi(s, a) = E_{\pi, T} [\sum \gamma^t r_t | s_0=s, a_0=a]$<br><br>
-
-      Here, we define this Q as a slight altercation of the above V. You can think of $Q^\pi(s, a)$ as experimenting with a policy. We're essentially saying: For one instance of time, take action $a$ which lands us in some $s'$ instead of following policy $\pi$.  Then for each following time step, the agent will follow the policy $\pi$ the rest of the way. This is the definition of $Q^\pi(s, a)$, which will be used later.<br><br>
-
-      From this point onwards, let's have our rewards $R(s, a)$ be deterministic. Remember that the randomness in $R$ comes from the transition probabilties, which can make the rewards different. Note: this is a very reasonable restriciton, because we can always redefine $R(s, a) = E_R[R(s, a)]$. Since this whole R term will be taken over expectation anyways, if we just redefined R to be deterministic, we would be fine.<br><br>
-
-      From this point onwards, let's also have our $\pi$ be a deterministic pi(s). This is a reasonable restriction, because for MDPs, it turns out there will always be a determistic optimal policy for a MDP.  The proof for this claim is outside the scope of this class, but the general idea is that there is always going to be a determistinic strategy that will exploit the highest possible discounted reward.<br>
-
-      Note: this assumption does not hold in a multiplayer game.  Imagine rock paper scissors: with two players, the optimal $\pi$ has to have some randomesnss, because if you always played scissors the opponent could always play rock and beat you consistently.<br><br>
-
-      <u>Bellman Equation:</u>
-
-      $$V^\pi(s) = R(s, \pi(s))  + \gamma \sum_s' T(s'|s, \pi(s)) V^\pi(s')$$
-
-      Here we introduce the Bellman Equation.  In our below derivation, we will show that the Bellman Equation is recursive with respect to each time step $t$.  Notice that because we assumed policy $\pi$ is deterministic, $\pi$ is a function of only $s$ instead of both $s$ and $a$. <br><br>
-
-      How did we derive this Bellman equation?  Let's start from our definition of $V^\pi(s)$:
-
-      $$V^\pi(s) = E[\sum_{t=0} \gamma^t r_t | s_0 = s]$$
-
-      $$V^\pi(s) = E[R(s_0, \pi(s_0)) + \sum_{t=1} \gamma^t r_t]$$
-
-      We can extract out the first time step.
-
-      $$V^\pi(s) = R(s_0, \pi(s_0)) + E[\sum_{t=1} \gamma^t r_t]$$
-
-      We can pull out a factor gamma to help us start to recreate V but for s'.
-
-      $$V^\pi(s) = R(s_0, \pi(s_0)) + \gamma E[\sum_{t=1}\gamma^t r_t | s_0 = s_1]$$
-
-      Note that $s_1$ is unknown. It depends on where taking $\pi(s)$ after $s_1$ lands us.
-
-      $$V^\pi(s) = R(s_t, \pi(s_0)) + \gamma E_{s_1 | s_0} [ E [ \sum \gamma^t r_t]]$$
-
-      Since the state space is discrete, we can use summations to rewrite the expectation.
-
-      $$V^\pi(s) = R(s_0, \pi(s_0)) + \gamma \sum_{s_1} T(s_1 | s, a) E_{T, \pi}[\sum \gamma^t r_t | s_0' = s_1]$$
-
-      The right part of this equation is now a redefinition of $V^\pi(s')$ so we have completed our recursion for 1 time step.
-
-      $$V^\pi(s) = R(s, \pi(s)) + \gamma \sum T(s' | s, a) V^\pi(s')$$
-
-      The idea here is that the value of being in a particular state is equal to the immediate reward that the agent gets from following policy, plus a discounted expectation of what the future value is at the next time step.<br><br>
-
-      <u>So how do we actually solve this to complete Policy Evaluation?</u><br><br>
-
-      So far we've just written out a Bellman equation, and justified why it's correct mathematically and conceptually. But we still haven't solved for $V^\pi(s)$ yet.<br><br>
-
-      The good news is, if the state spaces and actions spaces are discrete, it is easy to solve for $V^\pi$! First, we note that the Bellman equation is a linear equation. Across a set of $|S|$ states, we have $s$ unknowns and $s$ equations, with one Bellman Equation for each state. This means we can simply solve the system of equations.
-
-      <h5>Method 1: Solving for V</h5>
-
-      Write down our system of equations in vector form:
-
-      $$V^\pi = R^\pi + \gamma T^\pi V^\pi$$
-
-      $V^\pi$ is a vector. $R^\pi$ is a vector, where each element is $E_\pi[R(s_t, \pi(s_t))]$ if R is random, or $R(s_0, \pi(s_0))$ if R is deterministic. $T^\pi(s'|s)$ is $T(s'|s, \pi(s))$.<br><br>
-
-      When we solve the system of equations, we get closed-form solution:
-
-      $$V^\pi = (I - \pi T^n)^{-1} R^\pi$$
-
-      <h5>Method 2: Solving for V</h5>
-
-      We can also solve for $V$ iteratively, updating our estimates for $V^\pi$ until they converge. This method is used more in practice, as this method tends to be more stable.  First, initialize $\hat{V}^{\pi(s)}_{k=0}$ to be whatever constant you'd like.<br>
-
-      Define $\hat{V}^{\pi(s)}_k$ as:<br>
-
-      $$\hat{V}^{\pi(s)}_k = R(s, \pi(s)) + \gamma \sum_s' T(s' | s, \pi(s))V^{\pi(s')}_{k-1}$$
-
-      The $V^{\pi(s')}_{k-1}$ represent our old estimate of $V^{\pi(s')}$ at iteration $(k - 1)$ of the algorithm.  We can use this old estimate at iteration $(k - 1)$ to compute a new estimate at iteration $k$. The intuition is that with every iteration, we will push our our old estimate into the discounted future.
-
-      $$\hat{V}^{\pi(s)}_k = R(s, \pi(s)) + \gamma \sum_s' T(s' | s, \pi(s)) [R(s', \pi(s')) + \gamma \sum_s'' T(s'' | s', \pi(s'))V^{\pi(s'')}_{k-2}]$$
-
-       Therefore the originally initialized $\hat{V}^{\pi(s)}_{k=0}$ is ``pushed out'' into the future.  If we expand the math out, we end up with term $\gamma^2 \hat{V}^\pi_{k=2}(s'')$, where we notice for each iteration, we multiply this term by another $\gamma$. Essentially, we have $\gamma^\textrm{iters} V_0^\pi$.<br><br>
-
-      This is a contraction because $\gamma$ is less than 1 (by definition for us), and  eventually this pushes our wrongly initalized value matrix $\hat{V}^{\pi(s)}_{k=0}$ so far into the future that it doesn't matter anymore.
-
-      <h4>Tying Back to Policy Iteration</h4>
-
-      Now we have two ways to perform policy evaluation, or solve for $V^\pi(s)$. Now, let's return to our goal of policy iteration. As you can see, in it, we use policy evaluation. The algorithm is given below:
-
+      Example from class: 
       <div class="text-center">
-        <img src="{{ site.baseurl }}/images/recap20_4.png" style="width:80%"  alt="Policy Iteration"></img>
+        <img src="{{ site.baseurl }}/images/recap20_6.png" style="width:50%"  alt="MDP Setup"></img>
       </div>
 
-      The idea is, we will start with some policy $\pi$, and then use our $Q$ to try some excursion. If an action (excursion) $a$ is great, we'll actually replace the learned policy $\pi$ with the better move (policy update). While the proof of this is out of the scope of the course, it turns out that the policy improvement theorem proves that this loop will converge to $\pi^*$, the optimal policy. <br>
+      In this example, we have an absorbing state after leaving states with reward 10 or 5. At each state (other than the states at the ends of the line), there are two possible actions. The goal here is to find the maximum value we can extract with $t$ time steps remaining, as well as the corresponding policy with that time step. Notice that for $V^*_{(1)}$, our policy for each state is limited by the fact that we only have one move remaining. As such, the value is just the reward at that particular state. However, as we consider $V^*_{(2)}$, there are a set of possible states to which we can transition, and each of those states has a corresponding reward. For instance, the second state, which had a maximum value of -1 for $V^*_{(1)}$ now has a maximum value of 9. This is because the agent can now select the action to move left, and therefore receives the reward at the current state and the reward of 10 at the next state, which is the optimal value given that we have two moves. We can therefore perform policy extraction to derive the optimal policy for the remaining number of time steps by finding the action set at each state that maximizes the value. <br><br>
 
-      Overall, at a high level, you can think of like this: we started with a policy, we tried some excursions, evaluated them, then improved our policy. We then repeated this, iterating until our policy was optimal.<br><br>
+      The computational complexity of value iteration is $O(T |S| |A| L)$, where $L$ is defined as the maximum number of states reachable from any states through any action.
+
+      <h4>Infinite Time Horizon, Value Iteration:</h4>
+      Assume a deterministic policy, $\pi(s) \in A$. We then define an MDP value function:
+      
+      $$ V^{\pi}(s) = E_{s \sim p} \left[ \sum_{t=0}^\infty \gamma^t r(s_t, \pi(s_k)) | s_0 = s\right]$$
+      
+      In words, this essentially refers to the expected discounted value from policy $\pi$ in state $s$. 
+
+      $$V^{\pi}(s) = r(s, \pi(s)) + \gamma \sum_{s' \in S} p(s'|s, \pi(s)) V^{\pi}(s'))$$
+
+      We define the optimal policy to be: 
+      
+      $$\pi^* \in arg max_{pi} V^{\pi}(s)$$
+
+      for all possible states. The optimal value function is defined to be: 
+
+      $$V^*(s) = V^{\pi^*}(s)$$
+
+      We will continue to expand on solving this through the Bellman equation next week. 
 
       <h2 id="recap20_4">Recap and Looking Forward</h2>
 
