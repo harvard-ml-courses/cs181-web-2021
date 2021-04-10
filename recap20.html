@@ -8,9 +8,11 @@ weight: 0
 <section class="main-container text">
     <div class="main">
 
-      <h4>Date: April 15, 2020 (<a href="https://canvas.harvard.edu/courses/65269/external_tools/62565" target="_blank">Lecture Video</a>, <a href="https://piazza.com/class_profile/get_resource/k5fnxwvfh7p7mi/k927rxxtp0j5o5" target="_blank">iPad Notes</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSem2VpRYM3VeUjHziFOBD5EqpAvhXu32fgzYN1sQLB9Ja54nQ/viewform" target="_blank">Concept Check</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSem2VpRYM3VeUjHziFOBD5EqpAvhXu32fgzYN1sQLB9Ja54nQ/viewanalytics" target="_blank">Class Responses</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
+      <h4>Date: April 8, 2021 (<a href="https://forms.gle/CFLBjbHxRGWPtL3o7" target="_blank">Concept Check</a>, <a href="{{ site.baseurl }}/ccsolutions" target="_blank">Solutions</a>)</h4>
 
       <br>
+      <h4><a href="https://harvard.zoom.us/rec/play/GUWQqemSLEBrEBaz46wyA6howoeupmLoXrIp8WMsmiTsjXLF44HEbUKvxpfSYTMjfc_pSqxyYAFviT9i.NXeErUYer4P89S_u">Lecture Video</a></h4>
+      <!-- <h4><a href="files/lecture20_ipad.pdf" target="_blank">iPad Notes</a></h4> -->
 
       <h3>Lecture 20 Summary</h3>
 
@@ -25,9 +27,9 @@ weight: 0
 
       So far in CS181, we've been looking at how to make predictions. Today, we will transition from predictions into the realm of decision making.<br><br>
 
-      To best illustrate this, let's cover a few real world examples. Imagine we're using a map system to go from a starting point to a destination. The map system might have predictive tools that tell us where the traffic is (using realtime data of where cars are right now), and how long different routes take from start to finish. Modeling was used here to figure out all this traffic information and which routes are slower and faster. But now, we need to actually make a decision. Which route do we take? We might have different objectives. Maybe we want the route that is the shortest in expectation. Maybe we're okay with being a little slower on average, if there is a guarantee that we'll be there by some time (say we're trying to make an important interview). These are decisions that don't take place at the prediction time. In order to make these decisions, we'll need to formalize a reward function.<br><br>
+      To best illustrate this, let's cover a few real world examples. Imagine we're using a map system to go from a starting point to a destination. The map system might have predictive tools that tell us where the traffic is (using realtime data of where cars are right now), and how long different routes take from start to finish. Modeling was used here to figure out all this traffic information and which routes are slower and faster. But now, we need to make a decision. Which route do we take? We might have different objectives. Maybe we want the route that is the shortest in expectation. Maybe we're okay with being a little slower on average, if there is a guarantee that we'll be there by some time (say we're trying to make an important interview). These are decisions that don't take place at the prediction time. In order to make these decisions, we'll need to formalize a reward function.<br><br>
 
-      Another real world example is autonomous vehicles. There are tons of predictions that come into place for autonomous vehicles, including where the road is, where the lines on the road are, whether there are signs ahead or not, whether there are pedestrians crossing or not, etc. These are all predictive, and is what we've been doing so far in CS181. Once we have this data, how do we decide what to do next? How should the car actually drive to be safe? Those are the types of things we will start looking at across the next three lectures.
+      Another real world example is autonomous vehicles. There are tons of predictions that come into place for autonomous vehicles, including where the road is, where the lines on the road are, whether there are signs ahead or not, whether there are pedestrians crossing or not, etc. These are all predictive, and is what we've been doing so far in CS181. Once we have this data, how do we decide what to do next? How should the car drive to be safe? Those are the types of things we will start looking at across the next three lectures.
 
       <h2 id="recap20_2">Intro: Markov Decision Processes</h2>
 
@@ -64,11 +66,11 @@ weight: 0
 
       Imagine we had a situation where we wanted to get a person from Start (S) to Goal (G). Assume we have total control of where our person walks. The solid wiggly line to the middle point is the person's walking history. If the person takes the action, "Go Down", and we try to guess what happens next, we don't actually need to know anything about the history of where the person walked to get to their current location (the middle dot). The person could have taken the solid wiggly line or the dotted wiggly line to get to the middle dot, yet all we really needed to know was their current location. Similarly, if someone stopped you on the street to ask how to get to Maxwell Dworkin, you wouldn't ask them "where did you come from?". You already have enough info to direct them to MD, since you already know their current location. In this example, the person's location is their state, as it is a sufficient statistic.<br><br>
 
-      Let's say instead of a person that this was a car instead, however, and that the car's velocity matters. If the car was coming in at 100 miles per hour from the left, moving "Down" would require a huge turn, versus if the car was driving in slowly from above, at 10 miles per hour, the action "Down" would cause the car to move differently in each scenario. This means that only knowing the car's location is not enough to define the car's state. We would want to incoporate in the velocity, the acceleration, and essentialy everything we need to be able to predict what happens next.  State is all information needed to be able to ignore the past. If all of this information is available to us, then we say the system is Markov in state.<br><br>
+      Let's say instead of a person that this was a car instead, however, and that the car's velocity matters. If the car was coming in at 100 miles per hour from the left, moving "Down" would require a huge turn, versus if the car was driving in slowly from above, at 10 miles per hour, the action "Down" would cause the car to move differently in each scenario. This means that only knowing the car's location is not enough to define the car's state. We would want to incorporate in the velocity, the acceleration, and everything we need to be able to predict what happens next.  State is all information needed to be able to ignore the past. If all of this information is available to us, then we say the system is Markov in state.<br><br>
 
       Note: this is the official definition of state. Some papers in the literature will sometimes use approximations of states.
 
-      Say, for example, you might choose to use a single frame (a still snapshot) of a video game (such as Super Mario Bros) as a state.  Therefore from the still frame, you can see where each object (such as Mario, bricks, and evil mushrooms) is located on the screen.  But to really predict how the objects move, you actually need the velocity of the objects (is Mario running? in what direction are the mushrooms walking?) to predict what happens next and to be able to call the system Markov. It's possible that the paper will just say, "We will choose to use just the frame as our approxmiation of state". It's just important to note that that is exactly what it is: an approximation of a state. However, the formal definition of state is still everything you need to know to be able to predict what's next. We will use this definition for state for the next 3 lectures.<br><br>
+      Say, for example, you might choose to use a single frame (a still snapshot) of a video game (such as Super Mario Bros) as a state.  Therefore from the still frame, you can see where each object (such as Mario, bricks, and evil mushrooms) is located on the screen.  But to really predict how the objects move, you actually need the velocity of the objects (is Mario running? in what direction are the mushrooms walking?) to predict what happens next and to be able to call the system Markov. It's possible that the paper will just say, "We will choose to use just the frame as our approximation of state". It's just important to note that that is exactly what it is: an approximation of a state. However, the formal definition of state is still everything you need to know to be able to predict what's next. We will use this definition for state for the next 3 lectures.<br><br>
 
       <h4>Tying Back and Fully Defining our Markov Decision Process</h4>
 
@@ -91,7 +93,7 @@ weight: 0
       $\gamma$ is the discount factor.
       $p_0$ is some starting state.<br><br>
 
-      Goal: Find the best policy. We use $\pi$ to denote a policy. Policies can be stochastic, or describe a distribution over actions ($\pi(s, a) = P(a|s)$), or determinstic and be equal to 1 action ($\pi(s)=a$). Stoachastic policies have a probability distribution across actions for a given state (what probability to play each action with). Deterministic policies we simply have one predetermiend action in the policy to play for each given state. These both are commonly used notations. <br><br>
+      Goal: Find the best policy. We use $\pi$ to denote a policy. Policies can be stochastic, or describe a distribution over actions ($\pi(s, a) = P(a|s)$), or determinstic and be equal to 1 action ($\pi(s)=a$). Stochastic policies have a probability distribution across actions for a given state (what probability to play each action with). Deterministic policies we simply have one predetermiend action in the policy to play for each given state. These both are commonly used notations. <br><br>
 
       The best policy is as follows:
 
@@ -207,6 +209,6 @@ weight: 0
 
       <h2 id="recap20_4">Recap and Looking Forward</h2>
 
-      Where we are so far? So far, we've found one way of getting the optimal policy. We will cover two more methods in the next lecture. In addition, soon we will be covering reinforcement learning (RL). RL is learning when we don't have access to $T$, and $R$. What if we had to just interact with the world directly? Much more to come!
+      Where are we so far? So far, we've found one way of getting the optimal policy. We will cover two more methods in the next lecture. In addition, soon we will be covering reinforcement learning (RL). RL is learning when we don't have access to $T$, and $R$. What if we had to just interact with the world directly? Much more to come!
     </div>
 </section>
