@@ -72,20 +72,9 @@ weight: 0
         <li>Reinforcement learning: the input is the access to the world and the outputs are the actions (ie. the policy). This is equivalent to learning from feedback to optimize a policy. </li>
       </ul>
 
-      <h4>Objective:</h4>
-      <ul>
-        <li>Infinite Horizon: $max_{\pi} E\left[\sum_{t=0}^\infty \gamma^t r_t \right]$</li>. Our goal here is to find the policy $\pi$ that maximizes the expected value of this expression. 
-        <li>Finite Horizon: $max_\pi E \left[ \sum_{t=0}^T r_t \right]$ With a finite time horizon, we do not need to discount, but we are still trying to maximize expected reward from the policy </li>
-      </ul>
-
-
       With the above information, we have:<br><br>
 
-      $E [\sum_t \gamma^t r_t]$ represents expected sum of discounted rewards<br><br>
-
-      Goal: agent should choose the actions to maximize the expected sum of discounted rewards.<br><br>
-
-      $h_t = \{a_0, o_0 r_0, a_1, o_1, r_1 ... a_t, o_t, r_t\}$ represents the history of actions, obsevations, and rewards from time 1 to our current time t<br><br>
+      Goal: Agent should choose the actions to maximize the expected sum of discounted rewards. Find the best policy. We use $\pi$ to denote a policy. Policies can be stochastic, or describe a distribution over actions ($\pi(s, a) = P(a|s)$), or determinstic and be equal to 1 action ($\pi(s)=a$). Stochastic policies have a probability distribution across actions for a given state (what probability to play each action with). Deterministic policies we simply have one predetermined action in the policy to play for each given state. These both are commonly used notations. <br><br>
 
       State: summarizes a history such that making predictions about the future given the state is equivalent to making those same predictions given the entire history.<br><br>
 
@@ -124,13 +113,13 @@ weight: 0
       $\gamma$ is the discount factor.
       $p_0$ is some starting state.<br><br>
 
-      Goal: Find the best policy. We use $\pi$ to denote a policy. Policies can be stochastic, or describe a distribution over actions ($\pi(s, a) = P(a|s)$), or determinstic and be equal to 1 action ($\pi(s)=a$). Stochastic policies have a probability distribution across actions for a given state (what probability to play each action with). Deterministic policies we simply have one predetermiend action in the policy to play for each given state. These both are commonly used notations. <br><br>
+      <h4>Objective:</h4>
+      <ul>
+        <li>Infinite Horizon: $max_{\pi} E_{T, p_0}\left[\sum_{t=0}^\infty \gamma^t r_t \right]$</li>. Our goal here is to find the policy $\pi$ that maximizes the expected value of this expression. 
+        <li>Finite Horizon: $max_\pi E_{T, p_0} \left[ \sum_{t=0}^T r_t \right]$ With a finite time horizon, we do not need to discount, but we are still trying to maximize expected reward from the policy </li>
+      </ul>
 
-      The best policy is as follows:
-
-      $$max_\pi E_{T, p_0} [\sum_t \gamma^t r_t]$$
-
-      Here, $T$ and $p_0$ represent transition probabilities and the initial starting state of the world.  The agent does not have control over the world.  The agent does control its own actions. We are trying to determine the best actions for the agent to take: the actions that maximize the agent's returns that it gets in the world.
+      Here, $T$ and $p_0$ represent transition probabilities and the initial starting state of the world.  The agent does not have control over the world.  The agent does control its own actions. We are trying to determine the best actions for the agent to take: the actions that maximize the agent's returns that it gets in the world. <br><br>
 
       <h2 id="recap20_3">How to Solve using Policy Iteration (Method 1)</h2>
 
