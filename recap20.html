@@ -123,9 +123,9 @@ weight: 0
 
       <h2 id="recap20_3">How to Solve using Policy Iteration (Method 1)</h2>
 
-      Over the this lecture and next, we will cover three methods of sovling an MDP. Each will have their pros and cons. There's a lot of literature on this topic that includes more complex methods, but overall the three we cover are intuitive and scale relatively well. Additionally, the complex methods build off these simpler methods here, so this is laying down important groundwork.<br><br>
+      Over the this lecture and next, we will cover three methods of solving an MDP. Each will have their pros and cons. There's a lot of literature on this topic that includes more complex methods, but overall the three we cover are intuitive and scale relatively well. Additionally, the complex methods build off these simpler methods here, so this is laying down important groundwork.<br><br>
 
-      First, let's explore policy iteration.  At a high level, policy iteration iteratively evaluates a proposed policy, and then performs policy improvement.
+      First, let's explore value iteration.  At a high level, value iteration is similiar to dynamic programming in that it evaluates the optimal actions based on the best values it can achieve in a future time step. We will evaluate value iteration in the context of the finite and infinite time horizons. 
       <h4>Finite Horizon Planning, Value Iteration</h4>
       
       Define $V^*_{(t)} (s)$ as the total value from state $s$ under optimal policy with $t$ steps to go. Notice that in this notation, $t$ counts the $\textit{remaining}$ steps, and does not count the current time step. As such, iterating to the next time step will decrease the index $t$ to $t-1$. 
