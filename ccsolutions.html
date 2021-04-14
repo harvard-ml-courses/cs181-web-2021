@@ -169,6 +169,16 @@ weight: 0
          </ul>
          Can you understand why? For a more detailed explanation (and more hints), refer to the full explanations here: <a href="files/lecture20_concept.pdf" target="_blank">Concept Check Detailed Notes</a> 
         </li>
+
+        <li>
+          Lecture 20 - Markov Decision Processes (April 13, 2021)
+          <ul>
+            <li>1: Around top to avoid falling into red zone</li>
+            <li>2: Straight right now that there is no noise</li>
+            <li>3: Around top. Because we're using epsilon-greedy exploration and the SARSA agent must follow its policy, it will sometimes fall off into the red zone when it goes to the right and learn that going to the right is bad. This is like the agent can’t tell the difference between having noise and having to follow epsilon-greedy exploration.</li>
+            <li>4: Straight right. Even if the agent sometimes falls into the red zone while going right, it will still learn the optimal policy.</li>
+         </ul>
+        </li>
       </ul>
     </div>
 </section>
