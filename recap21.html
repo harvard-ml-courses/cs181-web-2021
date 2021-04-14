@@ -155,10 +155,10 @@ weight: 0
       $$V^{\pi}(s) = r(s, \pi(s)) + \gamma\sum_{s’} p(s’ | s,\pi(s))V^{\pi}(s’)$$
 
       Since we have $|s|$ unknowns (the value at each state) and $|s|$ equations, this system will be solvable. <br><br>
-       In matrix form (P is the transition matrix):
+      In matrix form (P is the transition matrix):
       \begin{align*}
       V^{\pi} = R^{\pi} + \gamma P^{\pi}V^{\pi}$$
-      \\ &\iff (I - \gamma P^{\pi})V^{\pi} = R^{\p}
+      \\ &\iff (I - \gamma P^{\pi})V^{\pi} = R^{\pi}
       \\ &\iff V^{\pi} = (I - \gamma P^{\pi})^{-1}R^{\pi}
       \end{align*}
 
@@ -217,25 +217,25 @@ weight: 0
       Our agent decides how to act in an $\epsilon$-greedy manner. This means it follows a policy that takes the optimal action (based on previous observations) with probability $1 - \epsilon$, and chooses a random action to explore with probability $\epsilon$: 
 
       $$\pi(s) = \begin{cases}
-      \arg\max_a Q(s,a) & w.p. 1 - \epsilon \\
-      Random & w.p. \epsilon
+      \arg\max_a Q(s,a) & \text{w.p. } 1 - \epsilon \\
+      \text{Random} & \text{w.p. } \epsilon
       \end{cases}$$
 
-      We will learn Q^* through “temporal difference updates”.<br><br>
+      We will learn $Q^*$ through “temporal difference updates”.<br><br>
 
       <b>Option 1: SARSA.</b> Each time we get a new experience $(s,a,r,s’,a’)$ (this is where the name SARSA comes from), we make the following Q-update:
 
       $$Q(s,a) \leftarrow Q(s,a) + \alpha_t[r + \gamma Q(s’,a’) - Q(s,a)]$$
 
-      $\alpha_t$ is a learning rate that can vary based on how many steps have passed so far. $r + \gamma Q(s’,a’)$ is our one-step estimate of $Q^{\pi(s,a)}$. We take the difference between this value and $Q(s,a)$, the estimated Q-value made by our current Q-function. Then we update our Q-function based on this difference, which is kind of like a gradient descent update.
+      $\alpha_t$ is a learning rate that can vary based on how many steps have passed so far. $r + \gamma Q(s’,a’)$ is our one-step estimate of $Q^{\pi(s,a)}$. We take the difference between this value and $Q(s,a)$, the estimated Q-value made by our current Q-function. Then we update our Q-function based on this difference, which is kind of like a gradient descent update.<br><br>
 
       <b>Option 2: Q-learning.</b> Each time we get a new experience $(s,a,r, s’)$, do the following update (we ignore the $a’$ in the observation that SARSA uses and just use the first four components):
 
       $$Q(s,a) \leftarrow Q(s,a) + \alpha_t[r + \gamma \max_{a’}Q(s’, a’) - Q(s,a)]$$
 
-      These update steps look pretty similar. The crucial difference is the presence of the max in the second version. In Q-learning, we take the Q-value for the best next step, by taking the max over all possible $a’$. In SARSA, we update our Q-function as though the only option for the next action is $a’$, the action recommended by the current policy. 
+      These update steps look pretty similar. The crucial difference is the presence of the max in the second version. In Q-learning, we take the Q-value for the best next step, by taking the max over all possible $a’$. In SARSA, we update our Q-function as though the only option for the next action is $a’$, the action recommended by the current policy. <br><br>
 
-      SARSA is known as on-policy because it estimates $Q^{\pi}$ following the current policy when it only considers $a’$ in the update. This is like saying our Q-functions updates must stay faithful to what action we would actually take when we followed our policy. Q-learning is called off-policy because its estimate for the $Q$-value might use a next action different than what we’d actually take if we followed the current policy. In other words, it estimates the optimal $Q^*$ while following $\pi$. Q-learning converges to $Q^*$ as long as (s,a) are visited often enough. 
+      SARSA is known as on-policy because it estimates $Q^{\pi}$ following the current policy when it only considers $a’$ in the update. This is like saying our Q-functions updates must stay faithful to what action we would actually take when we followed our policy. Q-learning is called off-policy because its estimate for the $Q$-value might use a next action different than what we’d actually take if we followed the current policy. In other words, it estimates the optimal $Q^*$ while following $\pi$. Q-learning converges to $Q^*$ as long as (s,a) are visited often enough. <br><br>
 
       To read more about SARSA, Q-learning, and the difference between them, see 6.4 and 6.5 in the Sutton & Barto RL textbook.
 
