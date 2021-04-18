@@ -40,7 +40,7 @@ weight: 0
 
       $$\{S, A, r, p\}$$
       
-      Where S is a set of possible states, A is a set of possible actions, r is the reward function, and p is the transition function. Our goal is to find the policy $\pi(s)$ that maximizes $E\left [\sum_{t=0} \gamma^t r_t\right ]$, the expected sum of discounted rewards.<br><br>
+      Where $S$ is a set of possible states, $A$ is a set of possible actions, $r(s,a)$ is the reward function (tells us the reward received for doing action $a$ at state $s$), and $p(s' | s,a)$ is the transition function (tells us the probability of the next state being $s'$ if the current state is $s$ and we do action $a$). Our goal is to find the policy $\pi(s)$ that maximizes $E\left [\sum_{t=0} \gamma^t r_t\right ]$, the expected sum of discounted rewards.<br><br>
       
       Today, we will continue our discussion on planning and introduce reinforcement learning. These are both MDP problems, but they are not the same problem. In planning, we are given a model of the environment (the full MDP, including the reward and transition functions) and seek to output a policy. In reinforcement learning, an agent does not have a model of the environment and has to interact with the environment to learn about what its policy should be.<br><br>
       
@@ -157,7 +157,7 @@ weight: 0
       Since we have $|s|$ unknowns (the value at each state) and $|s|$ equations, this system will be solvable. <br><br>
       In matrix form (P is the transition matrix):
       \begin{align*}
-      V^{\pi} = R^{\pi} + \gamma P^{\pi}V^{\pi}$$
+      V^{\pi} = R^{\pi} + \gamma P^{\pi}V^{\pi}
       \\ &\iff (I - \gamma P^{\pi})V^{\pi} = R^{\pi}
       \\ &\iff V^{\pi} = (I - \gamma P^{\pi})^{-1}R^{\pi}
       \end{align*}
@@ -166,25 +166,21 @@ weight: 0
 
       <h4>Policy vs. Value Iteration</h4>
 
-      Policy iteration uses fewer iterations than value iteration does to solve for $\pi^*$. Let L is the maximum number of reachable states. Per iteration, the work needed for value iteration is $O(|S||A|L)$, while the work for policy iteration is $O(|S||A|L + |S|^3)$ per iteration. The cubed term comes from the policy evaluation step. Policy iteration is doing much more work per iteration than value iteration does. Usually, we will prefer policy iteration.
+      Policy iteration uses fewer iterations than value iteration does to solve for $\pi^*$. Let L be the maximum number of reachable states. Per iteration, the work needed for value iteration is $O(|S||A|L)$, while the work for policy iteration is $O(|S||A|L + |S|^3)$ per iteration. The cubed term comes from the policy evaluation step. Policy iteration is doing much more work per iteration than value iteration does. Usually, we will prefer policy iteration.
 
       <h2 id="recap21_6">Reinforcement Learning</h2>
 
       In planning, we had a full model of the environment. We knew the transition matrix, the reward functions, etc.<br><br>
 
-      But in RL, we want to learn from the environment when we are given no knowledge about r or p. This poses a new challenge. We have to balance exploring (learning new things) vs. exploiting (leveraging the things we already know to do well).
+      But in RL, we want to learn from the environment when we are given no knowledge about r or p. This poses a new challenge. We have to balance exploring (learning new things) vs. exploiting (leveraging the things we already know) to do well.
 
       <h4>Two Main Approaches</h4>
 
-      <b>Model-Based</b><br><br>
-
-      We try to learn a model of the environment, which allows us to predict what the next state and reward will be. Then planning is used to decide how to act based on the estimated model.<br><br>
+      <b>Model-Based.</b> We try to learn a model of the environment, which allows us to predict what the next state and reward will be. Then planning is used to decide how to act based on the estimated model.<br><br>
 
       If the reward or transition structure changes, model-based learning is good at absorbing these changes into its model. However, model-based learning is computationally expensive.<br><br>
 
-      <b>Model Free</b><br><br>
-
-      We don’t try to learn a model. Instead, we directly learn a policy or an action-value function. We will refer to the action-value function as the “Q-function”.<br><br>
+      <b>Model Free.</b><br><br> We don’t try to learn a model. Instead, we directly learn a policy or an action-value function. We will refer to the action-value function as the “Q-function”.<br><br>
 
       Model-free learning is much simpler and cheaper, but if the environment changes, we have to do a lot more acting and exploring again to learn the changes.<br><br>
 
@@ -212,7 +208,7 @@ weight: 0
 
       A general framework for today’s RL algorithms is to 1) initialize a $|S| \times |A|$ table of the Q-values $Q(s,a)$, then 2) repeatedly choose an action based on the Q-values, and use the data we collect from this action to update our Q-table (and therefore also our approximation of $Q^*$). <br><br>
 
-      In each step, the data collected is of the form $s, a, r, s’, a’$, where $s$ is the current state, $a$ is the action the agent took, $r$ is the reward received, $s’$ is the next state, and $a’$ is what the current policy recommends for the next action (including random random actions from the $\epsilon$-greedy feature). Note that we do not have access to the reward function or the transition matrix, but as the agent moves in the environment, it collects data about the reward it received and the state it found itself in next.<br><br>
+      In each step, the data collected is of the form $s, a, r, s’, a’$: $s$ is the current state, $a$ is the action the agent took, $r$ is the reward received, $s’$ is the next state, and $a’$ is what the current policy recommends for the next action (including random random actions from the $\epsilon$-greedy feature). Note that we do not have access to the reward function or the transition matrix, but as the agent moves in the environment, it collects data about the reward it received and the state it found itself in next.<br><br>
 
       Our agent decides how to act in an $\epsilon$-greedy manner. This means it follows a policy that takes the optimal action (based on previous observations) with probability $1 - \epsilon$, and chooses a random action to explore with probability $\epsilon$: 
 
