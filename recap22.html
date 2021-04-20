@@ -35,7 +35,7 @@ weight: 0
 
       In model-based learning, we cycle through taking actions, using data from those actions to learn a model, using the model to make plan, and then using the plan to continue acting. How do we handle exploring vs. exploiting in this framework? (Recall: in model-free RL last week, we used $\epsilon$-greedy action selection to balance exploration and exploitation.)<br><br>
 
-      <b>Optimism under uncertainty.</b> Let $N(s,a)$ be the number of times we visited the state-action pair $(s,a)$. Each “visit” is a time that the agent was in state s and chose to perform action a. When we are learning, we will assume that if $N(s,a)$ is small, then the next state will have high reward. When we do this, we are being optimistic about the state-action pairs we’re uncertain about. Then, we plan using this optimistic model. Since the model thinks taking visiting lesser-known state-action pairs will lead to high reward, we’ll have a tendency to explore these lesser-known areas. <br><br>
+      <b>Optimism under uncertainty.</b> Let $N(s,a)$ be the number of times we visited the state-action pair $(s,a)$. Each “visit” is a time that the agent was in state $s$ and chose to perform action $a$. When we are learning, we will assume that if $N(s,a)$ is small, then the next state will have high reward. When we do this, we are being optimistic about the state-action pairs we’re uncertain about. Then, we plan using this optimistic model. Since the model thinks taking visiting lesser-known state-action pairs will lead to high reward, we’ll have a tendency to explore these lesser-known areas. <br><br>
 
       <b>Posterior sampling (Thompson sampling).</b> We maintain a posterior (Dirichlet) on the transition function $p(\cdot | s,a)$. We sample from this posterior to get a model, which we proceed to plan with. The idea is that when we are less certain about the outcome of the transition function, there’s a greater likelihood of the sampling leading us to explore. When we are more certain about what the best outcome is, we’re more likely to just stick with that best outcome.<br><br>
 
@@ -65,7 +65,7 @@ weight: 0
 
       (For the next part of the lecture, we will require $\alpha_t(s,a) = 0$ unless $(s,a)$ was visited at $t$.)<br><br>
 
-      When certain conditions are satisfied, we actually know for sure that Q_LEARN will converge to $Q^*$. We are not going to prove this theorem, but it comes from Bellman-equation, contraction-type ideas similar to some of what we discussed last week. 
+      When certain conditions are satisfied, we actually know for sure that Q_LEARN will converge to $Q^*$. We are not going to prove this theorem, but it comes from Bellman equation and contraction property-esque ideas similar to some of what we discussed last week. 
 
       <h4>Q-Learning Convergence Theorem</h4>
       Q_LEARN converges to $Q^*$ as $t \rightarrow \infty$ as long as
@@ -83,7 +83,7 @@ weight: 0
 
       By combining Q-learning with neural networks, researchers have been able to achieve amazing results like learning how to <a href="https://arxiv.org/abs/1312.5602">play video games</a>. In an Atari game, each state  is comprised of four $84 \times 84$ pixel arrays representing the video game screen at times $t-3, t-2, t-1, t$. One frame can provide information about the current locations of objects in the game, but we need multiple frames to capture attributes like velocity and acceleration. After around 500 iterations of training on the game Breakout, where the player hits a ball upwards to break through a wall of blocks, the RL agent was able to find a clever game strategy that even the engineers working on the project didn’t know about!<br><br>
 
-      Representing all of the game states in a table doesn’t work &mdash there’s just too many states. So to parameterize $Q(s, a ; w)$, we use a differentiable deep network with parameters $w$. This network will take in a state and generate predictions for the Q-values of taking each action from this state. In this framework, we are trying to use our gradient descent updates to find a model that minimizes the squared error between the estimated Q-values and the actual Q-value from our experiences in the environment. The TD error, the value we try to minimize, is the $r + \gamma \max_{a’} Q(s’, a’, w_{old}) - Q(s,a, w)$ term we’ve seen in our Q-learning update.<br><br>
+      Representing all of the game states in a table doesn’t work; there’s just too many states. So to parameterize $Q(s, a ; w)$, we use a differentiable deep network with parameters $w$. This network will take in a state and generate predictions for the Q-values of taking each action from this state. In this framework, we are trying to use our gradient descent updates to find a model that minimizes the squared error between the estimated Q-values and the actual Q-value from our experiences in the environment. The TD error, the value we try to minimize, is the $r + \gamma \max_{a’} Q(s’, a’, w_{old}) - Q(s,a, w)$ term we’ve seen in our Q-learning update.<br><br>
 
       To train the network, we set
       
@@ -96,9 +96,9 @@ weight: 0
       Another model-free learning method is policy learning, where we adopt a differentiable policy $\pi_{\theta}(a | s)$ with parameters $\theta$. We’ll learn the policy directly, without any Q-values, models, or planning. This is useful for cases where
 
       <ul>
-        <li>There are continuous actions that can’t be stored in a table, e.g. if we could choose any magnitude of force to apply during an action.</li>
+        <li>There are continuous actions that are impractical to store in a table, such as if we could choose any magnitude of force to apply during an action.</li>
         <li>The policy could be much simpler than the Q-table, making it easier to learn directly. What if we set up a huge Q-table, only to find that the optimal policy is to go right in every state?</li>
-        <li>Easier to incorporate expert knowledge. Maybe we want to initialize our model with suggestions from an expert (like a human video game player) about what to do. The human player likely has an idea of what a starting policy should look like, but is less likely to have some internal Q-table.</li>
+        <li>It could be easier to incorporate expert knowledge. Maybe we want to initialize our model with suggestions from an expert (like a human video game player) about what to do. The human player likely has an idea of what a starting policy should look like, but is less likely to have some internal Q-table.</li>
       </ul>
 
       To improve our policy, we use gradient ascent to maximize expected reward.
@@ -109,7 +109,7 @@ weight: 0
 
       $$J(\theta) = \mathbb E_h [r(h)]$$
 
-      Where $r(h) = \sum_t r_t$, and $h = (s,a,r,s’,a’,…)$ is the history of experiences we are considering. Also, let $\mu$ be the likelihood of a history:
+      Where $r(h) = \sum_t r_t$, and $h = (s,a,r,s’,a’,…)$ is the group of experiences we are considering, known as a "history". Also, let $\mu$ be the likelihood of a history:
 
       $$\mu_{\theta}(h) = \prod_t \pi_{\theta}(a_t | s_t)p(s_{t + 1} | s_t, a)$$
 
@@ -117,7 +117,7 @@ weight: 0
 
       $$\nabla_{\theta}J(\theta) = \nabla_{\theta} \mathbb E_h[r(h)] = \nabla_{\theta}\int_h \mu_{\theta}(h)r(h)dh = \int_h r(h) \nabla_{\theta}\mu_{\theta}(h)dh$$
 
-      However, now we have a problem. We’re using $\mu_{\theta}(h)$, which this depends on our transition model because it incorporates $p(s_{t + 1} | s_t, a)$. But isn’t the whole point of model-free learning that we don’t need to learn the transition model? To get around this, we use a clever identity that comes from the fact that $\frac{d}{dx} \ln f(x) = \frac{f’(x)}{f(x)}$, so then
+      However, now we have a problem. We’re using $\mu_{\theta}(h)$, which depends on our transition model because it incorporates $p(s_{t + 1} | s_t, a)$. But isn’t the whole point of model-free learning that we shouldn't need to learn the transition model? To get around this, we use a clever identity that comes from the fact that $\frac{d}{dx} \ln f(x) = \frac{f’(x)}{f(x)}$, so then
 
       $$\mu_{\theta}\nabla_{\theta}\ln(\mu_{\theta}) = \mu_{\theta}\frac{\nabla_{\theta}\mu_{\theta}}{\mu_{\theta}} =\nabla_{\theta}\mu_{\theta} $$
 
@@ -127,7 +127,7 @@ weight: 0
 
       Observe that (*) does not depend on \theta, so its gradient with respect to $\theta$ will be 0. Then we can just take it out of the expression, removing the transition probability term we were having trouble with! Continuing to simplify, we get
 
-      $$\mathbb E_h[r(h) \sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)] = \mathbb E_h \left [\sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)r_t\right ]$$
+      $$\mathbb E_h\left [r(h) \sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)\right ] = \mathbb E_h \left [\sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)r_t\right ]$$
 
       Finally, this is something we can calculate. We can approximate the expectation by sampling experiences from $h$. Note that this is on-policy because we are following our policy to get the update. 
 
@@ -137,10 +137,10 @@ weight: 0
 
       Go has historically been seen as the hardest game for AI to learn how to play. The game is incredibly complex, with a much larger state and action space than chess. For the rest of class, we’ll discuss how AlphaGo managed to beat a Go champion in 2016. The documentary we watched snippets of in class can be found <a href="https://www.youtube.com/watch?v=WXuK6gekU1Y">here</a>, and a full paper about AlphaGo <a href="https://www.nature.com/articles/nature16961">here</a>. For representing the state of a game, the team decided on hand-crafted per-position features to reduce the enormous state size to a $19 \times 19 \times 48$ space, with $48$ features for each position on the $19 \times 19$ board. For training, a combination of supervised learning and reinforcement learning was used. <br><br>
 
-      A model $\pi_{SL}$ came from supervised learning, where a deep net was trained to predict expert moves using log likelihood loss. This took three weeks of training on 50 GPUs. Then, the team trained a separate model $\pi_{FAST}$ was a linear softmax model trained with log likelihood loss and the hand coded features. For the reinforcement learning section, a neural network was initialized from the $\pi_{SL}$ model. The reward function was +1 for a win, -1 for a loss, and 0 for a draw. The model engaged in self-play games with earlier versions of itself over the course of a day, with updates done using the policy gradient method we discussed earlier.  Finally, supervised learning was used to train an estimate of $V_{\theta}$, where the goal was to predict whether the current state would result in a win or a loss. Trained for 1 week on 50 GPUs on 30m positions.<br><br>
+      A model $\pi_{SL}$ came from supervised learning, where a deep net was trained to predict expert moves using log likelihood loss. This took three weeks of training on 50 GPUs. Then, the team trained a separate model $\pi_{FAST}$, which was a linear softmax model trained with log likelihood loss and the hand coded features. For the reinforcement learning portion, a neural network was initialized from the $\pi_{SL}$ model. The reward function was +1 for a win, -1 for a loss, and 0 for a draw. The model engaged in self-play games with earlier versions of itself over the course of a day, with updates done using the policy gradient method we discussed earlier.  Finally, supervised learning was used to train an estimate of $V_{\theta}$, where the goal was to predict whether the current state would result in a win or a loss. This last part was trained for 1 week on 50 GPUs and 30 million positions.<br><br>
 
-      Using these models, how did AlphaGo selected moves using a guided Monte Carlo tree search. This is computationally very expensive, using 48 CPUs, 8 GPUs, and 40 compute threads. Essentially, the agent builds a lookahead tree “looking into” the future, which branches out depending on the actions taken (the actions selected to incorporate in the tree are decided using $\pi_{SL}$ and Q values backed up from leaves). Once a leaf of the tree is reached, $\pi_{FAST}$ and $V_{\theta}$ are used to approximate the value of the leaf state. <br><br>
+      Using these models together, AlphaGo selected moves using a guided Monte Carlo tree search. This is computationally very expensive, using 48 CPUs, 8 GPUs, and 40 compute threads. Essentially, the agent builds a lookahead tree “looking into” the future, which branches out depending on the actions taken (the actions selected to incorporate in the tree are decided using $\pi_{SL}$ and Q values backed up from leaves). Once a leaf of the tree is reached, $\pi_{FAST}$ and $V_{\theta}$ are used to approximate the value of the leaf state. <br><br>
 
-      Note: \pi_{\theta} wasn’t even used. The team found that $\pi_{SL}$ was more useful.
+      Note: $\pi_{\theta}$ wasn’t even used. The team found that $\pi_{SL}$ was more useful.
 
 </section>
