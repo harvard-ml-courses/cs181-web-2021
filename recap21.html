@@ -60,7 +60,7 @@ weight: 0
 
       Our goal is to find the optimal policy. To accomplish this, we will try to calculate the optimal value function. Once we know the optimal value function, we can extract the optimal policy from it by picking the best action at each state according to $V^*$. Specifically, once the optimal value function is known, we can get the optimal step at every state using:
 
-      $$\pi^*(s) \in \arg\max_a \left [r(s,a) + \gamma\sum_{s’} p(s’ | s,a)V^*(s’)\right ]$$
+      \begin{equation} \pi^*(s) \in \arg\max_a \left [r(s,a) + \gamma\sum_{s’} p(s’ | s,a)V^*(s’)\right ] \tag{*} \end{equation}
 
       The principle we use for this calculation is the Bellman equation, or the Principal of Optimality:
 
@@ -84,6 +84,8 @@ weight: 0
           <li>Replace $V(s)$ with $V’(s)$ for all $s$</li>
         </ol>
       </ol>
+
+      Again, once we have an approximation for $V^*$, we can extract the corresponding approximation of the optimal policy using $(*)$ from above.<br><br>
       
       Theorem: Using the value iteration algorithm above, $V$ will converge to the optimal value function $V^*$. 
       
