@@ -189,7 +189,7 @@ weight: 0
 
       Let's say we have discrete values again, and we've observed our radar to tell us that E=1, F=1, and G=1. So let's say we're looking for p(C | E=1, F=1, G=1).
 
-      $$p(C | E=1, F=1, G=1) = \sum_A \sum_B p(A) p(E=1|A) p(B|A) p(F=1|B) p(C|B) p(G=1|C)$$
+      $$p(C | E=1, F=1, G=1) \propto \sum_A \sum_B p(A) p(E=1|A) p(B|A) p(F=1|B) p(C|B) p(G=1|C)$$
 
       How do we determine the proper order of elimination? Note that these are polytrees too. We also note, first of all there no descendants to be pruned away. Next, we see that for us to work from the leaves towards the query, so for us that means we want to eliminate A, then B (since A is furthest away from the query C).
 
