@@ -125,13 +125,13 @@ weight: 0
 
       $$\int_h r(h) \mu_{\theta}(h)\nabla_{\theta}\left [\sum_t \ln \pi_{\theta}(a_t | s_t) + \underbrace{\sum_t \ln p(s_t|s_t, a_t)}_{*}\right ]dh$$ 
 
-      Observe that (*) does not depend on \theta, so its gradient with respect to $\theta$ will be 0. Then we can just take it out of the expression, removing the transition probability term we were having trouble with! Continuing to simplify, we get
+      Observe that (*) does not depend on $\theta$, so its gradient with respect to $\theta$ will be 0. Then we can just take it out of the expression, removing the transition probability term we were having trouble with! Continuing to simplify, we get
 
-      $$\mathbb E_h\left [r(h) \sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)\right ] = \mathbb E_h \left [\sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)r_t\right ]$$
+      $$\mathbb E_h\left [r(h) \sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)\right ]$$ <!--  = \mathbb E_h \left [\sum_t \nabla_{\theta} \ln \pi_{\theta}(a_t | s_t)r_t\right ]$$ -->
 
       Finally, this is something we can calculate. We can approximate the expectation by sampling experiences from $h$. Note that this is on-policy because we are following our policy to get the update. 
 
-      The SGD update step ends up being $$\theta \leftarrow \theta + \alpha_t \sum_t \nabla_{\theta} \pi_{\theta}(a_t | s_t)r_t$$
+      The SGD update step ends up being $$\theta \leftarrow \theta + \alpha_t r(h) \sum_t \nabla_{\theta} \pi_{\theta}(a_t | s_t)$$
 
       <h2 id="recap22_5">AlphaGo</h2>
 
